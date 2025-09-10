@@ -1,10 +1,10 @@
 # Deploy bundle (pristine)
 This package keeps your **five pages unchanged** and only adds thin wrappers so everything links correctly.
 
-- `index.html` → redirects to `the_un_stable_net_home_preview.html` (your Home).
-- `bio.html` → redirects to `bio_page_live_preview_uploadable_photo_bio_importer_contacts_inquiry.html`.
-- `articles.html` → redirects to `emm_article_professional_hero.html`.
-- `msb.html` → redirects to `million_slots_landing_editable_preview.html`.
+- `index.html` → redirects to `home.html` (your Home).
+- `bio.html` → redirects to `about.html`.
+- `articles.html` → redirects to `emm.html`.
+- `msb.html` → redirects to `msab.html`.
 - `project-new.html` → redirects to `project_new.html`.
 - `api/projects.json` → minimal API consumed by Home.
 - `vercel.json` → enables clean static hosting on Vercel (no build step needed).
