@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="assets/access-mode.css">
+<script defer src="assets/access-mode.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jacopo Berton — Full Bio</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* Shared pill button for links & buttons (same shape as Home) */
+    .ft-btn{
+      appearance:none;
+      display:inline-flex; align-items:center; gap:6px;
+      text-decoration:none; background:#fff; color:#1f3aa2;
+      border:1.5px solid #dbe6ff; border-radius:14px;
+      padding:12px 18px; font-weight:800; font-size:16px; line-height:1.1;
+      cursor:pointer; transition: box-shadow .2s, transform .02s, background .2s;
+      box-shadow:0 0 0 0 rgba(33,64,184,0);
+    }
+    .ft-btn:hover{ background:#f7faff; box-shadow:0 0 0 3px rgba(33,64,184,.08); }
+    .ft-btn:focus-visible{ outline:0; box-shadow:0 0 0 3px rgba(33,64,184,.18); }
+    .ft-btn:active{ transform:translateY(1px); }
+
+    :root{--line:#e7edf7; --ink:#0b152c; --maxw:920px; --ink-2:#4c5c83; --brand:#2140b8}
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); background:linear-gradient(180deg,#f7faff,#ffffff)}
+    header{position:sticky;top:0;background:rgba(255,255,255,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--line); z-index:10}
+    a{color:var(--brand); text-decoration:none}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:18px 20px}
+
+    /* Two-column head: smaller left side */
+    .head{
+      display:grid;
+      grid-template-columns: 260px 1fr;  /* smaller fixed left column */
+      gap:20px; align-items:start;
+    }
+
+    .photo-wrap{position:relative}
+    .photo{
+      width:100%; aspect-ratio:1/1; border-radius:18px;
+      border:2px solid #0f3299; box-shadow:0 10px 30px rgba(12,23,52,.08);
+      background: url('https://dummyimage.com/800x800/1b274d/ced9ff&text=Your+Photo') center/cover no-repeat; overflow:hidden
+    }
+    .photo.drop{outline:2px dashed #b8c6ff; outline-offset:-8px}
+    .photo-actions{position:absolute; right:10px; bottom:10px; display:flex; gap:8px}
+
+    .btn{border:1px solid var(--line); background:#fff; color:var(--ink); padding:8px 10px; border-radius:10px; font-weight:600; cursor:pointer; box-shadow:0 6px 16px rgba(12,23,52,.06)}
+    .btn.primary{background:#eef4ff; border-color:#dbe6ff; color:var(--brand)}
+    .btn.ghost{background:rgba(255,255,255,.85)}
+
+    h1{font-size: clamp(30px,4.6vw,52px); margin:0}
+    .sub{color:var(--ink-2); margin-top:6px}
+    .badges{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+    .badge{background:#eef4ff; border:1px solid #dbe6ff; color:var(--brand); padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px}
+
+    .contacts{margin-top:12px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px; box-shadow:0 8px 22px rgba(12,23,52,.06)}
+    .contacts h4{margin:0 0 8px 0; font-size:14px; color:#253157}
+    .link-list{display:flex; flex-wrap:wrap; gap:8px}
+    .link-pill{display:inline-flex; align-items:center; gap:6px; border:1px solid #e2e8f6; background:#f6f9ff; color:#1f3aa2; padding:6px 9px; border-radius:999px; font-size:12px}
+    .link-pill button{border:none; background:transparent; cursor:pointer; color:#6c7bb0; font-size:14px; line-height:1}
+    .add-link{display:flex; gap:6px; margin-top:8px}
+    .add-link input, .add-link select{flex:1; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-size:13px}
+    .add-link input.hidden{display:none}
+    .link-pill svg{width:14px; height:14px}
+
+    /* Right-side bio card (same styling as before, just nested on right) */
+    .body{margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 30px rgba(12,23,52,.06); padding:18px}
+    .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px}
+    .toggle{display:flex; align-items:center; gap:6px; font-size:13px; color:#2e3a62}
+    .dropzone{border:2px dashed #d8e1f7; border-radius:12px; padding:14px; text-align:center; color:#5a6aa0; cursor:pointer}
+    .dropzone.hover{border-color:#9fb2ff; background:#f3f6ff}
+    .hidden{display:none}
+    #bioView{line-height:1.55}
+    #bioEditor{width:100%; min-height:220px; border:1px solid var(--line); border-radius:12px; padding:12px; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:14px}
+
+    /* Inquiry dialog */
+    dialog{
+      border:0; padding:0; border-radius:16px; overflow:hidden;
+      width:min(720px, 94vw);
+      box-shadow:0 20px 60px rgba(12,23,52,.20), 0 2px 10px rgba(12,23,52,.08);
+    }
+    dialog::backdrop{ background:rgba(11,21,44,.55) }
+    .dialog-head{ padding:14px 16px; font-weight:800; background:#f7faff; border-bottom:1px solid #e7edf7 }
+    .dialog-body{ padding:16px; background:linear-gradient(180deg,#0b152c 0%, #11224a 50%, #0b152c 100%) }
+    .dialog-foot{ padding:12px 16px; background:#f7faff; border-top:1px solid #e7edf7; display:flex; justify-content:space-between }
+    .dialog-body form{ display:grid; gap:12px }
+    .dialog-body input, .dialog-body textarea{
+      width:100%; padding:12px; border-radius:12px; border:2px solid #0b152c;
+      background:white; color:#0b152c; font:inherit;
+    }
+
+    /* Footer like Home (legal row centered) */
+    footer{border-top:1px solid var(--line); padding:18px 0; color:#6b7897}
+    footer a{color:#2140b8; text-decoration:none; font-weight:700}
+    footer a:hover{text-decoration:underline}
+    .legal{display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; text-align:center}
+    .mini{font-size:12px}
+
+    @media (max-width: 780px){
+      .head{grid-template-columns:1fr}
+      .photo-wrap{order:-1}
+    }
+  </style>
+<link rel="stylesheet" href="assets/access-mode.css">
+<script defer src="assets/access-mode.js"></script>
+</head>
+<body>
+  <header>
+    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
+      <a href="index.html" class="ft-btn">← Home</a>
+      <button id="openInquiry" class="ft-btn" type="button" data-view-allowed>Ask a question</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="head">
+      <!-- LEFT: smaller photo + contacts -->
+      <div class="photo-wrap">
+        <div id="photo" class="photo" title="Drop a photo here or use Upload"></div>
+        <div class="photo-actions">
+          <button class="btn primary" id="uploadBtn">Upload Photo</button>
+          <button class="btn" id="clearPhoto" title="Remove saved photo">Clear</button>
+        </div>
+        <input type="file" id="photoFile" accept="image/*" class="hidden" />
+
+        <div class="contacts">
+          <h4>Contacts</h4>
+          <div id="links" class="link-list" data-view-allowed></div>
+          <div class="add-link only-editor">
+            <select id="linkType">
+              <option value="email">Email</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="youtube">YouTube</option>
+              <option value="github">GitHub</option>
+              <option value="x">X</option>
+              <option value="other">Other</option>
+            </select>
+            <input id="linkLabel" placeholder="Custom label (for Other)" class="hidden" />
+            <input id="linkURL" placeholder="URL or email" />
+            <button class="btn" id="addLinkBtn">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Header + BIO editor below -->
+      <div>
+        <h1>Jacopo Berton</h1>
+        <p class="sub"><i>I turn market noise into crisp briefs and ship small, useful AI products for SMEs and teams.</i></p>
+        <div class="badges">
+          <span class="badge">Markets & Strategy</span>
+          <span class="badge">AI Tooling</span>
+          <span class="badge">EU–CH Go-to-Market</span>
+        </div>
+
+        <!-- BIO (moved here under the name/tags) -->
+        <section class="body" id="bioCard">
+          <div class="toolbar">
+            <label class="toggle"><input type="checkbox" id="renderAsHTML"> Render as HTML (sanitized)</label>
+            <button class="btn" id="editBio">Edit</button>
+            <label class="btn" for="bioFile" style="cursor:pointer">Import .txt / .html</label>
+            <input type="file" id="bioFile" accept=".txt,.html,.htm,.md" class="hidden" />
+            <button class="btn" id="saveBio">Save</button>
+            <button class="btn" id="resetBio">Clear</button>
+          </div>
+
+          <div id="dropzone" class="dropzone hidden">
+            Drop a .txt/.html file here, or click “Import” above — or paste content via “Edit”.
+          </div>
+
+          <div id="bioView"></div>
+          <textarea id="bioEditor" class="hidden" placeholder="Paste text or HTML here…"></textarea>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer (same layout style as Home’s legal row) -->
+  <footer>
+    <div class="wrap legal mini">
+      <span>© <span id="y"></span> The (un)Stable Net</span>
+      <span aria-hidden="true">•</span>
+      <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy (PDF)</a>
+      <span aria-hidden="true">•</span>
+      <a href="assets/legal/terms.pdf" target="_blank" rel="noopener">Terms &amp; Conditions (PDF)</a>
+    </div>
+  </footer>
+
+  <!-- Inquiry Dialog -->
+  <dialog id="inqDialog" data-to-email="jacopoberton98@gmail.com" data-view-allowed>
+    <div class="dialog-head">Question / Collaboration Inquiry</div>
+    <div class="dialog-body">
+      <form id="inqForm" data-view-allowed>
+        <input name="name" placeholder="Your name" required data-view-allowed />
+        <input name="email" type="email" placeholder="Your email" required data-view-allowed />
+        <input name="topic" placeholder="Topic (optional)" data-view-allowed />
+        <textarea name="message" rows="6" placeholder="Your message" required data-view-allowed></textarea>
+        <small style="color:#c7d2fe">
+          On submit, your mail app opens with a pre-filled email to the contact address.
+        </small>
+      </form>
+    </div>
+    <div class="dialog-foot">
+      <button class="ft-btn" id="closeInq" type="button" data-view-allowed>Close</button>
+      <button class="ft-btn" id="sendInq" type="button" data-view-allowed>Send</button>
+    </div>
+  </dialog>
+
+  <script>
+  (function(){
+    const $ = (s, r=document) => r.querySelector(s);
+    const LS = { photo:'tsn_bio_photo', content:'tsn_bio_content', mode:'tsn_bio_mode', links:'tsn_contacts' };
+
+    // Year in footer
+    $('#y').textContent = new Date().getFullYear();
+
+    // Photo upload
+    const photoEl = $('#photo'), photoFile = $('#photoFile');
+    const uploadBtn = $('#uploadBtn'), clearPhotoBtn = $('#clearPhoto');
+    const loadPhoto = () => { const u = localStorage.getItem(LS.photo); if (u) photoEl.style.backgroundImage = `url('${u}')`; };
+    const savePhoto = f => { const r = new FileReader(); r.onload = e => { localStorage.setItem(LS.photo, e.target.result); loadPhoto(); }; r.readAsDataURL(f); };
+    uploadBtn.addEventListener('click', ()=> photoFile.click());
+    photoFile.addEventListener('change', e => { const f = e.target.files?.[0]; if (f) savePhoto(f); photoFile.value=''; });
+    clearPhotoBtn.addEventListener('click', ()=>{ localStorage.removeItem(LS.photo); photoEl.style.backgroundImage = "url('https://dummyimage.com/800x800/1b274d/ced9ff&text=Your+Photo')"; });
+    ['dragenter','dragover'].forEach(evt => photoEl.addEventListener(evt, e => { e.preventDefault(); photoEl.classList.add('drop'); }));
+    ['dragleave','drop'].forEach(evt => photoEl.addEventListener(evt, e => { e.preventDefault(); photoEl.classList.remove('drop'); }));
+    photoEl.addEventListener('drop', e => { const f=e.dataTransfer.files?.[0]; if (f?.type.startsWith('image/')) savePhoto(f); });
+    loadPhoto();
+
+    // Contacts
+    const linksWrap = $('#links'), linkType = $('#linkType'), linkLabel = $('#linkLabel'), linkURL = $('#linkURL'), addLinkBtn = $('#addLinkBtn');
+    const ICONS = {
+      email:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 6.5A2.5 2.5 0 0 1 4.5 4h15A2.5 2.5 0 0 1 22 6.5v11A2.5 2.5 0 0 1 19.5 20h-15A2.5 2.5 0 0 1 2 17.5v-11Zm2.2-.5 7.3 5.1L18.8 6H4.2Zm15.3 2.1-7.8 5.4a1 1 0 0 1-1.2 0L2.7 8.1V17.5c0 .55.45 1 1 1h15.8c.55 0 1-.45 1-1V8.1Z"/></svg>',
+      linkedin:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5 2.5 2.5 0 0 1 4.98 3.5ZM.5 8.5h4V23h-4V8.5Zm7.5 0h3.8v2h.1c.5-.9 1.7-2.2 3.6-2.2 3.9 0 4.6 2.6 4.6 6V23h-4v-6.5c0-1.6 0-3.7-2.3-3.7s-2.7 1.7-2.7 3.6V23h-4V8.5Z"/></svg>',
+      youtube:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 12c0 2.2-.2 3.7-.5 4.6-.3.8-1 1.5-1.8 1.8C18.8 19 12 19 12 19s-6.8 0-8.7-.6c-.8-.3-1.5-1-1.8-1.8C.2 15.7 0 14.2 0 12s.2-3.7.5-4.6c.3-.8 1-1.5 1.8-1.8C5.2 5 12 5 12 5s6.8 0 8.7.6c.8.3 1.5 1 1.8 1.8.3.9.5 2.4.5 4.6ZM9.75 8.5v7l6-3.5-6-3.5Z"/></svg>',
+      github:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 3 .9.1-.7.4-1.1.7-1.4-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.6.1-3.4 0 0 1-.3 3.4 1.2a11.7 11.7 0 0 1 6.2 0c2.4-1.5 3.4-1.2 3.4-1.2.6 1.8.2 3.1.1 3.4.8.9 1.2 2 1.2 3.3 0 4.6-2.7 5.6-5.4 5.9.4.3.8 1 .8 2v3c0 .4.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>',
+      x:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2 13.6 9.2 21.8 22h-6.5l-4.4-6.7L5.8 22H2l7.1-9.8L2.2 2h6.5l4 6.1L17 2h1.9Z"/></svg>'
+    };
+    const LABELS = { email:'Email', linkedin:'LinkedIn', youtube:'YouTube', github:'GitHub', x:'X', other:'Other' };
+    const PLACEHOLDERS = {
+      email:'you@domain.com', linkedin:'https://www.linkedin.com/in/your-handle',
+      youtube:'https://youtube.com/@yourchannel', github:'https://github.com/your-handle',
+      x:'https://x.com/your-handle', other:'https://… or mailto:…'
+    };
+    const getLinks = () => { try { return JSON.parse(localStorage.getItem(LS.links) || '[]'); } catch { return []; } };
+    const setLinks = (a) => localStorage.setItem(LS.links, JSON.stringify(a));
+    const normalizeURL = (t,u)=>{ if(!u) return ''; u=u.trim(); if(t==='email'){ if(!/^mailto:/i.test(u)&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(u)) return 'mailto:'+u; return u; } if(!/^https?:/i.test(u)&&!/^mailto:/i.test(u)) u='https://'+u; return u; };
+    const guessType = (it)=>{ if(it.type) return it.type; const u=(it.url||'').toLowerCase(); if(/^mailto:/.test(u)||(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(u)&&!u.startsWith('http'))) return 'email'; if(u.includes('linkedin.com')) return 'linkedin'; if(u.includes('github.com')) return 'github'; if(u.includes('youtube.com')||u.includes('youtu.be')) return 'youtube'; if(u.includes('x.com')||u.includes('twitter.com')) return 'x'; return 'other'; };
+    linkType.addEventListener('change', ()=>{ const t=linkType.value; linkURL.placeholder = PLACEHOLDERS[t] || 'URL or email'; linkLabel.classList.toggle('hidden', t!=='other'); });
+    linkType.dispatchEvent(new Event('change'));
+    function renderLinks(){
+      linksWrap.innerHTML=''; const arr=getLinks();
+      arr.forEach((it,idx)=>{ const type=guessType(it), label=it.label||LABELS[type]||'Link';
+        const pill=document.createElement('span'); pill.className='link-pill';
+        const icon=document.createElement('span'); icon.innerHTML=ICONS[type]||''; pill.appendChild(icon);
+        const a=document.createElement('a'); a.href=it.url; a.target=(/^https?:/i.test(it.url))?'_blank':'_self'; a.rel='noopener'; a.textContent=label; pill.appendChild(a);
+        const x=document.createElement('button'); x.type='button'; x.textContent='✕'; x.title='Remove';
+        x.addEventListener('click', ()=>{ const a2=getLinks(); a2.splice(idx,1); setLinks(a2); renderLinks(); ensureEmailHint(); });
+        pill.appendChild(x); linksWrap.appendChild(pill);
+      });
+      ensureEmailHint();
+    }
+    addLinkBtn.addEventListener('click', ()=>{ const type=linkType.value; const url=normalizeURL(type, linkURL.value.trim()); const label=(type==='other')?(linkLabel.value||'').trim():LABELS[type]; if(!url) return; if(type==='other'&&!label) return; const arr=getLinks(); arr.push({type,label,url}); setLinks(arr); linkURL.value=''; linkLabel.value=''; renderLinks(); });
+
+    // BIO (same behavior as before)
+    const bioView = $('#bioView'), bioEditor = $('#bioEditor'), renderAsHTML = $('#renderAsHTML');
+    const editBioBtn = $('#editBio'), saveBioBtn = $('#saveBio'), resetBioBtn = $('#resetBio'), bioFile = $('#bioFile'), dropzone = $('#dropzone');
+    const sanitizeHTML = (html)=>{
+      const allowed = new Set(['A','P','DIV','H1','H2','H3','H4','H5','H6','EM','STRONG','B','I','U','UL','OL','LI','BR','HR','BLOCKQUOTE','CODE','PRE','SPAN']);
+      const doc = new DOMParser().parseFromString(html,'text/html');
+      const walk = (n)=>{ if(n.nodeType===1){ if(!allowed.has(n.tagName)){ n.replaceWith(...n.childNodes); return; } const rm=[]; for(const a of n.attributes){ if(n.tagName==='A'&&a.name.toLowerCase()==='href'){ const ok=/^(https?:|mailto:|#)/i.test(a.value.trim()); if(!ok) rm.push(a.name);} else rm.push(a.name);} rm.forEach(x=>n.removeAttribute(x)); if(n.tagName==='A'){ n.setAttribute('rel','noopener'); n.setAttribute('target','_blank'); } } Array.from(n.childNodes).forEach(walk); };
+      walk(doc.body); return doc.body.innerHTML;
+    };
+    const applyBio = ()=>{
+      const mode=(localStorage.getItem(LS.mode)||'text'); const raw=localStorage.getItem(LS.content)||''; renderAsHTML.checked=(mode==='html');
+      if(!raw){ bioView.classList.add('hidden'); dropzone.classList.remove('hidden'); }
+      else{ dropzone.classList.add('hidden'); bioView.classList.remove('hidden'); bioView[mode==='html'?'innerHTML':'textContent'] = (mode==='html'?sanitizeHTML(raw):raw); }
+    };
+    editBioBtn.addEventListener('click', ()=>{ bioEditor.classList.toggle('hidden'); if(!bioEditor.classList.contains('hidden')){ bioEditor.value=localStorage.getItem(LS.content)||''; bioEditor.focus(); }});
+    saveBioBtn.addEventListener('click', ()=>{ const raw=bioEditor.classList.contains('hidden')?(localStorage.getItem(LS.content)||''):bioEditor.value; localStorage.setItem(LS.content, raw); localStorage.setItem(LS.mode, renderAsHTML.checked?'html':'text'); applyBio(); if(!bioEditor.classList.contains('hidden')) bioEditor.classList.add('hidden'); });
+    resetBioBtn.addEventListener('click', ()=>{ localStorage.removeItem(LS.content); localStorage.setItem(LS.mode, renderAsHTML.checked?'html':'text'); bioEditor.value=''; applyBio(); });
+    bioFile.addEventListener('change', e=>{ const f=e.target.files?.[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ const text=ev.target.result; bioEditor.value=text; const isHTML=/\.html?$/i.test(f.name)||/^\s*<(!doctype|html|head|body|p|h1|div)/i.test(text); renderAsHTML.checked=!!isHTML; bioEditor.classList.remove('hidden'); }; r.readAsText(f); bioFile.value=''; });
+    ['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.classList.add('hover'); }));
+    ['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.classList.remove('hover'); }));
+    dropzone.addEventListener('drop', e=>{ const f=e.dataTransfer.files?.[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ const text=ev.target.result; bioEditor.value=text; renderAsHTML.checked= /\.html?$/i.test(f.name) || /^\s*</.test(text); bioEditor.classList.remove('hidden'); dropzone.classList.add('hidden'); }; r.readAsText(f); });
+
+    // Inquiry
+    const inqDialog = $('#inqDialog'); const openInquiry = $('#openInquiry');
+    function ensureEmailHint(){ const mail=(getLinks().find(l=>/^mailto:/i.test(l.url))||{}).url||''; inqDialog.dataset.toEmail = mail.replace(/^mailto:/i,''); }
+    openInquiry.addEventListener('click', ()=> inqDialog.showModal());
+    document.getElementById('closeInq').addEventListener('click', ()=> inqDialog.close());
+    document.getElementById('sendInq').addEventListener('click', ()=>{
+      const fd = new FormData(document.getElementById('inqForm'));
+      const name = (fd.get('name')||'').toString();
+      const from = (fd.get('email')||'').toString();
+      const topic= (fd.get('topic')||'').toString();
+      const msg  = (fd.get('message')||'').toString();
+      const to = inqDialog.dataset.toEmail || 'jacopoberton98@gmail.com';
+      const subject = `Inquiry${topic ? ': ' + topic : ''} — from ${name}`;
+      const body = `Name: ${name}\nEmail: ${from}\nTopic: ${topic}\n\n${msg}\n\n— sent from Bio page`;
+      window.location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      inqDialog.close();
+    });
+
+    // Seed & init
+    if (!localStorage.getItem(LS.links)) {
+      setLinks([{label:'Email', url:'mailto:hello@example.com'},{label:'LinkedIn', url:'https://www.linkedin.com/in/your-handle'},{label:'X (Twitter)', url:'https://x.com/your-handle'}]);
+    }
+    renderLinks(); applyBio(); ensureEmailHint();
+  })();
+  </script>
+<script type="module" src="assets/sb-init.js"></script>
+<script type="module" src="assets/dynamic-bio.js"></script>
+<script type="module" src="assets/editor-auth.js"></script>
+<script type="module" src="assets/editor-tray.js"></script>
+<script type="module" src="assets/editor-quiet.js"></script>
+<script type="module" src="assets/editor-unlock.js"></script>
+  
+
+</body>
+</html>

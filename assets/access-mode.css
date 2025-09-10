@@ -1,0 +1,46 @@
+/*! Role/View helper styles (with strict VIEWER) */
+html[data-mode="editor"] .only-user, html[data-mode="editor"] .only-viewer { display:none !important; }
+html[data-mode="user"] .only-editor, html[data-mode="user"] .only-viewer { display:none !important; }
+html[data-mode="viewer"] .only-editor, html[data-mode="viewer"] .only-user { display:none !important; }
+
+html[data-mode="editor"] .edit-outline { outline: 1.5px dashed rgba(16,185,129,0.7); outline-offset: 2px; }
+
+html[data-mode="viewer"] [contenteditable],
+html[data-mode="viewer"] .edit-toolbar,
+html[data-mode="viewer"] .edit-controls,
+html[data-mode="viewer"] .editor-only,
+html[data-mode="viewer"] [data-editor-only],
+html[data-mode="viewer"] .admin-only,
+html[data-mode="viewer"] [data-admin],
+html[data-mode="viewer"] .debug-panel,
+html[data-mode="viewer"] .dev-only,
+html[data-mode="viewer"] .editable,
+html[data-mode="viewer"] .editor,
+html[data-mode="viewer"] .toolbar,
+html[data-mode="viewer"] .controls,
+html[data-mode="viewer"] .customize,
+html[data-mode="viewer"] .customise,
+html[data-mode="viewer"] .edit-button,
+html[data-mode="viewer"] .uploader,
+html[data-mode="viewer"] .upload,
+html[data-mode="viewer"] .file-upload,
+html[data-mode="viewer"] .dropzone,
+html[data-mode="viewer"] .cms,
+html[data-mode="viewer"] .admin,
+html[data-mode="viewer"] .editor-panel,
+html[data-mode="viewer"] .editor-area,
+html[data-mode="viewer"] .editor-tools,
+html[data-mode="viewer"] .editor-actions,
+html[data-mode="viewer"] [data-edit],
+html[data-mode="viewer"] [data-upload],
+html[data-mode="viewer"] [data-customize] { display:none !important; }
+
+html[data-mode="viewer"] :is(button, input, select, textarea, [role="button"], .btn, .button, .switch, .toggle):not([data-view-allowed]) {
+  display: none !important;
+}
+
+html[data-mode="viewer"] [data-locked="true"] { opacity: 0.6; pointer-events: none; user-select: text; }
+
+/* Hide the editor tray for viewers; show it only in editor mode */
+#editorTray { display: none; }
+[data-mode="editor"] #editorTray { display: block; }

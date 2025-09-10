@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-mode="viewer">
+<head>
+  <link rel="stylesheet" href="assets/access-mode.css">
+<script defer src="assets/access-mode.js"></script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Viewer Mode</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/access-mode.css">
+  <script defer src="assets/access-mode.js"></script>
+  <style>body{font-family:Inter,system-ui,sans-serif}</style>
+</head>
+<body class="min-h-screen bg-[#0b0f13] text-white">
+  <div class="mx-auto max-w-xl px-6 py-16">
+    <h1 class="text-3xl font-extrabold tracking-tight">Strict Viewer Mode</h1>
+    <p class="mt-2 text-white/70">Click below to force the entire site into a locked viewing state.</p>
+    <div class="mt-8">
+      <button id="go-viewer" class="rounded-2xl border border-white/20 text-white font-semibold px-5 py-3 shadow">Enable Viewer Mode</button>
+    </div>
+    <p class="mt-6 text-white/60 text-sm">To re-enable editing, press <b>Ctrl + Shift + E</b> and enter your passphrase.</p>
+  </div>
+  <script>
+    document.getElementById('go-viewer').addEventListener('click', function(){
+      localStorage.removeItem('tsn_token');
+      localStorage.setItem('tsn_mode', 'viewer');
+      location.href = '/';
+    });
+  </script>
+  <script type="module" src="assets/sb-init.js"></script>
+<script type="module" src="assets/editor-auth.js"></script>
+<script type="module" src="assets/editor-tray.js"></script>
+
+</body>
+</html>

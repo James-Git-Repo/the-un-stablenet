@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" data-mode="viewer">
+<head>
+  <link rel="stylesheet" href="assets/access-mode.css">
+<script defer src="assets/access-mode.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Switch View — Editor/User/Viewer</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/access-mode.css">
+  <script defer src="assets/access-mode.js"></script>
+  <style>body{font-family:Inter,system-ui,sans-serif}</style>
+</head>
+<body class="min-h-screen bg-[#0b0f13] text-white">
+  <div class="mx-auto max-w-xl px-6 py-16">
+    <h1 class="text-3xl font-extrabold tracking-tight">View Switch</h1>
+    <p class="mt-2 text-white/70">Default: <b>Viewer</b>. Press <b>Ctrl+Shift+E</b> for Editor (passphrase required).</p>
+    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <button id="enter-editor" class="rounded-2xl bg-white text-black font-semibold px-5 py-3 shadow">Enter Editor Mode</button>
+      <button id="enter-user" class="rounded-2xl border border-white/20 text-white font-semibold px-5 py-3 shadow">Soft User Mode</button>
+      <button id="enter-viewer" class="rounded-2xl border border-white/20 text-white font-semibold px-5 py-3 shadow">Strict Viewer Mode</button>
+    </div>
+  </div>
+  <script>
+    async function sha256Hex(str){
+      const data = new TextEncoder().encode(str);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+    document.getElementById('enter-editor').addEventListener('click', async function(){
+      const pass = prompt('Enter passphrase to enable Editor Mode:');
+      if (pass) {
+        const tok = await sha256Hex(pass);
+        // token is validated inside access-mode.js; here we just set intent
+        localStorage.setItem('tsn_token', tok);
+        localStorage.setItem('tsn_mode','editor');
+        location.reload();
+      }
+    });
+    document.getElementById('enter-user').addEventListener('click', function(){
+      localStorage.removeItem('tsn_token'); localStorage.setItem('tsn_mode','user'); location.reload();
+    });
+    document.getElementById('enter-viewer').addEventListener('click', function(){
+      localStorage.removeItem('tsn_token'); localStorage.setItem('tsn_mode','viewer'); location.reload();
+    });
+  </script>
+  <script type="module" src="assets/sb-init.js"></script>
+<script type="module" src="assets/editor-auth.js"></script>
+<script type="module" src="assets/editor-tray.js"></script>
+
+</body>
+</html>

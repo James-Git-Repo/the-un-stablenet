@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="assets/access-mode.css">
+<script defer src="assets/access-mode.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Million Slots Billboard — Landing (Editable)</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body{font-family:Inter,system-ui,sans-serif}
+    @keyframes twinkle { 0%, 100% { transform: scale(1); opacity: 0.25; } 50% { transform: scale(1.1); opacity: 0.65; } }
+    .grid-cols-32 { display:grid; grid-template-columns: repeat(32, minmax(0, 1fr)); }
+    .edit-outline{ outline:1.5px dashed rgba(16,185,129,0.7); outline-offset: 4px; border-radius: 0.5rem; }
+  </style>
+<link rel="stylesheet" href="assets/access-mode.css">
+<script defer src="assets/access-mode.js"></script>
+</head>
+<body class="min-h-screen w-full bg-[#0b0f13] text-white selection:bg-white selection:text-black">
+  <!-- Header -->
+<header class="sticky top-0 z-40 border-b border-white/10 bg-black/20 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <!-- Brand: square-ish TSN icon + title -->
+    <a href="million_slots_landing_editable_preview.html" class="flex items-center gap-3">
+      <!-- TSN logo: grayscale “negative”, tighter radius -->
+      <span class="relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.25)] ring-1 ring-white/25" aria-label="TSN logo">
+        <span class="absolute inset-0" style="background:linear-gradient(180deg,#ffffff 0%, #f1f1f1 100%);"></span>
+        <span class="absolute inset-0" style="background:linear-gradient(135deg, transparent 49.5%, #d3d3d3 50%);"></span>
+        <span class="relative text-[11px] font-extrabold tracking-wide text-black">TSN</span>
+      </span>
+      <span class="text-white text-lg font-extrabold leading-none">The (un)Stable Net</span>
+    </a>
+
+    <nav class="flex items-center gap-4 text-sm">
+      <!-- White-outline pill Home -->
+      <a
+        href="the_un_stable_net_home_preview.html"
+        class="inline-flex items-center rounded-[14px] px-4 py-1.5 font-extrabold text-white border border-white hover:bg-white hover:text-black transition"
+        style="border-width:1.5px"
+      >Home</a>
+
+      <button
+        id="toggleEdit"
+        class="rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 hover:bg-emerald-400/20"
+       class="only-editor">✎ Edit</button>
+    </nav>
+  </div>
+</header>
+
+
+  <!-- Hero + Grid Background -->
+  <section class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 opacity-70" aria-hidden>
+      <div class="absolute -top-24 -left-32 h-96 w-96 rounded-full bg-gradient-to-br from-fuchsia-500/40 via-cyan-400/30 to-emerald-400/30 blur-3xl"></div>
+      <div class="absolute -bottom-24 -right-32 h-[28rem] w-[28rem] rounded-full bg-gradient-to-tr from-indigo-500/30 via-rose-500/30 to-amber-400/30 blur-3xl"></div>
+    </div>
+
+    <!-- Grid container (cells count can be changed in the Edit panel). -->
+    <div id="msbGrid" data-cells="640" class="absolute inset-0 -z-0 grid grid-cols-32 gap-[4px] px-6 py-6 sm:px-10 sm:py-10 md:px-14 md:py-14 opacity-60"></div>
+
+    <div class="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-28 text-center sm:py-32 md:py-40">
+      <span id="badge" data-editable class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-widest text-white/80">
+        <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-400"></span>
+        Million Billboard Project
+      </span>
+
+      <h1 id="title" data-editable class="mt-2 bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-4xl font-bold leading-tight text-transparent sm:text-5xl md:text-6xl">
+        A Living, Permanent<br class="hidden sm:inline" /> AI Video Mosaic
+      </h1>
+
+      <p id="intro" data-editable class="max-w-3xl text-base text-white/80 sm:text-lg">
+        One board. <span class="text-white">1,000,000 micro‑slots</span>. Anyone can claim space - for a year or forever - and publish AI‑generated video stories, art, and messages.
+      </p>
+
+      <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+        <a id="cta1" data-link-edit class="rounded-2xl bg-white px-5 py-2.5 text-sm font-semibold text-black shadow-lg shadow-white/10 transition hover:-translate-y-0.5 hover:shadow-xl" href="#brief">Read the Brief</a>
+        <a id="cta2" data-link-edit class="rounded-2xl border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10" href="#reserve">Reserve a Slot</a>
+      </div>
+
+      <div id="optionsText" data-editable class="mt-6 text-xs text-white/60">Display options: <span class="text-white/80">1‑Year</span> or <span class="text-white/80">Permanent</span></div>
+    </div>
+
+    <div class="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center" aria-hidden>
+      <div id="ghostBanner" data-editable class="bg-gradient-to-r from-white/15 via-white/10 to-white/15 bg-clip-text text-4xl font-black uppercase tracking-[0.35em] text-transparent opacity-20 sm:text-5xl md:text-6xl">1,000,000 SLOTS</div>
+    </div>
+  </section>
+
+  <!-- Brief -->
+  <section id="brief" class="relative mx-auto max-w-4xl px-6 py-14">
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur md:p-8">
+      <h2 class="text-2xl font-semibold sm:text-3xl">Project Brief</h2>
+      <div id="briefBody" data-editable class="mt-3 text-white/80">
+        <p>
+          The <span class="text-white">Million Billboard Project</span> is a massive, single‑page digital canvas composed of one million purchasable slots. Each slot can host an AI‑generated video tile; multiple adjacent slots can be combined to enlarge presence. Buyers choose how long their mark lasts—<span class="text-white">one year</span> or <span class="text-white">permanent</span>.
+        </p>
+        <ul class="mt-5 list-disc space-y-2 pl-6">
+          <li><span class="text-white">What it is:</span> Scalable grid; AI videos adapt to claimed area.</li>
+          <li><span class="text-white">How it works:</span> Pick coordinates, choose duration, upload video, go live.</li>
+          <li><span class="text-white">Why it matters:</span> Gallery × ad space × digital landmark.</li>
+          <li><span class="text-white">Ethos:</span> Open expression with brand‑safe moderation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer class="mx-auto mt-8 max-w-4xl px-1 pb-12 text-center text-xs text-white/40">
+      © <span id="y"></span> <span id="footerNote" data-editable>Million Billboard Project - A living digital monument.</span>
+    </footer>
+
+  </section>
+
+  <!-- Lightweight Edit Panel -->
+  <aside id="editPanel" class="fixed bottom-4 right-4 z-50 hidden w-[22rem] max-w-[92vw] rounded-2xl border border-white/10 bg-[#0b0f13]/95 p-4 shadow-2xl backdrop-blur">
+    <div class="mb-3 flex items-center justify-between">
+      <h3 class="text-sm font-semibold">Inline Editor</h3>
+      <button id="closePanel" class="text-xs text-white/60 hover:text-white">✕</button>
+    </div>
+
+    <div class="space-y-3 text-sm">
+      <label class="block">CTA #1 URL
+        <input id="cta1Href" class="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white placeholder-white/40" placeholder="#brief" />
+      </label>
+      <label class="block">CTA #2 URL
+        <input id="cta2Href" class="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white placeholder-white/40" placeholder="#reserve" />
+      </label>
+      <label class="block">Grid cells (visual stars)
+        <input id="cellsCount" type="number" min="64" step="32" class="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white" />
+      </label>
+
+      <div class="flex flex-wrap gap-2 pt-2">
+        <button id="saveEdits" class="rounded-xl bg-emerald-400 px-3 py-2 text-xs font-semibold text-black">Save</button>
+        <button id="resetEdits" class="rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs text-white">Reset</button>
+        <button id="copyHtml" class="rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs text-white">Copy HTML</button>
+        <button id="downloadHtml" class="rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs text-white">Export HTML</button>
+      </div>
+      <p class="text-[11px] leading-snug text-white/50">Tip: toggle <span class="text-emerald-300">Edit</span> to turn on inline editing. Click any highlighted area to change text. Changes are kept in your browser (localStorage).</p>
+    </div>
+  </aside>
+
+  <script>
+  (function(){
+    // --- DOM refs
+    const grid = document.getElementById('msbGrid');
+    const y = document.getElementById('y');
+    const toggleBtn = document.getElementById('toggleEdit');
+    const panel = document.getElementById('editPanel');
+    const panelClose = document.getElementById('closePanel');
+    const inputs = {
+      cta1Href: document.getElementById('cta1Href'),
+      cta2Href: document.getElementById('cta2Href'),
+      cellsCount: document.getElementById('cellsCount'),
+    };
+    const links = {
+      cta1: document.getElementById('cta1'),
+      cta2: document.getElementById('cta2'),
+    };
+    const editableEls = Array.from(document.querySelectorAll('[data-editable]'));
+
+    // --- Utilities
+    const STORAGE_KEY = 'msb-landing-edits-v1';
+    const loadState = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const saveState = (state) => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+
+    // NEW: helper to set link + target for externals
+    function setLink(a, url){
+      if(!a) return;
+      const u = (url || '').trim();
+      if(!u){
+        a.removeAttribute('href');
+        a.removeAttribute('target');
+        a.removeAttribute('rel');
+        return;
+      }
+      a.setAttribute('href', u);
+      if(/^https?:\/\//i.test(u)){
+        a.setAttribute('target','_blank');
+        a.setAttribute('rel','noopener');
+      }else{
+        a.removeAttribute('target');
+        a.removeAttribute('rel');
+      }
+    }
+
+    function applyState(state){
+      if(!state) return;
+      // Textual edits
+      editableEls.forEach(el => {
+        const id = el.id; if(!id) return;
+        if (state.text && state.text[id] != null) {
+          el.innerHTML = state.text[id];
+        }
+      });
+      // Links (use helper so empty removes href)
+      if(state.links){
+        if(state.links.cta1 !== undefined) setLink(links.cta1, state.links.cta1);
+        if(state.links.cta2 !== undefined) setLink(links.cta2, state.links.cta2);
+      }
+      // Cells
+      if(state.cells){ grid.dataset.cells = String(state.cells); }
+      renderGrid();
+      // Inputs reflect current DOM
+      inputs.cta1Href.value = links.cta1.getAttribute('href') || '';
+      inputs.cta2Href.value = links.cta2.getAttribute('href') || '';
+      inputs.cellsCount.value = grid.dataset.cells || '640';
+    }
+
+    function getCurrentState(){
+      const state = { text:{}, links:{}, cells: parseInt(grid.dataset.cells || '640',10) };
+      editableEls.forEach(el => { if(el.id){ state.text[el.id] = el.innerHTML; }});
+      state.links.cta1 = links.cta1.getAttribute('href') || '';
+      state.links.cta2 = links.cta2.getAttribute('href') || '';
+      return state;
+    }
+
+    function resetState(){ localStorage.removeItem(STORAGE_KEY); location.reload(); }
+
+    // --- Grid renderer
+    function renderGrid(){
+      const CELLS = parseInt(grid.dataset.cells || '640',10);
+      grid.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      for(let i=0;i<CELLS;i++){
+        const d=document.createElement('div');
+        d.className='rounded-sm bg-white/10';
+        d.style.height='6px'; d.style.width='6px';
+        d.style.opacity=(0.35+(i%7)*0.07).toString();
+        d.style.animation=`twinkle 3.2s ease-in-out ${(i%37)*0.05}s infinite`;
+        frag.appendChild(d);
+      }
+      grid.appendChild(frag);
+    }
+
+    // --- Edit mode toggle
+    let editOn = false;
+    function setEditMode(on){
+      editOn = on;
+      toggleBtn.textContent = on ? '✓ Editing' : '✎ Edit';
+      toggleBtn.classList.toggle('bg-emerald-400/30', on);
+      toggleBtn.classList.toggle('text-emerald-100', on);
+      editableEls.forEach(el => {
+        el.contentEditable = on ? 'plaintext-only' : 'false';
+        el.classList.toggle('edit-outline', on);
+      });
+      panel.classList.toggle('hidden', !on);
+    }
+
+    // Save button (panel)
+    document.getElementById('saveEdits').addEventListener('click', () => {
+      // Update links and cell count from inputs (via helper)
+      setLink(links.cta1, inputs.cta1Href.value);
+      setLink(links.cta2, inputs.cta2Href.value);
+      const n = parseInt(inputs.cellsCount.value || '640',10);
+      if(!Number.isNaN(n)) { grid.dataset.cells = String(Math.max(64, n)); renderGrid(); }
+      saveState(getCurrentState());
+    });
+
+    // Reset button (panel)
+    document.getElementById('resetEdits').addEventListener('click', resetState);
+
+    // Copy HTML
+    document.getElementById('copyHtml').addEventListener('click', async () => {
+      const html = buildExportHtml();
+      try{
+        await navigator.clipboard.writeText(html);
+        toggleBtn.textContent = 'Copied!';
+        setTimeout(()=>toggleBtn.textContent = editOn?'✓ Editing':'✎ Edit', 1000);
+      }catch(e){ alert('Copy failed. Use Export HTML to download'); }
+    });
+
+    // Download HTML
+    document.getElementById('downloadHtml').addEventListener('click', () => {
+      const html = buildExportHtml();
+      const blob = new Blob([html], {type:'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'million-slots-landing.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+    });
+
+    // Build a clean, self-contained HTML (without editor UI/attributes)
+    function buildExportHtml(){
+      const doc = document.documentElement.cloneNode(true);
+      const $ = (sel, root=doc) => root.querySelector(sel);
+      const $$ = (sel, root=doc) => Array.from(root.querySelectorAll(sel));
+
+      const panelClone = $('#editPanel', doc); if(panelClone) panelClone.remove();
+      const toggleClone = $('#toggleEdit', doc); if(toggleClone) toggleClone.remove();
+
+      $$('#'+editableEls.map(e=>e.id).join(',#')).forEach(el=>{
+        el.removeAttribute('contenteditable');
+        el.classList.remove('edit-outline');
+        el.removeAttribute('data-editable');
+      });
+
+      $$('[data-link-edit]', doc).forEach(a => a.removeAttribute('data-link-edit'));
+
+      const yEl = $('#y', doc); if(yEl) yEl.textContent = new Date().getFullYear();
+
+      const doctype = '<!doctype html>';
+      return doctype + '\n' + doc.outerHTML;
+    }
+
+    // --- Wire up events
+    toggleBtn.addEventListener('click', () => setEditMode(!editOn));
+    panelClose.addEventListener('click', () => setEditMode(false));
+
+    // Save on blur for inline fields
+    editableEls.forEach(el => el.addEventListener('blur', () => saveState(getCurrentState())));
+
+    // NEW: Click a CTA to set its URL while editing
+    document.querySelectorAll('[data-link-edit]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        if(!editOn) return;      // normal nav when not editing
+        e.preventDefault();
+        const label = a.textContent.trim() || 'link';
+        const current = a.getAttribute('href') || '';
+        const url = prompt(`Set link URL for “${label}”`, current);
+        if(url !== null){
+          setLink(a, url);
+          // reflect in panel inputs
+          if(a.id === 'cta1') inputs.cta1Href.value = a.getAttribute('href') || '';
+          if(a.id === 'cta2') inputs.cta2Href.value = a.getAttribute('href') || '';
+          saveState(getCurrentState());
+        }
+      });
+    });
+
+    // Initial render
+    y.textContent = new Date().getFullYear();
+    applyState(loadState());
+    if(!inputs.cta1Href.value) inputs.cta1Href.value = links.cta1.getAttribute('href') || '';
+    if(!inputs.cta2Href.value) inputs.cta2Href.value = links.cta2.getAttribute('href') || '';
+    if(!inputs.cellsCount.value) inputs.cellsCount.value = grid.dataset.cells || '640';
+
+    // Click outside panel to close (when editing) -> keep panel open
+    document.addEventListener('click', (e)=>{
+      if(editOn && !panel.contains(e.target) && e.target !== toggleBtn){ /* keep open */ }
+    });
+  })();
+</script>
+<script type="module" src="assets/sb-init.js"></script>
+<script type="module" src="assets/dynamic-msb.js"></script>
+<script type="module" src="assets/editor-auth.js"></script>
+<script type="module" src="assets/editor-tray.js"></script>
+<script type="module" src="assets/editor-quiet.js"></script>
+<script type="module" src="assets/editor-unlock.js"></script>
+
+</body>
+</html>

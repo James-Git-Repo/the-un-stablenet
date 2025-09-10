@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-mode="viewer">
+<head>
+  <link rel="stylesheet" href="assets/access-mode.css">
+<script defer src="assets/access-mode.js"></script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/access-mode.css">
+  <script defer src="assets/access-mode.js"></script>
+  <style>
+    :root{ --page:#ffffff; --ink:#0b152c; --line:#e7edf7; --maxw:1120px; }
+    body{font-family:Inter,system-ui,sans-serif; color:var(--ink)}
+    .wrap{ max-width:var(--maxw); margin:0 auto; padding:24px }
+    header{ border-bottom:1px solid var(--line); background:#fff8 }
+    .hero{ min-height:220px; background:#eef4ff; display:flex; align-items:flex-end; }
+    .hero-inner{ max-width:var(--maxw); margin:0 auto; padding:36px 24px }
+    footer{ border-top:1px solid var(--line); padding:18px 0; color:#6b7897 }
+    .proj-body { padding-top: 16px; }
+  </style>
+</head>
+<body class="bg-white">
+  <header class="sticky top-0 z-20">
+    <div class="wrap flex items-center justify-between">
+      <a href="index.html" class="text-lg font-extrabold">The (un)Stable Net</a>
+      <nav class="text-sm">
+        <a class="px-3 py-2" href="index.html">Home</a>
+        <a class="px-3 py-2" href="the_un_stable_net_home_preview.html">Projects</a>
+        <a class="px-3 py-2" href="newsletter.html">Newsletter</a>
+        <a class="px-3 py-2" href="bio.html">Bio</a>
+        <a class="px-3 py-2 only-editor" href="mode.html">Switch view</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero proj-hero">
+    <div class="hero-inner">
+      <h1 class="proj-title text-3xl font-extrabold"></h1>
+      <p class="proj-subtitle text-slate-600 mt-2"></p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <article class="proj-body prose max-w-none" data-publish-target="project"></article>
+  </main>
+
+  <footer>
+    <div class="wrap">&copy; The (un)Stable Net</div>
+  </footer>
+
+  <script type="module" src="assets/sb-init.js"></script>
+  <script type="module" src="assets/dynamic-project.js"></script>
+  <script type="module" src="assets/editor-auth.js"></script>
+  <script type="module" src="assets/editor-tray.js"></script>
+  <script type="module" src="assets/editor-quiet.js"></script>
+  <script type="module" src="assets/editor-unlock.js"></script>
+</body>
+</html>
