@@ -1,130 +1,132 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="assets/access-mode.css">
-<script defer src="assets/access-mode.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jacopo Berton — Full Bio</title>
+
+  <!-- Access / View Mode -->
+  <link rel="stylesheet" href="assets/access-mode.css">
+  <script defer src="assets/access-mode.js"></script>
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    /* Shared pill button for links & buttons (same shape as Home) */
+    :root{--line:#e7edf7; --ink:#0b152c; --maxw:920px; --ink-2:#4c5c83; --brand:#2140b8}
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); background:linear-gradient(180deg,#f7faff,#ffffff)}
+
+    header{position:sticky;top:0;background:rgba(255,255,255,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--line); z-index:10}
+    a{color:var(--brand); text-decoration:none}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:18px 20px}
+
+    /* Shared pill button */
     .ft-btn{
-      appearance:none;
-      display:inline-flex; align-items:center; gap:6px;
+      appearance:none; display:inline-flex; align-items:center; gap:6px;
       text-decoration:none; background:#fff; color:#1f3aa2;
       border:1.5px solid #dbe6ff; border-radius:14px;
       padding:12px 18px; font-weight:800; font-size:16px; line-height:1.1;
       cursor:pointer; transition: box-shadow .2s, transform .02s, background .2s;
       box-shadow:0 0 0 0 rgba(33,64,184,0);
     }
-    .ft-btn:hover{ background:#f7faff; box-shadow:0 0 0 3px rgba(33,64,184,.08); }
-    .ft-btn:focus-visible{ outline:0; box-shadow:0 0 0 3px rgba(33,64,184,.18); }
-    .ft-btn:active{ transform:translateY(1px); }
+    .ft-btn:hover{ background:#f7faff; box-shadow:0 0 0 3px rgba(33,64,184,.08) }
+    .ft-btn:focus-visible{ outline:0; box-shadow:0 0 0 3px rgba(33,64,184,.18) }
+    .ft-btn:active{ transform:translateY(1px) }
 
-    :root{--line:#e7edf7; --ink:#0b152c; --maxw:920px; --ink-2:#4c5c83; --brand:#2140b8}
-    *{box-sizing:border-box}
-    body{margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); background:linear-gradient(180deg,#f7faff,#ffffff)}
-    header{position:sticky;top:0;background:rgba(255,255,255,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--line); z-index:10}
-    a{color:var(--brand); text-decoration:none}
-    .wrap{max-width:var(--maxw); margin:0 auto; padding:18px 20px}
+    /* Two-column head */
+    .head{ display:grid; grid-template-columns:260px 1fr; gap:20px; align-items:start }
 
-    /* Two-column head: smaller left side */
-    .head{
-      display:grid;
-      grid-template-columns: 260px 1fr;  /* smaller fixed left column */
-      gap:20px; align-items:start;
-    }
-
-    .photo-wrap{position:relative}
+    .photo-wrap{ position:relative }
     .photo{
       width:100%; aspect-ratio:1/1; border-radius:18px;
       border:2px solid #0f3299; box-shadow:0 10px 30px rgba(12,23,52,.08);
       background: url('https://dummyimage.com/800x800/1b274d/ced9ff&text=Your+Photo') center/cover no-repeat; overflow:hidden
     }
-    .photo.drop{outline:2px dashed #b8c6ff; outline-offset:-8px}
-    .photo-actions{position:absolute; right:10px; bottom:10px; display:flex; gap:8px}
+    .photo.drop{ outline:2px dashed #b8c6ff; outline-offset:-8px }
+    .photo-actions{ position:absolute; right:10px; bottom:10px; display:flex; gap:8px }
 
-    .btn{border:1px solid var(--line); background:#fff; color:var(--ink); padding:8px 10px; border-radius:10px; font-weight:600; cursor:pointer; box-shadow:0 6px 16px rgba(12,23,52,.06)}
-    .btn.primary{background:#eef4ff; border-color:#dbe6ff; color:var(--brand)}
-    .btn.ghost{background:rgba(255,255,255,.85)}
+    .btn{ border:1px solid var(--line); background:#fff; color:var(--ink); padding:8px 10px; border-radius:10px; font-weight:600; cursor:pointer; box-shadow:0 6px 16px rgba(12,23,52,.06) }
+    .btn.primary{ background:#eef4ff; border-color:#dbe6ff; color:var(--brand) }
+    .btn.ghost{ background:rgba(255,255,255,.85) }
 
-    h1{font-size: clamp(16px,2.2vw,22px); margin:0}
-    .sub{color:var(--ink-2); margin-top:6px}
-    .badges{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
-    .badge{background:#eef4ff; border:1px solid #dbe6ff; color:var(--brand); padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px}
+    h1{ font-size: clamp(16px,2.2vw,22px); margin:0 }
+    .sub{ color:var(--ink-2); margin-top:6px }
+    .badges{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px }
+    .badge{ background:#eef4ff; border:1px solid #dbe6ff; color:#2140b8; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px }
 
-    .contacts{margin-top:12px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px; box-shadow:0 8px 22px rgba(12,23,52,.06)}
-    .contacts h4{margin:0 0 8px 0; font-size:14px; color:#253157}
-    .link-list{display:flex; flex-wrap:wrap; gap:8px}
-    .link-pill{display:inline-flex; align-items:center; gap:6px; border:1px solid #e2e8f6; background:#f6f9ff; color:#1f3aa2; padding:6px 9px; border-radius:999px; font-size:12px}
-    .link-pill button{border:none; background:transparent; cursor:pointer; color:#6c7bb0; font-size:14px; line-height:1}
-    .add-link{display:flex; gap:6px; margin-top:8px}
-    .add-link input, .add-link select{flex:1; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-size:13px}
-    .add-link input.hidden{display:none}
-    .link-pill svg{width:14px; height:14px}
+    .contacts{ margin-top:12px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px; box-shadow:0 8px 22px rgba(12,23,52,.06) }
+    .contacts h4{ margin:0 0 8px 0; font-size:14px; color:#253157 }
+    .link-list{ display:flex; flex-wrap:wrap; gap:8px }
+    .link-pill{ display:inline-flex; align-items:center; gap:6px; border:1px solid #e2e8f6; background:#f6f9ff; color:#1f3aa2; padding:6px 9px; border-radius:999px; font-size:12px }
+    .link-pill button{ border:none; background:transparent; cursor:pointer; color:#6c7bb0; font-size:14px; line-height:1 }
+    .add-link{ display:flex; gap:6px; margin-top:8px }
+    .add-link input, .add-link select{ flex:1; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-size:13px }
+    .add-link input.hidden{ display:none }
+    .link-pill svg{ width:14px; height:14px }
 
-    /* Right-side bio card (same styling as before, just nested on right) */
-    .body{margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 30px rgba(12,23,52,.06); padding:18px}
-    .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px}
-    .toggle{display:flex; align-items:center; gap:6px; font-size:13px; color:#2e3a62}
-    .dropzone{border:2px dashed #d8e1f7; border-radius:12px; padding:14px; text-align:center; color:#5a6aa0; cursor:pointer}
-    .dropzone.hover{border-color:#9fb2ff; background:#f3f6ff}
-    .hidden{display:none}
-    #bioView{line-height:1.55}
+    /* Bio card */
+    .body{ margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 30px rgba(12,23,52,.06); padding:18px }
+    .toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px }
+    .toggle{ display:flex; align-items:center; gap:6px; font-size:13px; color:#2e3a62 }
+    .dropzone{ border:2px dashed #d8e1f7; border-radius:12px; padding:14px; text-align:center; color:#5a6aa0; cursor:pointer }
+    .dropzone.hover{ border-color:#9fb2ff; background:#f3f6ff }
+    .hidden{ display:none }
+
     /* Polished content styles */
-#bioView{ line-height:1.65; font-size:15px }
-#bioView p{ margin:0 0 .75rem }
-#bioView h1,#bioView h2,#bioView h3{ font-weight:800; line-height:1.2; margin:1.2rem 0 .5rem }
-#bioView h1{ font-size:1.4rem }
-#bioView h2{ font-size:1.25rem }
-#bioView h3{ font-size:1.15rem }
-#bioView ul,#bioView ol{ padding-left:1.2rem; margin:.5rem 0 .75rem }
-#bioView blockquote{
-  border-left:3px solid #dbe6ff; margin:1rem 0; padding:.5rem 0 .5rem .9rem;
-  color:#4c5c83; background:#f7faff; border-radius:8px
-}
-#bioView code{
-  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  font-size:.9em; background:#f5f7ff; padding:.15em .35em; border-radius:6px
-}
-#bioView pre{
-  background:#0b152c; color:#e6edff; padding:.9rem; border-radius:12px; overflow:auto
-}
-#bioView a{ color:#2140b8; text-decoration:underline; text-underline-offset:3px }
-    #bioEditor{width:100%; min-height:220px; border:1px solid var(--line); border-radius:12px; padding:12px; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:14px}
-
-    /* Inquiry dialog */
-    dialog{
-      border:0; padding:0; border-radius:16px; overflow:hidden;
-      width:min(720px, 94vw);
-      box-shadow:0 20px 60px rgba(12,23,52,.20), 0 2px 10px rgba(12,23,52,.08);
+    #bioView{ line-height:1.65; font-size:15px }
+    #bioView p{ margin:0 0 .75rem }
+    #bioView h1,#bioView h2,#bioView h3{ font-weight:800; line-height:1.2; margin:1.2rem 0 .5rem }
+    #bioView h1{ font-size:1.4rem }
+    #bioView h2{ font-size:1.25rem }
+    #bioView h3{ font-size:1.15rem }
+    #bioView ul,#bioView ol{ padding-left:1.2rem; margin:.5rem 0 .75rem }
+    #bioView blockquote{
+      border-left:3px solid #dbe6ff; margin:1rem 0; padding:.5rem 0 .5rem .9rem;
+      color:#4c5c83; background:#f7faff; border-radius:8px
     }
-    dialog::backdrop{ background:rgba(11,21,44,.55) }
-    .dialog-head{ padding:14px 16px; font-weight:800; background:#f7faff; border-bottom:1px solid #e7edf7 }
-    .dialog-body{ padding:16px; background:linear-gradient(180deg,#0b152c 0%, #11224a 50%, #0b152c 100%) }
-    .dialog-foot{ padding:12px 16px; background:#f7faff; border-top:1px solid #e7edf7; display:flex; justify-content:space-between }
-    .dialog-body form{ display:grid; gap:12px }
-    .dialog-body input, .dialog-body textarea{
-      width:100%; padding:12px; border-radius:12px; border:2px solid #0b152c;
-      background:white; color:#0b152c; font:inherit;
+    #bioView code{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      font-size:.9em; background:#f5f7ff; padding:.15em .35em; border-radius:6px
+    }
+    #bioView pre{
+      background:#0b152c; color:#e6edff; padding:.9rem; border-radius:12px; overflow:auto
+    }
+    #bioView a{ color:#2140b8; text-decoration:underline; text-underline-offset:3px }
+
+    /* Images */
+    #bioView img{ display:block; max-width:100%; height:auto; border-radius:12px; border:1px solid var(--line); box-shadow:0 6px 18px rgba(12,23,52,.08); margin:.75rem 0 }
+    #bioView figure{ margin:1rem 0 }
+    #bioView figure img{ margin:.25rem auto }
+    #bioView figcaption{ font-size:12px; color:#4c5c83; text-align:center; margin-top:6px }
+
+    /* Tables */
+    #bioView table{ width:100%; border-collapse:collapse; margin:.85rem 0 }
+    #bioView th, #bioView td{ border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top }
+    #bioView thead th{ background:#f3f6ff; font-weight:800 }
+    #bioView tbody tr:nth-child(even){ background:#fafcff }
+    @media (max-width: 640px){
+      #bioView table{ display:block; overflow-x:auto; white-space:nowrap }
     }
 
-    /* Footer like Home (legal row centered) */
-    footer{border-top:1px solid var(--line); padding:18px 0; color:#6b7897}
-    footer a{color:#2140b8; text-decoration:none; font-weight:700}
-    footer a:hover{text-decoration:underline}
-    .legal{display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; text-align:center}
-    .mini{font-size:12px}
+    #bioEditor{
+      width:100%; min-height:220px; border:1px solid var(--line); border-radius:12px;
+      padding:12px; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:14px
+    }
 
-    @media (max-width: 780px){
-      .head{grid-template-columns:1fr}
-      .photo-wrap{order:-1}
+    /* Footer */
+    footer{ border-top:1px solid var(--line); padding:18px 0; color:#6b7897 }
+    footer a{ color:#2140b8; text-decoration:none; font-weight:700 }
+    footer a:hover{ text-decoration:underline }
+    .legal{ display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; text-align:center }
+    .mini{ font-size:12px }
+
+    @media (max-width:780px){
+      .head{ grid-template-columns:1fr }
+      .photo-wrap{ order:-1 }
     }
   </style>
-<link rel="stylesheet" href="assets/access-mode.css">
-<script defer src="assets/access-mode.js"></script>
 </head>
 <body>
   <header>
@@ -136,7 +138,7 @@
 
   <main class="wrap">
     <div class="head">
-      <!-- LEFT: smaller photo + contacts -->
+      <!-- LEFT: photo + contacts -->
       <div class="photo-wrap">
         <div id="photo" class="photo" title="Drop a photo here or use Upload"></div>
         <div class="photo-actions">
@@ -155,7 +157,6 @@
               <option value="youtube">YouTube</option>
               <option value="github">GitHub</option>
               <option value="x">X</option>
-
               <option value="other">Other</option>
             </select>
             <input id="linkLabel" placeholder="Custom label (for Other)" class="hidden" />
@@ -165,17 +166,16 @@
         </div>
       </div>
 
-      <!-- RIGHT: Header + BIO editor below -->
+      <!-- RIGHT: heading + bio -->
       <div>
         <h1>About The (un)Stable Net's founder</h1>
         <p class="sub"><i>I turn market noise into crisp briefs and ship small, useful AI products for SMEs and teams.</i></p>
         <div class="badges">
           <span class="badge">Markets & Strategy</span>
           <span class="badge">AI Tooling</span>
-          <span class="badge">Event Planning </span>
+          <span class="badge">Event Planning</span>
         </div>
 
-        <!-- BIO (moved here under the name/tags) -->
         <section class="body" id="bioCard">
           <div class="toolbar">
             <label class="toggle"><input type="checkbox" id="renderAsHTML"> Render as HTML (sanitized)</label>
@@ -198,7 +198,6 @@
     </div>
   </main>
 
-  <!-- Footer (same layout style as Home’s legal row) -->
   <footer>
     <div class="wrap legal mini">
       <span>© <span id="y"></span> The (un)Stable Net</span>
@@ -234,7 +233,7 @@
     const $ = (s, r=document) => r.querySelector(s);
     const LS = { photo:'tsn_bio_photo', content:'tsn_bio_content', mode:'tsn_bio_mode', links:'tsn_contacts' };
 
-    // Year in footer
+    // Year
     $('#y').textContent = new Date().getFullYear();
 
     // Photo upload
@@ -285,120 +284,188 @@
     }
     addLinkBtn.addEventListener('click', ()=>{ const type=linkType.value; const url=normalizeURL(type, linkURL.value.trim()); const label=(type==='other')?(linkLabel.value||'').trim():LABELS[type]; if(!url) return; if(type==='other'&&!label) return; const arr=getLinks(); arr.push({type,label,url}); setLinks(arr); linkURL.value=''; linkLabel.value=''; renderLinks(); });
 
-    // BIO (same behavior as before)
+    // BIO
     const bioView = $('#bioView'), bioEditor = $('#bioEditor'), renderAsHTML = $('#renderAsHTML');
     const editBioBtn = $('#editBio'), saveBioBtn = $('#saveBio'), resetBioBtn = $('#resetBio'), bioFile = $('#bioFile'), dropzone = $('#dropzone');
+
     // Decode & normalize
-const decodeEntities = (s)=>{
-  const t = document.createElement('textarea'); t.innerHTML = s; return t.value;
-};
-const normalizeWhitespace = (s)=> s
-  .replace(/\r\n?/g,'\n').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+    const decodeEntities = (s)=>{ const t = document.createElement('textarea'); t.innerHTML = s; return t.value; };
+    const normalizeWhitespace = (s)=> s.replace(/\r\n?/g,'\n').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
 
-// Turn raw/escaped HTML into clean, uniform markup
-const polishHTML = (raw)=>{
-  // If it looks escaped (&lt;h2&gt;…), decode it
-  if (/&lt;|&gt;|&amp;/.test(raw) && !/<[a-z!/]/i.test(raw)) raw = decodeEntities(raw);
+    // Make markup tidy & consistent
+    const polishHTML = (raw)=>{
+      if (/&lt;|&gt;|&amp;/.test(raw) && !/<[a-z!/]/i.test(raw)) raw = decodeEntities(raw);
+      raw = normalizeWhitespace(raw)
+        .replace(/(\s*<br\s*\/?>(\s|\u00A0)*){2,}/gi, '</p><p>')
+        .replace(/<\s*b(\s*[^>]*)?>/gi,'<strong>').replace(/<\s*\/\s*b\s*>/gi,'</strong>')
+        .replace(/<\s*i(\s*[^>]*)?>/gi,'<em>').replace(/<\s*\/\s*i\s*>/gi,'</em>');
+      if (!/<\s*(p|h1|h2|h3|ul|ol|blockquote|pre|div|table|figure|img)\b/i.test(raw)) {
+        raw = raw.split(/\n{2,}/).map(s => `<p>${s.trim()}</p>`).join('');
+      }
+      raw = raw.replace(/<\s*h([4-6])\b[^>]*>/gi, '<h3>').replace(/<\/\s*h([4-6])\s*>/gi, '</h3>');
+      return raw.trim();
+    };
 
-  raw = normalizeWhitespace(raw)
-    // normalize double <br> into paragraph breaks
-    .replace(/(\s*<br\s*\/?>\s*){2,}/gi, '</p><p>')
-    // convert <b>/<i> to semantic
-    .replace(/<\s*b(\s*[^>]*)?>/gi,'<strong>')
-    .replace(/<\s*\/\s*b\s*>/gi,'</strong>')
-    .replace(/<\s*i(\s*[^>]*)?>/gi,'<em>')
-    .replace(/<\s*\/\s*i\s*>/gi,'</em>');
+    // Rebuild-only sanitizer (now with IMG + TABLE support)
+    const sanitizeHTML = (html)=>{
+      const allowed = new Set(['A','P','DIV','H1','H2','H3','EM','STRONG','UL','OL','LI','BR','HR','BLOCKQUOTE','CODE','PRE','SPAN','IMG','FIGURE','FIGCAPTION','TABLE','THEAD','TBODY','TFOOT','TR','TH','TD']);
+      const doc = new DOMParser().parseFromString(html,'text/html');
+      const out = doc.createElement('div');
 
-  // If no block tags are present, wrap paragraphs from blank lines
-  if (!/<\s*(p|h1|h2|h3|ul|ol|blockquote|pre|div)\b/i.test(raw)) {
-    raw = raw.split(/\n{2,}/).map(s => `<p>${s.trim()}</p>`).join('');
-  }
+      const allowURL = (url)=>{
+        if (!url) return false;
+        const v = url.trim();
+        if (/^https:\/\//i.test(v)) return true;                // https only
+        if (/^data:image\//i.test(v)) return true;               // inline images
+        if (/^blob:/i.test(v)) return true;                       // pasted/temporary blobs
+        return false;
+      };
 
-  // Down-level h4..h6 to h3 for consistent look
-  raw = raw.replace(/<\s*h([4-6])\b[^>]*>/gi, '<h3>').replace(/<\/\s*h([4-6])\s*>/gi, '</h3>');
+      const scrub = (src, dst)=>{
+        src.childNodes.forEach(node=>{
+          if (node.nodeType === Node.TEXT_NODE) {
+            dst.appendChild(doc.createTextNode(node.nodeValue));
+            return;
+          }
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const tag = node.tagName;
+            if (!allowed.has(tag)) {
+              if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'IFRAME' || tag === 'OBJECT' || tag === 'EMBED') return; // drop entirely
+              // unwrap other disallowed tags
+              scrub(node, dst);
+              return;
+            }
+            const el = doc.createElement(tag);
 
-  return raw.trim();
-};
+            // Attributes: keep only safe ones
+            if (tag === 'A') {
+              const href = (node.getAttribute('href')||'').trim();
+              if (/^(https?:|mailto:|#)/i.test(href)) {
+                el.setAttribute('href', href);
+                el.setAttribute('rel','noopener noreferrer nofollow');
+                el.setAttribute('target','_blank');
+              }
+            } else if (tag === 'IMG') {
+              const srcAttr = (node.getAttribute('src')||'').trim();
+              const altAttr = (node.getAttribute('alt')||'').slice(0,200);
+              if (allowURL(srcAttr)) {
+                el.setAttribute('src', srcAttr);
+                if (altAttr) el.setAttribute('alt', altAttr);
+                el.setAttribute('loading','lazy');
+                el.setAttribute('decoding','async');
+              } else {
+                // If src not allowed, drop the image entirely by not appending children
+              }
+            }
+            dst.appendChild(el);
 
-// Strict, attribute-aware sanitizer
-const sanitizeHTML = (html)=>{
-  const allowedTags = new Set(['A','P','DIV','H1','H2','H3','EM','STRONG','UL','OL','LI','BR','HR','BLOCKQUOTE','CODE','PRE','SPAN']);
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-
-  const walk = (node)=>{
-    [...node.childNodes].forEach(child=>{
-      if (child.nodeType === 1) {
-        const tag = child.tagName;
-        if (!allowedTags.has(tag)) {
-          // unwrap disallowed tag
-          while (child.firstChild) node.insertBefore(child.firstChild, child);
-          node.removeChild(child);
-          return;
-        }
-        // strip attributes except <a href>
-        [...child.attributes].forEach(attr=>{
-          const name = attr.name.toLowerCase();
-          if (tag === 'A' && name === 'href') {
-            const v = (child.getAttribute('href')||'').trim();
-            if (!/^(https?:|mailto:|#)/i.test(v)) child.removeAttribute('href');
-          } else {
-            child.removeAttribute(name);
+            // Recurse children
+            scrub(node, el);
           }
         });
-        if (tag === 'A') {
-          child.setAttribute('rel','noopener');
-          child.setAttribute('target','_blank');
-        }
-        walk(child);
+      };
+
+      scrub(doc.body, out);
+      return out.innerHTML;
+    };
+
+    const applyBio = ()=>{
+      const mode=(localStorage.getItem(LS.mode)||'text');
+      const raw=localStorage.getItem(LS.content)||'';
+      renderAsHTML.checked=(mode==='html');
+      if(!raw){
+        bioView.classList.add('hidden');
+        dropzone.classList.remove('hidden');
+      } else {
+        dropzone.classList.add('hidden');
+        bioView.classList.remove('hidden');
+        bioView[mode==='html'?'innerHTML':'textContent'] = (mode==='html'? sanitizeHTML(raw) : raw);
+      }
+    };
+
+    editBioBtn.addEventListener('click', ()=>{
+      bioEditor.classList.toggle('hidden');
+      if(!bioEditor.classList.contains('hidden')){
+        bioEditor.value=localStorage.getItem(LS.content)||'';
+        bioEditor.focus();
       }
     });
-  };
-  walk(doc.body);
-  return doc.body.innerHTML;
-};
-    const applyBio = ()=>{
-      const mode=(localStorage.getItem(LS.mode)||'text'); const raw=localStorage.getItem(LS.content)||''; renderAsHTML.checked=(mode==='html');
-      if(!raw){ bioView.classList.add('hidden'); dropzone.classList.remove('hidden'); }
-      else{ dropzone.classList.add('hidden'); bioView.classList.remove('hidden'); bioView[mode==='html'?'innerHTML':'textContent'] = (mode==='html'?sanitizeHTML(raw):raw); }
-    };
-    editBioBtn.addEventListener('click', ()=>{ bioEditor.classList.toggle('hidden'); if(!bioEditor.classList.contains('hidden')){ bioEditor.value=localStorage.getItem(LS.content)||''; bioEditor.focus(); }});
-    saveBioBtn.addEventListener('click', ()=>{ const raw=bioEditor.classList.contains('hidden')?(localStorage.getItem(LS.content)||''):bioEditor.value; localStorage.setItem(LS.content, raw); localStorage.setItem(LS.mode, renderAsHTML.checked?'html':'text'); applyBio(); if(!bioEditor.classList.contains('hidden')) bioEditor.classList.add('hidden'); });
-    resetBioBtn.addEventListener('click', ()=>{ localStorage.removeItem(LS.content); localStorage.setItem(LS.mode, renderAsHTML.checked?'html':'text'); bioEditor.value=''; applyBio(); });
-    bioFile.addEventListener('change', e=>{ const f=e.target.files?.[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ const text=ev.target.result; bioEditor.value=text; const isHTML=/\.html?$/i.test(f.name)||/^\s*<(!doctype|html|head|body|p|h1|div)/i.test(text); renderAsHTML.checked=!!isHTML; bioEditor.classList.remove('hidden'); }; r.readAsText(f); bioFile.value=''; });
+
+    // Save (polish + sanitize in HTML mode)
+    saveBioBtn.addEventListener('click', ()=>{
+      let raw = bioEditor.classList.contains('hidden') ? (localStorage.getItem(LS.content)||'') : bioEditor.value;
+      if (renderAsHTML.checked) raw = sanitizeHTML(polishHTML(raw));
+      localStorage.setItem(LS.content, raw);
+      localStorage.setItem(LS.mode, renderAsHTML.checked ? 'html' : 'text');
+      applyBio();
+      if (!bioEditor.classList.contains('hidden')) bioEditor.classList.add('hidden');
+    });
+
+    // Clear
+    resetBioBtn.addEventListener('click', ()=>{
+      localStorage.removeItem(LS.content);
+      localStorage.setItem(LS.mode, renderAsHTML.checked?'html':'text');
+      bioEditor.value='';
+      applyBio();
+    });
+
+    // Import
+    bioFile.addEventListener('change', e=>{
+      const f=e.target.files?.[0]; if(!f) return;
+      const r=new FileReader();
+      r.onload=ev=>{
+        const text=ev.target.result;
+        bioEditor.value=text;
+        const isHTML=/\.html?$/i.test(f.name)||/^\s*<(!doctype|html|head|body|p|h1|div|figure|img|table)/i.test(text);
+        renderAsHTML.checked=!!isHTML;
+        bioEditor.classList.remove('hidden');
+      };
+      r.readAsText(f);
+      bioFile.value='';
+    });
+
+    // Dropzone
     ['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.classList.add('hover'); }));
     ['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e=>{ e.preventDefault(); dropzone.classList.remove('hover'); }));
-    dropzone.addEventListener('drop', e=>{ const f=e.dataTransfer.files?.[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ const text=ev.target.result; bioEditor.value=text; renderAsHTML.checked= /\.html?$/i.test(f.name) || /^\s*</.test(text); bioEditor.classList.remove('hidden'); dropzone.classList.add('hidden'); }; r.readAsText(f); });
+    dropzone.addEventListener('drop', e=>{
+      const f=e.dataTransfer.files?.[0]; if(!f) return;
+      const r=new FileReader();
+      r.onload=ev=>{
+        const text=ev.target.result;
+        bioEditor.value=text;
+        renderAsHTML.checked= /\.html?$/i.test(f.name) || /^\s*</.test(text);
+        bioEditor.classList.remove('hidden');
+        dropzone.classList.add('hidden');
+      };
+      r.readAsText(f);
+    });
+
+    // Polish button
     const polishBtn = $('#polishBio');
+    polishBtn.addEventListener('click', ()=>{
+      const raw = bioEditor.classList.contains('hidden') ? (localStorage.getItem(LS.content)||'') : bioEditor.value;
+      const polished = sanitizeHTML(polishHTML(raw));
+      renderAsHTML.checked = true;
+      bioEditor.classList.remove('hidden');
+      bioEditor.value = polished;
+      localStorage.setItem(LS.content, polished);
+      localStorage.setItem(LS.mode, 'html');
+      applyBio();
+    });
 
-// Save: if HTML mode, sanitize + polish before storing
-saveBioBtn.addEventListener('click', ()=>{
-  let raw = bioEditor.classList.contains('hidden')
-    ? (localStorage.getItem(LS.content)||'')
-    : bioEditor.value;
-
-  if (renderAsHTML.checked) {
-    raw = sanitizeHTML(polishHTML(raw));
-  }
-  localStorage.setItem(LS.content, raw);
-  localStorage.setItem(LS.mode, renderAsHTML.checked ? 'html' : 'text');
-  applyBio();
-  if (!bioEditor.classList.contains('hidden')) bioEditor.classList.add('hidden');
-});
-
-// One-click “Polish”: sanitize + prettify + preview in HTML mode
-polishBtn.addEventListener('click', ()=>{
-  const raw = bioEditor.classList.contains('hidden')
-    ? (localStorage.getItem(LS.content)||'')
-    : bioEditor.value;
-
-  const polished = sanitizeHTML(polishHTML(raw));
-  renderAsHTML.checked = true;
-  bioEditor.classList.remove('hidden');
-  bioEditor.value = polished;
-  localStorage.setItem(LS.content, polished);
-  localStorage.setItem(LS.mode, 'html');
-  applyBio();
-});
+    // Auto-polish when toggling HTML view
+    renderAsHTML.addEventListener('change', ()=>{
+      let raw = bioEditor.classList.contains('hidden') ? (localStorage.getItem(LS.content)||'') : bioEditor.value;
+      if (renderAsHTML.checked) {
+        raw = sanitizeHTML(polishHTML(raw));
+        if (!bioEditor.classList.contains('hidden')) bioEditor.value = raw;
+        localStorage.setItem(LS.mode, 'html');
+      } else {
+        localStorage.setItem(LS.mode, 'text');
+      }
+      localStorage.setItem(LS.content, raw);
+      applyBio();
+    });
 
     // Inquiry
     const inqDialog = $('#inqDialog'); const openInquiry = $('#openInquiry');
@@ -425,13 +492,13 @@ polishBtn.addEventListener('click', ()=>{
     renderLinks(); applyBio(); ensureEmailHint();
   })();
   </script>
-<script type="module" src="assets/sb-init.js"></script>
-<script type="module" src="assets/dynamic-bio.js"></script>
-<script type="module" src="assets/editor-auth.js"></script>
-<script type="module" src="assets/editor-tray.js"></script>
-<script type="module" src="assets/editor-quiet.js"></script>
-<script type="module" src="assets/editor-unlock.js"></script>
-  
 
+  <!-- Your modules (kept as in your original setup) -->
+  <script type="module" src="assets/sb-init.js"></script>
+  <script type="module" src="assets/dynamic-bio.js"></script>
+  <script type="module" src="assets/editor-auth.js"></script>
+  <script type="module" src="assets/editor-tray.js"></script>
+  <script type="module" src="assets/editor-quiet.js"></script>
+  <script type="module" src="assets/editor-unlock.js"></script>
 </body>
 </html>
