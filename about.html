@@ -288,12 +288,74 @@
     // BIO (same behavior as before)
     const bioView = $('#bioView'), bioEditor = $('#bioEditor'), renderAsHTML = $('#renderAsHTML');
     const editBioBtn = $('#editBio'), saveBioBtn = $('#saveBio'), resetBioBtn = $('#resetBio'), bioFile = $('#bioFile'), dropzone = $('#dropzone');
-    const sanitizeHTML = (html)=>{
-      const allowed = new Set(['A','P','DIV','H1','H2','H3','H4','H5','H6','EM','STRONG','B','I','U','UL','OL','LI','BR','HR','BLOCKQUOTE','CODE','PRE','SPAN']);
-      const doc = new DOMParser().parseFromString(html,'text/html');
-      const walk = (n)=>{ if(n.nodeType===1){ if(!allowed.has(n.tagName)){ n.replaceWith(...n.childNodes); return; } const rm=[]; for(const a of n.attributes){ if(n.tagName==='A'&&a.name.toLowerCase()==='href'){ const ok=/^(https?:|mailto:|#)/i.test(a.value.trim()); if(!ok) rm.push(a.name);} else rm.push(a.name);} rm.forEach(x=>n.removeAttribute(x)); if(n.tagName==='A'){ n.setAttribute('rel','noopener'); n.setAttribute('target','_blank'); } } Array.from(n.childNodes).forEach(walk); };
-      walk(doc.body); return doc.body.innerHTML;
-    };
+    // Decode & normalize
+const decodeEntities = (s)=>{
+  const t = document.createElement('textarea'); t.innerHTML = s; return t.value;
+};
+const normalizeWhitespace = (s)=> s
+  .replace(/\r\n?/g,'\n').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+
+// Turn raw/escaped HTML into clean, uniform markup
+const polishHTML = (raw)=>{
+  // If it looks escaped (&lt;h2&gt;…), decode it
+  if (/&lt;|&gt;|&amp;/.test(raw) && !/<[a-z!/]/i.test(raw)) raw = decodeEntities(raw);
+
+  raw = normalizeWhitespace(raw)
+    // normalize double <br> into paragraph breaks
+    .replace(/(\s*<br\s*\/?>\s*){2,}/gi, '</p><p>')
+    // convert <b>/<i> to semantic
+    .replace(/<\s*b(\s*[^>]*)?>/gi,'<strong>')
+    .replace(/<\s*\/\s*b\s*>/gi,'</strong>')
+    .replace(/<\s*i(\s*[^>]*)?>/gi,'<em>')
+    .replace(/<\s*\/\s*i\s*>/gi,'</em>');
+
+  // If no block tags are present, wrap paragraphs from blank lines
+  if (!/<\s*(p|h1|h2|h3|ul|ol|blockquote|pre|div)\b/i.test(raw)) {
+    raw = raw.split(/\n{2,}/).map(s => `<p>${s.trim()}</p>`).join('');
+  }
+
+  // Down-level h4..h6 to h3 for consistent look
+  raw = raw.replace(/<\s*h([4-6])\b[^>]*>/gi, '<h3>').replace(/<\/\s*h([4-6])\s*>/gi, '</h3>');
+
+  return raw.trim();
+};
+
+// Strict, attribute-aware sanitizer
+const sanitizeHTML = (html)=>{
+  const allowedTags = new Set(['A','P','DIV','H1','H2','H3','EM','STRONG','UL','OL','LI','BR','HR','BLOCKQUOTE','CODE','PRE','SPAN']);
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+
+  const walk = (node)=>{
+    [...node.childNodes].forEach(child=>{
+      if (child.nodeType === 1) {
+        const tag = child.tagName;
+        if (!allowedTags.has(tag)) {
+          // unwrap disallowed tag
+          while (child.firstChild) node.insertBefore(child.firstChild, child);
+          node.removeChild(child);
+          return;
+        }
+        // strip attributes except <a href>
+        [...child.attributes].forEach(attr=>{
+          const name = attr.name.toLowerCase();
+          if (tag === 'A' && name === 'href') {
+            const v = (child.getAttribute('href')||'').trim();
+            if (!/^(https?:|mailto:|#)/i.test(v)) child.removeAttribute('href');
+          } else {
+            child.removeAttribute(name);
+          }
+        });
+        if (tag === 'A') {
+          child.setAttribute('rel','noopener');
+          child.setAttribute('target','_blank');
+        }
+        walk(child);
+      }
+    });
+  };
+  walk(doc.body);
+  return doc.body.innerHTML;
+};
     const applyBio = ()=>{
       const mode=(localStorage.getItem(LS.mode)||'text'); const raw=localStorage.getItem(LS.content)||''; renderAsHTML.checked=(mode==='html');
       if(!raw){ bioView.classList.add('hidden'); dropzone.classList.remove('hidden'); }
