@@ -140,9 +140,9 @@
       </div>
 
       <div class="tabs" role="tablist">
-        <button id="tabText" class="active" type="button">Text</button>
-        <button id="tabHtml" type="button">HTML</button>
-      </div>
+  <button id="tabText" class="active" type="button" data-view-allowed>Text</button>
+  <button id="tabHtml" type="button" data-view-allowed>HTML</button>
+</div>
       <div id="paneText" role="tabpanel">
         <div class="field"><label for="aText">Text content</label><textarea id="aText" rows="10" placeholder="Write your article as plain text. Use blank lines between paragraphs."></textarea></div>
       </div>
@@ -297,6 +297,35 @@
   <script type="module" src="assets/sb-init.js"></script>
 <script type="module" src="assets/editor-auth.js"></script>
 <script type="module" src="assets/editor-tray.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const textBtn  = document.getElementById('tabText');
+  const htmlBtn  = document.getElementById('tabHtml');
+  const paneText = document.getElementById('paneText');
+  const paneHtml = document.getElementById('paneHtml');
 
+  function show(which){
+    const isHtml = (which === 'html');
+    textBtn?.classList.toggle('active', !isHtml);
+    htmlBtn?.classList.toggle('active',  isHtml);
+    if (paneText) paneText.hidden =  isHtml;
+    if (paneHtml) paneHtml.hidden = !isHtml;
+  }
+
+  // Ensure they aren't left disabled by viewer locks
+  [textBtn, htmlBtn].forEach(b => b && b.removeAttribute('disabled'));
+
+  const safe = (fn) => (e) => {
+    // defeat any global capture listeners that might block clicks
+    e.stopImmediatePropagation?.();
+    e.stopPropagation?.();
+    e.preventDefault();
+    fn();
+  };
+
+  textBtn?.addEventListener('click', safe(() => show('text')), {capture:true});
+  htmlBtn?.addEventListener('click', safe(() => show('html')), {capture:true});
+});
+</script>
 </body>
 </html>
