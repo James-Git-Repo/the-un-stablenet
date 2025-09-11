@@ -1,464 +1,602 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="assets/access-mode.css">
-<script defer src="assets/access-mode.js"></script>
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The (un)Stable Net — Home</title>
-  <meta name="description" content="The (un)Stable Net — projects, research, and a personal bio."/>
+  <title>European Market Movers — Weekly</title>
+  <meta name="description" content="European Market Movers — a PM-style weekly wrap of European markets: what moved, why it mattered, what’s next."/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    :root{
-      --page:#ffffff; --ink:#0b152c; --line:#e7edf7; --card:#ffffff;
-      --primary:#1f4aff; --accent:#00b7ff; --chip:#eef4ff; --maxw:1120px;
-      --shadow:0 10px 30px rgba(12,23,52,.08);
-    }
+    :root{ --page:#ffffff; --ink:#0b152c; --muted:#4c5c83; --line:#e7edf7; --card:#ffffff; --primary:#1f4aff; --accent:#00b7ff; --chip:#eef4ff; --maxw:1120px; --shadow:0 10px 30px rgba(12,23,52,.08) }
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--page)}
     header{position:sticky; top:0; z-index:40; backdrop-filter:saturate(140%) blur(8px); background:rgba(255,255,255,.9); border-bottom:1px solid var(--line)}
     .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
     .nav{height:72px; display:flex; align-items:center; justify-content:space-between}
     .brand{display:flex; align-items:center; gap:12px}
     .mark{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; color:#fff; background:conic-gradient(from 210deg, var(--primary), var(--accent)); box-shadow:var(--shadow)}
-    nav{flex:1; margin-left:24px}
-    nav ul{display:flex; list-style:none; margin:0; padding:0; justify-content:space-evenly; gap:0}
-    nav a{color:#143166; font-weight:800; padding:10px 14px; border-radius:12px; text-decoration:none; border:1px solid #dbe6ff; background:#ffffff; box-shadow:0 1px 0 rgba(12,23,52,.04)}
-    nav a:hover{background:#f4f7ff; transform:translateY(-1px)}
-
-    .hero{position:relative; overflow:hidden; border-bottom:1px solid var(--line)}
-    canvas#net{position:absolute; inset:0; width:100%; height:100%; display:block; background:linear-gradient(180deg,#f7faff 0%,#ffffff 70%)}
-    .hero .inner{position:relative; max-width:var(--maxw); margin:0 auto; padding:56px 20px 32px; color:#263659}
-    .title{font-size: clamp(34px, 5vw, 60px); line-height:1.05; margin:8px 0 8px; font-weight:800}
-    .subtitle{margin:0; color:#4c5c83; font-weight:600}
-    .chips{margin:16px 0 0; display:flex; gap:8px; flex-wrap:wrap}
-    .chip{background:var(--chip); border:1px solid #dbe6ff; color:#2140b8; padding:6px 12px; border-radius:999px; font-weight:800; font-size:12px}
-    .cta{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0 0}
-    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; font-weight:800; border:1px solid #dbe6ff; color:#143166; background:#fff; cursor:pointer}
-    .btn.primary{background:linear-gradient(135deg, var(--primary), var(--accent)); color:#ffffff; border-color:transparent}
-    .btn.small{padding:8px 12px; font-weight:700}
-
-    .newsletter{margin:22px 0 10px}
-    .nl-card{background:#f3f7ff; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:16px 16px; display:grid; grid-template-columns: 1.2fr .8fr; gap:12px}
-    .nl-input{padding:12px 12px; border-radius:10px; border:1px solid #cfe0ff; min-width:260px; font:inherit}
-
-    section.projects{padding:26px 0}
-    .section-head{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  margin-bottom:12px; /* added spacing under the title */
-}
-    .section-title{font-weight:800}
-    .grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:16px}
-    .card{position:relative; background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; transition:transform .2s ease}
-    .card:hover{transform:translateY(-2px)}
-    .cover{width:100%; aspect-ratio:16/9; background:#1b2550; background-size:cover; background-position:center; border-bottom:1px solid var(--line); cursor:pointer}
-    .project-title { font-weight: 800; }
-    
-    .inner{padding:16px}
-    .tag{display:inline-flex; padding:6px 10px; border-radius:999px; background:#eef4ff; border:1px solid #dbe6ff; color:#2140b8; font-weight:800; font-size:12px}
-    .ghost{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:10px; border:1px solid #dbe6ff; background:#fff; color:#18306b; font-weight:700}
-
-    /* Inquiry dialog (kept; no open button present) */
-    dialog{
-      border:0; padding:0; border-radius:16px; overflow:hidden;
-      width:min(720px, 94vw);
-      box-shadow:0 20px 60px rgba(12,23,52,.20), 0 2px 10px rgba(12,23,52,.08);
+    nav ul{display:flex; list-style:none; gap:12px; margin:0; padding:0}
+    .pill-btn{
+      appearance:none; display:inline-flex; align-items:center; gap:6px;
+      text-decoration:none; background:#fff; color:#1f3aa2;
+      border:1.5px solid #dbe6ff; border-radius:14px;
+      padding:12px 18px; font-weight:800; font-size:16px; line-height:1;
+      transition:background .15s ease, box-shadow .15s ease;
+      box-shadow:0 1px 0 rgba(12,23,52,.02);
     }
-    dialog::backdrop{ background:rgba(11,21,44,.55) }
-    .dialog-head{ padding:14px 16px; font-weight:800; background:#f7faff; border-bottom:1px solid #e7edf7 }
-    .dialog-body{ padding:16px; background:linear-gradient(180deg,#0b152c 0%, #11224a 50%, #0b152c 100%) }
-    .dialog-foot{ padding:12px 16px; background:#f7faff; border-top:1px solid #e7edf7; display:flex; justify-content:space-between }
-    .dialog-body form{ display:grid; gap:12px }
-    .dialog-body input, .dialog-body textarea{
-      width:100%; padding:12px; border-radius:12px; border:2px solid #0b152c;
-      background:white; color:#0b152c; font:inherit;
+    .pill-btn:hover{ background:#f4f7ff; }
+    .pill-btn.primary{
+      background:linear-gradient(180deg,#2954ff,#1f4aff); color:#fff; border-color:#2140b8;
+      box-shadow:0 6px 18px rgba(31,74,255,.20), inset 0 1px 0 rgba(255,255,255,.25);
     }
+    .pill-row{display:flex; align-items:center; gap:12px}
 
-    /* inline editing highlight (unused now; safe to keep) */
-    [contenteditable="true"]{
-      outline:1.5px dashed rgba(16,185,129,.7);
-      outline-offset:3px; border-radius:8px;
+    /* Hero */
+    .hero{border-bottom:1px solid var(--line)}
+    .hero.financial{
+      position:relative;
+      background-image:linear-gradient(180deg, rgba(31,74,255,0.12), rgba(0,183,255,0.08)), var(--hero, linear-gradient(180deg,#f7faff 0%,#ffffff 60%));
+      background-size:cover; background-position:center
     }
-/* Footer About block */
-.about-block{
-  margin-left:auto;                 /* keep it on the right side */
-  max-width:520px;                  /* a bit wider */
-  padding-left:24px;                /* push content slightly right */
-}
-.about-label{
-  display:block;
-  font-weight:800;
-  color:#526189;
-  margin-bottom:4px;
-  text-align:right;                 /* label aligned to the right */
-}
-.about-text{
-  font-size:14px;
-  line-height:1.55;
-  margin:0;
-  text-align:justify;               /* justify lines */
-  text-justify:inter-word;
-  text-align-last:right;            /* last line hugs the right edge */
-}
-@media (max-width:780px){
-  .about-block{ max-width:100%; padding-left:0; }
-  .about-label{ text-align:center; }
-  .about-text{ text-align:justify; text-align-last:auto; }
-}
+    .hero.financial::before{
+      content:""; position:absolute; inset:0;
+      background-image:
+        linear-gradient(to right, rgba(12,23,52,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(12,23,52,0.06) 1px, transparent 1px);
+      background-size:48px 48px; pointer-events:none
+    }
+    .hero.financial::after{
+      content:""; position:absolute; top:-30%; right:-20%; width:60%; height:160%;
+      background:radial-gradient(closest-side, rgba(31,74,255,0.18), transparent 70%);
+      pointer-events:none
+    }
+    .hero .inner{position:relative; max-width:var(--maxw); margin:0 auto; padding:40px 20px}
+    .cover-title{font-size: clamp(30px, 3.8vw, 48px); line-height:1.08; margin:6px 0; color:#0b152c}
 
+    /* Editor + article + comments */
+    .editor{background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:14px; margin:18px 0}
+    .field{display:flex; flex-direction:column; gap:6px; margin-bottom:10px}
+    .field label{font-size:12px; font-weight:700; color:#3a4a74}
+    .field input,.field textarea,.field select{font:inherit; padding:10px 12px; border:1px solid #cad7f5; border-radius:10px}
+    .two{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .tabs{display:flex; gap:8px; margin:6px 0}
+    .tabs button{padding:6px 10px; border:1px solid #cad7f5; background:#fff; border-radius:999px; font-weight:700; cursor:pointer}
+    .tabs button.active{background:#e9f1ff}
+    .article{margin:0 0 40px}
+    .post-head h1{font-size: clamp(28px, 4vw, 46px); line-height:1.08; margin:6px 0}
+    .post-head .subtitle{color:var(--muted); margin:0 0 8px 0}
+    .meta{display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:13px}
+    .chip{background:var(--chip); border:1px solid #dbe6ff; color:#2140b8; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px}
+
+    /* Prose defaults */
+    .prose p{margin:1em 0; line-height:1.68}
+    .prose h2{margin-top:1.4em; font-size:1.25rem}
+    .prose img{max-width:100%; border-radius:12px; display:block; margin:12px 0}
+    .prose figure{margin:14px 0}
+    .prose figcaption{font-size:12px; color:#5d6a8e; text-align:center}
+    .prose blockquote{border-left:4px solid var(--line); padding:6px 12px; color:#3a4a74; background:#f7faff; border-radius:8px}
+    .prose ul, .prose ol { margin: 1em 0; padding-left: 1.2em; }
+    .prose ul { list-style: disc; }
+    .prose ol { list-style: decimal; }
+    .prose li { margin: .25em 0; }
+    .prose table { width: 100%; border-collapse: collapse; margin: 1em 0; }
+    .prose th, .prose td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    .prose thead th { background: #f7faff; }
+    .prose pre, .prose code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .prose pre { background: #f7faff; border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow:auto; }
+
+    .comments{border-top:1px solid var(--line); padding-top:18px; margin-top:24px}
+    .comment-item{padding:12px 0; border-bottom:1px solid var(--line)}
+    .comment-item:last-child{border-bottom:0}
+    .comment-author{font-weight:700}
+    .comment-meta{font-size:12px; color:#6b7897}
+    .comment-text{margin:8px 0 0 0; white-space:pre-wrap}
+
+    /* Cards (feed) */
+    .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px; }
+    .card{
+      display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
+      border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
+    .card .thumb{ aspect-ratio: 16/9; background:#eef4ff; object-fit:cover; width:100%; }
+    .card .body{ padding:12px; }
+    .card h4{ margin:0 0 4px 0; font-size:16px; line-height:1.25; font-weight:800; color:#0b152c }
+    .card .deck{ margin:0 0 8px 0; color:#4c5c83; font-size:13px }
+    .card .meta{ display:flex; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:12px }
+
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    .hide{display:none}
+    body.empty #article{display:none}
     footer{border-top:1px solid var(--line); padding:18px 0; color:#6b7897}
-    footer a{color:#2140b8; text-decoration:none; font-weight:700}
-    footer a:hover{text-decoration:underline}
-    .ft-wrap{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap}
-    .ft-input{padding:10px 12px; border-radius:10px; border:1px solid #cfe0ff; font:inherit; min-width:140px}
-    .ft-btn{padding:10px 14px; border-radius:10px; border:1px solid #dbe6ff; background:#fff; font-weight:800; cursor:pointer}
-    footer .ft-btn{color:#0c2a9c}
-    .fab{position:fixed; right:16px; bottom:16px; z-index:60; box-shadow:var(--shadow)}
-    .customize{position:fixed; right:16px; bottom:76px; z-index:60; width:min(420px,92vw); background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:14px}
-    .customize h3{margin:0 0 8px}
-    .row{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0}
-    .mini{font-size:12px; color:#526189}
-    .hidden{display:none}
-
-    @media (max-width: 780px){
-      .grid{grid-template-columns:1fr}
-      nav{flex:unset; margin-left:0}
-      nav ul{justify-content:center; gap:12px; flex-wrap:wrap}
-      .nl-card{grid-template-columns:1fr}
-    }
+    @media (max-width: 780px){ .two{grid-template-columns:1fr} }
   </style>
-<link rel="stylesheet" href="assets/access-mode.css">
-<script defer src="assets/access-mode.js"></script>
+
+  <!-- viewer lock (keep look; whitelist our buttons) -->
+  <link rel="stylesheet" href="assets/access-mode.css">
+  <script defer src="assets/access-mode.js"></script>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand"><div class="mark" aria-hidden="true">TSN</div><h1><b>The (un)Stable Net</b></h1></div>
+      <div class="brand"><div class="mark" aria-hidden="true">TSN</div><h1 class="text-lg font-extrabold">The (un)Stable Net</h1></div>
       <nav aria-label="Primary">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="newsletter.html">Newsletter</a></li>
-          <li><a href="bio.html">About me</a></li>
+        <ul class="pill-row">
+          <li><a class="pill-btn" href="index.html">Home</a></li>
+          <li><button id="openContrib" class="pill-btn primary" type="button" data-view-allowed>Contribute</button></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <canvas id="net" aria-hidden="true"></canvas>
+  <!-- Hero -->
+  <section class="hero financial" aria-label="Section cover">
     <div class="inner">
-      <h2 class="title">The (un)Stable Net</h2>
-      <p class="subtitle">A blog about Business, Tech, AI & Content</p>
-      <div class="chips"><span class="chip">Business</span><span class="chip">Tech</span><span class="chip">AI</span><span class="chip">Content</span></div>
-      <div class="newsletter" id="subscribe">
-        <div class="nl-card">
-          <div><strong>European Market Movers</strong><br/>A weekly, PM-style wrap of European markets: what moved, why it mattered, and what’s next.</div>
-          <form class="nl-form" onsubmit="event.preventDefault(); alert('Thanks! I\'ll keep you posted.');" data-view-allowed>
-            <input id="email" type="email" required class="nl-input" placeholder="info@example.com" / data-view-allowed>
-            <button class="btn primary" type="submit" data-view-allowed>Subscribe</button data-view-allowed>
-          </form>
-        </div>
-      </div>
+      <h2 class="cover-title">European Market Movers</h2>
+      <p class="text-slate-600 max-w-2xl"><i>A weekly wrap of European markets: what moved, why it mattered and what’s next.</i></p>
     </div>
   </section>
 
   <main class="wrap">
-    <section id="projects" class="projects" aria-labelledby="projects-title">
-      <div class="section-head">
-        <h2 id="projects-title" class="section-title">Projects</h2>
-        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
-        </div>
+    <!-- Uploader -->
+    <section id="upload" class="editor" aria-labelledby="uploader-title">
+      <div class="flex items-center justify-between mb-2">
+        <strong id="uploader-title">Upload article</strong>
+        <span class="text-xs text-slate-500" id="draftStatus">Draft</span>
       </div>
-      <div class="grid" id="projectGrid"></div>
+
+      <div class="field"><label for="aTitle">Title</label><input id="aTitle" placeholder="Week NN — headline"/></div>
+      <div class="field"><label for="aSubtitle">Subtitle / Deck</label><textarea id="aSubtitle" rows="2" placeholder="Short deck as in the example"></textarea></div>
+      <div class="two">
+        <div class="field"><label for="aAuthor">Author</label><input id="aAuthor" placeholder="Your name" value="Jacopo Berton"/></div>
+        <div class="field"><label for="aDate">Date</label><input id="aDate" type="date"/></div>
+      </div>
+
+      <div class="two">
+        <div class="field"><label for="aTags">Tags (comma-separated)</label><input id="aTags" placeholder="Equities, Rates, FX"/></div>
+        <div class="field"><label for="aExcerpt">Excerpt (optional)</label><input id="aExcerpt" placeholder="Short summary used in previews"/></div>
+      </div>
+
+      <div class="two">
+        <div class="field"><label for="aCoverUrl">Cover image URL</label><input id="aCoverUrl" placeholder="https://... (optional)"/></div>
+        <div class="field"><label for="aCoverFile">Or upload cover file</label><input id="aCoverFile" type="file" accept="image/*"/></div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button id="tabText" class="active" type="button" data-view-allowed>Text</button>
+        <button id="tabHtml" type="button" data-view-allowed>HTML</button>
+      </div>
+
+      <div id="paneText" role="tabpanel">
+        <div class="field"><label for="aText">Text content</label><textarea id="aText" rows="10" placeholder="Write your article as plain text. Use blank lines between paragraphs."></textarea></div>
+      </div>
+      <div id="paneHtml" role="tabpanel" hidden>
+        <div class="field"><label for="aHtml">HTML content</label><textarea id="aHtml" rows="12" placeholder="Paste full HTML or snippets (e.g. &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, callouts)"></textarea></div>
+      </div>
+
+      <div class="two">
+        <button id="publishBtn" class="pill-btn primary" type="button" data-view-allowed>Publish</button>
+        <button id="clearBtn"   class="pill-btn"          type="button" data-view-allowed>Clear form</button>
+      </div>
     </section>
 
-    <!-- About me section removed as requested -->
-    <!-- About controls removed as requested -->
+    <!-- FEED -->
+    <section id="feed" aria-label="Post list" class="mt-6">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-lg font-extrabold">All posts</h3>
+        <span id="feedCount" class="text-xs text-slate-500">0</span>
+      </div>
+      <div id="feedGrid" class="cards"></div>
+      <p id="emptyFeed" class="text-slate-500 text-sm mt-2">No posts yet. Publish your first above.</p>
+    </section>
+
+    <!-- Toolbar for detail view -->
+    <div id="articleToolbar" class="mb-2" hidden>
+      <button id="backToFeed" class="pill-btn" type="button" data-view-allowed>← Back to posts</button>
+    </div>
+
+    <!-- Article -->
+    <section id="article" class="article" aria-labelledby="postTitle" hidden>
+      <article class="post">
+        <header class="post-head">
+          <h1 id="postTitle"></h1>
+          <p id="postSubtitle" class="subtitle"></p>
+          <div class="meta">
+            <span id="postAuthor"></span>
+            <span>•</span>
+            <time id="postDate" datetime=""></time>
+            <span>•</span>
+            <span id="postReadTime"></span>
+            <div id="postTags" class="flex gap-2" style="margin-left:8px"></div>
+          </div>
+        </header>
+        <div id="postBody" class="prose"></div>
+      </article>
+
+      <!-- Comments (visible & usable in Viewer mode) -->
+      <section id="comments" class="comments" aria-labelledby="commentsTitle" data-view-allowed hidden>
+        <div class="flex items-center justify-between">
+          <h3 id="commentsTitle" class="text-lg font-extrabold">Comments</h3>
+          <span id="commentsCount" class="text-xs text-slate-500">0</span>
+        </div>
+        <div id="commentsList" class="mt-2"></div>
+        <form id="commentForm" class="editor mt-3" aria-label="Add a comment" data-view-allowed>
+          <div class="two">
+            <div class="field"><label for="cName">Name</label><input id="cName" autocomplete="name" placeholder="Your name" data-view-allowed/></div>
+            <div class="field"><label for="cEmail">Email (not shown)</label><input id="cEmail" type="email" autocomplete="email" placeholder="you@example.com" data-view-allowed/></div>
+          </div>
+          <div class="field"><label for="cText">Comment</label><textarea id="cText" rows="4" placeholder="Be respectful. No HTML allowed." data-view-allowed></textarea></div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-slate-500">Stored locally for this article.</span>
+            <button class="pill-btn primary" type="submit" data-view-allowed>Post comment</button>
+          </div>
+        </form>
+      </section>
+    </section>
   </main>
 
-  <!-- Bio-style Inquiry Dialog (kept, but no open button in footer) -->
-  <dialog id="inqDialog" data-to-email="jacopoberton98@gmail.com">
-    <div class="dialog-head">Question / Collaboration Inquiry</div>
-    <div class="dialog-body">
-      <form id="inqForm">
-        <input name="name" placeholder="Your name" required />
-        <input name="email" type="email" placeholder="Your email" required />
-        <input name="topic" placeholder="Topic (optional)" />
-        <textarea name="message" rows="6" placeholder="Your message" required></textarea>
-        <small style="color:#c7d2fe">
-          On submit, your mail app opens with a pre-filled email to the contact address.
-        </small>
-      </form>
-    </div>
-    <div class="dialog-foot">
-      <button class="ft-btn" id="closeInq" type="button">Close</button>
-      <button class="ft-btn" id="sendInq" type="button">Send</button>
-    </div>
-  </dialog>
-
   <footer>
-    <div class="wrap ft-wrap">
-      <!-- Left: social icons -->
-      <div>
-        <a href="https://www.linkedin.com/in/jacopo-berton-16a69424b/"
-           target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-           style="display:inline-flex;align-items:center;justify-content:center;
-                  width:28px;height:28px;margin-right:10px;color:#2140b8">
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-            <path fill="currentColor"
-              d="M20.447 20.452h-3.554V14.75c0-1.357-.027-3.099-1.889-3.099-1.89 0-2.178 1.477-2.178 3.002v5.799H9.27V9h3.414v1.561h.047c.476-.9 1.637-1.849 3.37-1.849 3.601 0 4.266 2.37 4.266 5.455v6.285zM5.337 7.433a2.062 2.062 0 11.001-4.124 2.062 2.062 0 01-.001 4.124zM6.918 20.452H3.654V9h3.264v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>
-        </a>
-        <a href="mailto:jacopoberton98@gmail.com" aria-label="Email" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-right:10px">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M1.5 5.75A2.75 2.75 0 0 1 4.25 3h15.5A2.75 2.75 0 0 1 22.5 5.75v12.5A2.75 2.75 0 0 1 19.75 21H4.25A2.75 2.75 0 0 1 1.5 18.25V5.75zm2.75-.25a.25.25 0 0 0-.25.25v.17l7.5 5.01 7.5-5.01v-.17a.25.25 0 0 0-.25-.25H4.25zm15.5 2.64-7.14 4.77a.75.75 0 0 1-.82 0L3.65 8.14v10.11c0 .14.11.25.25.25h15.85c.14 0 .25-.11.25-.25V8.14z"/></svg>
-        </a>
-        <a href="https://github.com/James-Git-Repo" target="_blank" rel="noopener" aria-label="GitHub" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-right:10px">
-          <img alt="" src="https://cdn.simpleicons.org/github/2140b8" width="22" height="22" loading="lazy">
-        </a>
-        <a href="https://x.com/your-handle" target="_blank" rel="noopener" aria-label="X" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px">
-          <img alt="" src="https://cdn.simpleicons.org/x/2140b8" width="22" height="22" loading="lazy">
-        </a>
-      </div>
-
-      <div class="about-block">
-  <span class="about-label">About</span>
-  <p class="about-text">I'm a Swiss–Italian analyst & builder focused on fintech & AI. With a curious and delivery-oriented mindset, I'm always down for a new challenge.</p>
-</div>
-
-
-    <!-- Centered © + legal links -->
     <div class="wrap mini" style="margin-top:6px; display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; text-align:center;">
       <span>© 2025 The (un)Stable Net</span>
       <span aria-hidden="true">•</span>
-      <a
-        href="/assets/legal/privacy-policy.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="hover:underline underline-offset-4"
-      >Privacy Policy (PDF)</a>
+      <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline underline-offset-4">Privacy Policy (PDF)</a>
       <span aria-hidden="true" class="hidden sm:inline">•</span>
-      <a
-        href="/assets/legal/terms.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="hover:underline underline-offset-4"
-      >Terms &amp; Conditions (PDF)</a>
+      <a href="assets/legal/terms.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline underline-offset-4">Terms &amp; Conditions (PDF)</a>
     </div>
   </footer>
 
-  <button id="openCustomizer" class="btn fab">✎ Customize</button>
-  <div id="customizePanel" class="customize hidden" role="dialog" aria-modal="true" aria-labelledby="czTitle">
-    <h3 id="czTitle">Quick Customize</h3>
-    <p class="mini">Set a bio photo and project covers (URL or upload). Saved in your browser.</p>
+  <!-- Contribute dialog -->
+  <dialog id="contribDialog" class="contrib" data-view-allowed>
+    <form method="dialog" id="contribFormContainer" data-view-allowed>
+      <div class="dlg-head">
+        <strong>Contribute to EMM</strong>
+        <button class="close-x" id="closeContrib" value="cancel" aria-label="Close" data-view-allowed>Close</button>
+      </div>
+      <div class="dlg-body">
+        <div class="two">
+          <div class="field"><label for="ctName">Name</label><input id="ctName" required placeholder="Your name" data-view-allowed/></div>
+          <div class="field"><label for="ctEmail">Email</label><input id="ctEmail" type="email" required placeholder="you@example.com" data-view-allowed/></div>
+        </div>
+        <div class="two">
+          <div class="field">
+            <label for="ctType">Contribution type</label>
+            <select id="ctType" data-view-allowed>
+              <option value="tip">Market tip / lead</option>
+              <option value="chart">Chart / data point</option>
+              <option value="correction">Correction / feedback</option>
+              <option value="guest">Guest paragraph / op-ed</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ctFile">Attachment (optional)</label>
+            <input id="ctFile" type="file" data-view-allowed />
+          </div>
+        </div>
+        <div class="field"><label for="ctMsg">Message</label><textarea id="ctMsg" rows="5" required placeholder="What would you like to share?" data-view-allowed></textarea></div>
+        <label class="text-xs text-slate-600 flex items-center gap-2">
+          <input id="ctConsent" type="checkbox" required data-view-allowed />
+          I consent to being contacted about this submission.
+        </label>
+      </div>
+      <div class="dlg-actions">
+        <button class="pill-btn" value="cancel" type="button" id="cancelContrib" data-view-allowed>Cancel</button>
+        <button class="pill-btn primary" id="submitContrib" type="button" data-view-allowed>Send</button>
+      </div>
+    </form>
+  </dialog>
 
-    <div class="row">
-      <strong>Bio photo</strong>
-      <input class="ft-input" type="url" id="bioUrl" placeholder="https://…/photo.jpg" aria-label="Bio photo URL">
-      <input class="ft-input" type="file" id="bioFile" accept="image/*" aria-label="Upload bio photo">
-    </div>
+  <!-- Local state (optional) -->
+  <script id="emm-state" type="application/json">{"posts":[]}</script>
 
-    <div id="projectInputs"></div>
-
-    <div class="row" style="justify-content:flex-end">
-      <button id="czReset" class="ft-btn" type="button">Reset</button>
-      <button id="czSave" class="ft-btn" type="button">Save</button>
-      <button id="czClose" class="ft-btn" type="button">Close</button>
-    </div>
-  </div>
-
+  <!-- Contribute dialog wiring -->
   <script>
-    (function(){const s=document.createElement('style');s.textContent=`.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}`;document.head.appendChild(s)})();
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('openContrib');
+      const dlg = document.getElementById('contribDialog');
+      const closeBtn = document.getElementById('closeContrib');
+      const cancelBtn = document.getElementById('cancelContrib');
 
-    (function(){const c=document.getElementById('net');if(!c)return;const x=c.getContext('2d');const d=Math.max(1,Math.min(2,window.devicePixelRatio||1));let w,h,p=[];const N=72;const R=matchMedia('(prefers-reduced-motion: reduce)').matches;function r(a,b){return Math.random()*(b-a)+a}function size(){w=c.clientWidth;h=c.clientHeight;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0)}function reset(){p=Array.from({length:N},()=>({x:r(0,w),y:r(0,h),vx:r(-.3,.3),vy:r(-.2,.2)}))}function step(){x.clearRect(0,0,w,h);const g=x.createLinearGradient(0,0,w,h);g.addColorStop(0,'rgba(31,74,255,0.10)');g.addColorStop(1,'rgba(0,183,255,0.08)');x.fillStyle=g;x.fillRect(0,0,w,h);for(let i=0;i<p.length;i++){const a=p[i];a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>w)a.vx*=-1;if(a.y<0||a.y>h)a.vy*=-1;x.beginPath();x.arc(a.x,a.y,1.6,0,Math.PI*2);x.fillStyle='rgba(33,64,184,0.9)';x.fill();for(let j=i+1;j<p.length;j++){const b=p[j],dx=a.x-b.x,dy=a.y-b.y,dst=Math.hypot(dx,dy);if(dst<120){x.strokeStyle=`rgba(100,150,255,${0.14*(1-dst/120)})`;x.lineWidth=1;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke()}}}if(!R)requestAnimationFrame(step)}size();reset();step();addEventListener('resize',size);if(R)step()})();
-
-    const API_PROJECTS = 'api/projects.json';
-
-    const DEFAULTS = {
-  "projects": [
-    { "id":"msb",  "title":"Million Slots Billboard", "tag":"Platform",  "blurb":"A permanent AI video mosaic with 1,000,000 micro-slots. Claim space and publish.", "href":"msb.html",        "cover":"" },
-    { "id":"emm",  "title":"European Market Movers",  "tag":"Newsletter", "blurb":"Weekly, PM-style wrap of European markets.",                                   "href":"newsletter.html", "cover":"" },
-    { "id":"coming","title":"New projects coming soon…","tag":"Coming up","blurb":"Stay tuned","href":"project-new.html","cover":"" }
-  ]
-}
-
-
-
-const grid = document.getElementById('projectGrid');
-let DATA = DEFAULTS;
-
-function genCover(title, tag){
-  const svg=`<?xml version="1.0"?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='675'>
-  <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='#1f4aff'/><stop offset='100%' stop-color='#00b7ff'/></linearGradient></defs>
-  <rect width='1200' height='675' fill='#0b1226'/><rect width='1200' height='675' fill='url(#g)' opacity='0.18'/>
-  <text x='40' y='80' fill='#dbe5ff' font-family='Inter,Arial' font-weight='700' font-size='42'>${(title||'Project').replace(/</g,'&lt;')}</text>
-  <text x='40' y='120' fill='#a9b7d9' font-family='Inter,Arial' font-size='24'>${(tag||'')}</text></svg>`;
-  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
-}
-
-function getCover(p){
-  const override = localStorage.getItem('project_cover_'+p.id);
-  return override || p.cover || genCover(p.title,p.tag);
-}
-
-function cardTemplate(p){
-  const cover = getCover(p);
-  const clickable = !!(p.href && p.href.trim());
-  const open = clickable ? `onclick="location.href='${p.href}'"` : '';
-  const cursor = clickable ? 'pointer' : 'default';
-  return `<article class="card" ${open} style="cursor:${cursor}">
-    <div class="cover" style="background-image:url('${cover}')" title="${p.title||''}"></div>
-    <div class="inner">
-      <span class="tag">${p.tag||''}</span>
-      <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
-      <p><em>${p.blurb||''}</em></p>
-    </div>
-  </article>`;
-}
-
-function render(){
-  grid.innerHTML = (DATA.projects || []).map(cardTemplate).join('');
-}
-
-
-    async function load(){
-      try{ const r=await fetch(API_PROJECTS,{cache:'no-store'}); if(!r.ok) throw new Error('no api'); DATA = await r.json(); }
-      catch{ DATA = DEFAULTS; }
-      buildCustomizer();
-      render();
-    }
-
-    const panel = document.getElementById('customizePanel');
-    const openBtn = document.getElementById('openCustomizer');
-    const closeBtn = document.getElementById('czClose');
-    const saveBtn = document.getElementById('czSave');
-    const resetBtn = document.getElementById('czReset');
-    const projInputsWrap = document.getElementById('projectInputs');
-    const bioUrlInput = document.getElementById('bioUrl');
-    const bioFileInput = document.getElementById('bioFile');
-
-    function togglePanel(show){ panel.classList.toggle('hidden', !show); }
-
-    openBtn.addEventListener('click', ()=>togglePanel(true));
-    closeBtn.addEventListener('click', ()=>togglePanel(false));
-    resetBtn.addEventListener('click', ()=>{
-      localStorage.removeItem('bio_photo');
-      if (DATA && DATA.projects){
-        DATA.projects.forEach(p=> localStorage.removeItem('project_cover_'+p.id));
+      function open() {
+        if (!dlg) return;
+        if (typeof dlg.showModal === 'function') dlg.showModal();
+        else dlg.style.display = 'block';
       }
-      bioUrlInput.value='';
-      document.querySelectorAll('.proj-url').forEach(i => { i.value = ''; });
-      render();
-      alert('All custom images cleared.');
-    });
+      function close(e) {
+        if (e) e.preventDefault();
+        if (!dlg) return;
+        if (dlg.open && typeof dlg.close === 'function') dlg.close();
+        else dlg.style.display = 'none';
+      }
 
-    function buildCustomizer(){
-      const existingBio = localStorage.getItem('bio_photo');
-      if (existingBio) bioUrlInput.value = existingBio;
+      if (btn && dlg) btn.addEventListener('click', open, { capture: true });
+      if (closeBtn) closeBtn.addEventListener('click', close, { capture: true });
+      if (cancelBtn) cancelBtn.addEventListener('click', close, { capture: true });
 
-      projInputsWrap.innerHTML = '';
-      (DATA.projects||[]).forEach(p=>{
-        const existing = localStorage.getItem('project_cover_'+p.id) || p.cover || '';
-        const row = document.createElement('div');
-        row.className = 'row';
-        row.innerHTML = `
-          <strong style="min-width:140px">${p.title}</strong>
-          <input class="ft-input proj-url" type="url" placeholder="https://…/cover.jpg" data-pid="${p.id}" value="${existing?existing:''}" aria-label="${p.title} cover URL">
-          <input class="ft-input proj-file" type="file" accept="image/*" data-pid="${p.id}" aria-label="Upload ${p.title} cover">
-        `;
-        projInputsWrap.appendChild(row);
-      });
-    }
-
-    function readFileAsDataURL(file){
-      return new Promise((resolve,reject)=>{
-        const fr = new FileReader();
-        fr.onload = ()=> resolve(fr.result);
-        fr.onerror = reject;
-        fr.readAsDataURL(file);
-      });
-    }
-
-    saveBtn.addEventListener('click', async ()=>{
-      try{
-        if (bioFileInput.files && bioFileInput.files[0]){
-          const dataUrl = await readFileAsDataURL(bioFileInput.files[0]);
-          localStorage.setItem('bio_photo', dataUrl);
-          bioUrlInput.value = dataUrl;
-        } else if (bioUrlInput.value.trim()){
-          localStorage.setItem('bio_photo', bioUrlInput.value.trim());
-        }
-
-        const fileInputs = Array.from(document.querySelectorAll('.proj-file'));
-        const urlInputs  = Array.from(document.querySelectorAll('.proj-url'));
-
-        for (const finput of fileInputs){
-          const pid = finput.getAttribute('data-pid');
-          if (finput.files && finput.files[0]){
-            const dataUrl = await readFileAsDataURL(finput.files[0]);
-            localStorage.setItem('project_cover_'+pid, dataUrl);
-            const u = urlInputs.find(el=>el.getAttribute('data-pid')===pid);
-            if (u) u.value = dataUrl;
-          }
-        }
-        for (const uinput of urlInputs){
-          const pid = uinput.getAttribute('data-pid');
-          const val = uinput.value.trim();
-          if (val) localStorage.setItem('project_cover_'+pid, val);
-        }
-
-        render();
-        alert('Saved! Your custom images are now applied.');
-        togglePanel(false);
-      }catch(err){
-        console.error(err);
-        alert('Oops—there was a problem saving your images.');
+      if (dlg) {
+        dlg.addEventListener('click', (e) => {
+          const r = dlg.getBoundingClientRect();
+          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
+        }, { capture: true });
       }
     });
-
-    load();
   </script>
 
-  <!-- Inquiry dialog wiring (open button removed; others safe) -->
+  <!-- Feed + detail + comments + publish -->
   <script>
-    (function(){
-      const openBtn  = document.getElementById('openInquiry'); // no longer present
-      const dialog   = document.getElementById('inqDialog');
-      const closeBtn = document.getElementById('closeInq');
-      const sendBtn  = document.getElementById('sendInq');
-      const form     = document.getElementById('inqForm');
-
-      if (openBtn && dialog) openBtn.addEventListener('click', ()=> dialog.showModal());
-      if (closeBtn && dialog) closeBtn.addEventListener('click', ()=> dialog.close());
-      if (sendBtn && form && dialog){
-        sendBtn.addEventListener('click', ()=>{
-          const fd = new FormData(form);
-          const name  = (fd.get('name')||'').toString();
-          const email = (fd.get('email')||'').toString();
-          const topic = (fd.get('topic')||'').toString();
-          const msg   = (fd.get('message')||'').toString();
-          const to = dialog.dataset.toEmail || 'hello@example.com';
-          const subject = `Inquiry${topic ? ': ' + topic : ''} — from ${name}`;
-          const body = `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${msg}\n\n— sent from Home page`;
-          const url = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          window.location.href = url;
-          dialog.close();
+    /* ---------- sanitizer ---------- */
+    function sanitizeHTML(html) {
+      if (!html) return '';
+      const tmpl = document.createElement('template');
+      tmpl.innerHTML = html;
+      const BLOCK = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
+      const allowProtocol = (url) => {
+        try {
+          if (url.startsWith('data:')) return /^data:image\//i.test(url);
+          const u = new URL(url, location.origin);
+          return ['http:','https:','mailto:','tel:'].includes(u.protocol);
+        } catch { return !/^\s*javascript:/i.test(url); }
+      };
+      const walker = document.createNodeIterator(tmpl.content, NodeFilter.SHOW_ELEMENT);
+      let node, kill = [];
+      while ((node = walker.nextNode())) {
+        if (BLOCK.has(node.tagName) || node.tagName === 'LINK') { kill.push(node); continue; }
+        [...node.attributes].forEach(a => {
+          const n=a.name.toLowerCase(), v=a.value||'';
+          if (n.startsWith('on')) node.removeAttribute(a.name);
+          if ((n==='href'||n==='src') && v && !allowProtocol(v)) node.removeAttribute(a.name);
         });
       }
+      kill.forEach(el => el.remove());
+      return tmpl.innerHTML;
+    }
 
-      // About inline editing code removed references (section deleted)
-      // Kept harmless storage calls above
-    })();
+    /* ---------- utils ---------- */
+    const $ = id => document.getElementById(id);
+    const STORAGE_KEY = 'emm_posts';
+    const COMMENTS_KEY = id => `emm_comments_${id}`;
+    const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    function stripToText(html){ const d=document.createElement('div'); d.innerHTML=html; return (d.textContent||'').trim(); }
+    function textToHtml(text){
+      if(!text) return '';
+      const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return esc.trim().split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('\n');
+    }
+    function wordCount(html){ return (stripToText(html).match(/\S+/g)||[]).length; }
+    function tagsFragment(tagsStr){
+      const frag = document.createDocumentFragment();
+      (tagsStr||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{
+        const span=document.createElement('span'); span.className='chip'; span.textContent=t; frag.appendChild(span);
+      });
+      return frag;
+    }
+    function setHeroCover(url){
+      const hero=document.querySelector('.hero.financial');
+      if(!hero) return;
+      if(url) hero.style.setProperty('--hero', `url("${url}")`);
+      else hero.style.removeProperty('--hero');
+    }
+
+    /* ---------- storage (local) ---------- */
+    function loadPosts(){
+      try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch{ return []; }
+    }
+    function savePosts(list){
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch{}
+    }
+    function upsertPost(p){
+      const list = loadPosts();
+      const idx = list.findIndex(x=>x.id===p.id);
+      if(idx>-1) list[idx]=p; else list.unshift(p);
+      savePosts(list);
+    }
+
+    /* ---------- comments (local per post) ---------- */
+    function loadComments(postId){
+      try{ return JSON.parse(localStorage.getItem(COMMENTS_KEY(postId))||'[]'); }catch{ return []; }
+    }
+    function saveComments(postId, arr){
+      try{ localStorage.setItem(COMMENTS_KEY(postId), JSON.stringify(arr)); }catch{}
+    }
+    function renderComments(postId){
+      const listEl = $('commentsList'), countEl=$('commentsCount');
+      if (!listEl) return;
+      const items = loadComments(postId);
+      listEl.innerHTML = items.map(c => `
+        <div class="comment-item" data-view-allowed>
+          <div class="comment-author">${c.name||'Anonymous'}</div>
+          <div class="comment-meta">${new Date(c.timeISO).toLocaleString()}</div>
+          <div class="comment-text">${(c.text||'').replace(/[<>&]/g, s=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[s]))}</div>
+        </div>
+      `).join('');
+      if (countEl) countEl.textContent = items.length;
+    }
+
+    /* ---------- feed ---------- */
+    function renderFeed(){
+      const grid = $('feedGrid'), count=$('feedCount'), empty=$('emptyFeed');
+      if(!grid) return;
+      const items = loadPosts().sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
+      grid.innerHTML = '';
+      count.textContent = items.length;
+      empty.hidden = items.length>0;
+
+      for(const p of items){
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.tabIndex = 0;
+        card.setAttribute('role','link');
+        card.setAttribute('data-view-allowed','');
+        card.dataset.id = p.id;
+
+        if (p.cover){
+          const img = document.createElement('img');
+          img.className = 'thumb';
+          img.alt = '';
+          img.src = p.cover;
+          card.appendChild(img);
+        }
+
+        const body = document.createElement('div'); body.className='body';
+        const h4 = document.createElement('h4'); h4.textContent = p.title || 'Untitled';
+        const deck = document.createElement('p'); deck.className='deck'; deck.textContent = p.excerpt || p.subtitle || stripToText(p.bodyHtml).slice(0,180);
+        const meta = document.createElement('div'); meta.className='meta';
+        const dt = new Date(p.dateISO||Date.now());
+        meta.textContent = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${Math.max(1,Math.round((p.minutes||1)))} min`;
+
+        body.append(h4, deck, meta);
+        card.appendChild(body);
+
+        const open = (e)=>{ e?.preventDefault(); e?.stopPropagation(); location.hash = `#post/${p.id}`; };
+        card.addEventListener('click', open, {capture:true});
+        card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') open(e); }, {capture:true});
+
+        grid.appendChild(card);
+      }
+    }
+
+    /* ---------- article view ---------- */
+    function renderPost(p){
+      if(!p) return;
+      const postTitle = $('postTitle'), postSubtitle=$('postSubtitle'), postAuthor=$('postAuthor'),
+            postDate=$('postDate'), postReadTime=$('postReadTime'), postTags=$('postTags'),
+            postBody=$('postBody'), articleSec=$('article'), toolbar=$('articleToolbar'), commentsSec=$('comments');
+
+      postTitle.textContent = p.title || 'Untitled';
+      postSubtitle.textContent = p.subtitle || '';
+      postAuthor.textContent = p.author || '—';
+      const dt = new Date(p.dateISO||Date.now());
+      postDate.textContent = dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+      postDate.setAttribute('datetime', p.dateISO || '');
+      postReadTime.textContent = `${Math.max(1, Math.round((p.minutes||wordCount(p.bodyHtml)/220)))} min read`;
+      postTags.innerHTML=''; postTags.appendChild(tagsFragment(p.tagsStr||''));
+      postBody.innerHTML = p.bodyHtml || '';
+
+      setHeroCover(p.cover||'');
+
+      if(articleSec) articleSec.hidden = false;
+      if($('feed')) $('feed').hidden = true;
+      if(toolbar) toolbar.hidden = false;
+      if(commentsSec) { commentsSec.hidden = false; commentsSec.setAttribute('data-view-allowed',''); }
+
+      renderComments(p.id);
+
+      const form = $('commentForm');
+      if (form && !form.dataset.bound) {
+        form.dataset.bound = '1';
+        form.addEventListener('submit', (e)=>{
+          e.preventDefault();
+          const name = $('cName').value.trim();
+          const email= $('cEmail').value.trim(); // not displayed
+          const text = $('cText').value.trim();
+          if (!text) return;
+          const curId = location.hash.replace(/^#post\//,'');
+          const arr = loadComments(curId);
+          arr.push({ name, email, text, timeISO: new Date().toISOString() });
+          saveComments(curId, arr);
+          $('cText').value = '';
+          renderComments(curId);
+        }, {capture:true});
+      }
+    }
+
+    /* ---------- router ---------- */
+    function goToFeed(){
+      if($('article')) $('article').hidden = true;
+      if($('articleToolbar')) $('articleToolbar').hidden = true;
+      if($('feed')) $('feed').hidden = false;
+      setHeroCover('');
+    }
+    function findPostById(id){ return loadPosts().find(p=>p.id===id); }
+    function onRoute(){
+      const m = location.hash.match(/^#post\/([a-z0-9]+)/i);
+      if(m){
+        const post = findPostById(m[1]);
+        if(post) renderPost(post); else goToFeed();
+      } else {
+        goToFeed();
+      }
+    }
+
+    /* ---------- boot ---------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Allow controls in Viewer
+      ['publishBtn','clearBtn','tabText','tabHtml','backToFeed','commentForm','cName','cEmail','cText'].forEach(id=>{
+        const el=$(id); if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-allowed',''); }
+      });
+
+      // Tabs
+      const tabText  = $('tabText'), tabHtml = $('tabHtml');
+      const paneText = $('paneText'), paneHtml = $('paneHtml');
+      function showTab(which){ const isHtml = which==='html';
+        tabText?.classList.toggle('active', !isHtml);
+        tabHtml?.classList.toggle('active',  isHtml);
+        if(paneText) paneText.hidden =  isHtml;
+        if(paneHtml) paneHtml.hidden = !isHtml;
+      }
+      const safe = fn => e=>{ e.stopImmediatePropagation?.(); e.stopPropagation?.(); e.preventDefault?.(); fn(); };
+      tabText?.addEventListener('click', safe(()=>showTab('text')), {capture:true});
+      tabHtml?.addEventListener('click', safe(()=>showTab('html')), {capture:true});
+
+      // Back
+      $('backToFeed')?.addEventListener('click', safe(()=>{ location.hash=''; }), {capture:true});
+
+      // Publish
+      const aTitle=$('aTitle'), aSubtitle=$('aSubtitle'), aAuthor=$('aAuthor'), aDate=$('aDate'), aTags=$('aTags'),
+            aExcerpt=$('aExcerpt'), aCoverUrl=$('aCoverUrl'), aCoverFile=$('aCoverFile'),
+            aText=$('aText'), aHtml=$('aHtml');
+      const btnPublish=$('publishBtn'), btnClear=$('clearBtn'), draftStatus=$('draftStatus');
+
+      function readFileAsDataURL(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(file); }); }
+
+      btnPublish?.addEventListener('click', safe(async ()=>{
+        const id = genId();
+        const title    = (aTitle.value||'').trim() || 'Untitled';
+        const subtitle = (aSubtitle.value||'').trim();
+        const author   = (aAuthor.value||'').trim();
+        const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
+        const tagsStr  = (aTags.value||'').trim();
+        const excerpt  = (aExcerpt.value||'').trim();
+
+        let cover = (aCoverUrl.value||'').trim();
+        const f = aCoverFile.files && aCoverFile.files[0];
+        if(f) cover = await readFileAsDataURL(f);
+
+        const isHtmlMode = tabHtml?.classList.contains('active');
+        const bodyHtml = isHtmlMode ? sanitizeHTML(aHtml.value||'') : textToHtml(aText.value||'');
+        const minutes = Math.max(1, Math.round(wordCount(bodyHtml)/220));
+
+        const post = { id, title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
+
+        upsertPost(post);
+        draftStatus.textContent = 'Published';
+        draftStatus.classList.add('text-green-600');
+
+        renderFeed();      // refresh list
+        window.scrollTo({ top: $('feed').offsetTop - 10, behavior:'smooth' });
+      }), {capture:true});
+
+      btnClear?.addEventListener('click', safe(()=>{
+        document.querySelectorAll('#upload input, #upload textarea').forEach(el=>{ el.type==='file' ? el.value='' : el.value=''; });
+        draftStatus.textContent='Draft'; draftStatus.classList.remove('text-green-600');
+      }), {capture:true});
+
+      // Boot
+      renderFeed();
+      window.addEventListener('hashchange', onRoute);
+      onRoute();
+    });
   </script>
-<script type="module" src="assets/sb-init.js"></script>
-<script type="module" src="assets/dynamic-home.js"></script>
-<script type="module" src="assets/editor-auth.js"></script>
-<script type="module" src="assets/editor-tray.js"></script>
-<script type="module" src="assets/editor-quiet.js"></script>
-<script type="module" src="assets/editor-unlock.js"></script>
+
+  <!-- Supabase/editor modules (leave or edit per your setup) -->
+  <script type="module" src="assets/sb-init.js"></script>
+  <script type="module" src="assets/dynamic-emm.js"></script> <!-- You said you'll handle this separately -->
+  <script type="module" src="assets/editor-auth.js"></script>
+  <script type="module" src="assets/editor-tray.js"></script>
+  <script type="module" src="assets/editor-quiet.js"></script>
+  <script type="module" src="assets/editor-unlock.js"></script>
 </body>
 </html>
