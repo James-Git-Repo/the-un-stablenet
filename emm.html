@@ -537,4 +537,79 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Whitelist controls for Viewer
       ['publishBtn','clearBtn','tabText','tabHtml','backToFeed','commentForm','cName','cEmail','cText'].forEach(id=>{
-        const el=$(id); if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-al
+        const el=$(id); if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-allowed',''); }
+      });
+
+      // Tabs
+      const tabText  = $('tabText'), tabHtml = $('tabHtml');
+      const paneText = $('paneText'), paneHtml = $('paneHtml');
+      function showTab(which){ const isHtml = which==='html';
+        tabText?.classList.toggle('active', !isHtml);
+        tabHtml?.classList.toggle('active',  isHtml);
+        if(paneText) paneText.hidden =  isHtml;
+        if(paneHtml) paneHtml.hidden = !isHtml;
+      }
+      const safe = fn => e=>{ e.stopImmediatePropagation?.(); e.stopPropagation?.(); e.preventDefault?.(); fn(); };
+      tabText?.addEventListener('click', safe(()=>showTab('text')), {capture:true});
+      tabHtml?.addEventListener('click', safe(()=>showTab('html')), {capture:true});
+
+      // Back
+      $('backToFeed')?.addEventListener('click', safe(()=>{ location.hash=''; }), {capture:true});
+
+      // Publish
+      const aTitle=$('aTitle'), aSubtitle=$('aSubtitle'), aAuthor=$('aAuthor'), aDate=$('aDate'), aTags=$('aTags'),
+            aExcerpt=$('aExcerpt'), aCoverUrl=$('aCoverUrl'), aCoverFile=$('aCoverFile'),
+            aText=$('aText'), aHtml=$('aHtml');
+      const btnPublish=$('publishBtn'), btnClear=$('clearBtn'), draftStatus=$('draftStatus');
+
+      function readFileAsDataURL(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(file); }); }
+
+      btnPublish?.addEventListener('click', safe(async ()=>{
+        const id = genId();
+        const title    = (aTitle.value||'').trim() || 'Untitled';
+        const subtitle = (aSubtitle.value||'').trim();
+        const author   = (aAuthor.value||'').trim();
+        const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
+        const tagsStr  = (aTags.value||'').trim();
+        const excerpt  = (aExcerpt.value||'').trim();
+
+        let cover = (aCoverUrl.value||'').trim();
+        const f = aCoverFile.files && aCoverFile.files[0];
+        if(f) cover = await readFileAsDataURL(f);
+
+        const isHtmlMode = tabHtml?.classList.contains('active');
+        const bodyHtml = isHtmlMode ? sanitizeHTML(aHtml.value||'') : textToHtml(aText.value||'');
+        const minutes = Math.max(1, Math.round(wordCount(bodyHtml)/220));
+        const slug = slugify(title) || ('post-'+id);
+
+        const post = { id, slug, title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
+
+        upsertPost(post);
+        draftStatus.textContent = 'Published';
+        draftStatus.classList.add('text-green-600');
+
+        renderFeed();                    // refresh list
+        window.scrollTo({ top: $('feed').offsetTop - 10, behavior:'smooth' });
+      }), {capture:true});
+
+      btnClear?.addEventListener('click', safe(()=>{
+        document.querySelectorAll('#upload input, #upload textarea').forEach(el=>{ el.type==='file' ? el.value='' : el.value=''; });
+        draftStatus.textContent='Draft'; draftStatus.classList.remove('text-green-600');
+      }), {capture:true});
+
+      // Boot
+      renderFeed();
+      window.addEventListener('hashchange', onRoute);
+      onRoute();
+    });
+  </script>
+
+  <!-- If you also load Supabase/editor modules on this page, keep them here -->
+  <script type="module" src="assets/sb-init.js"></script>
+  <!-- <script type="module" src="assets/dynamic-emm.js"></script> -->
+  <script type="module" src="assets/editor-auth.js"></script>
+  <script type="module" src="assets/editor-tray.js"></script>
+  <script type="module" src="assets/editor-quiet.js"></script>
+  <script type="module" src="assets/editor-unlock.js"></script>
+</body>
+</html>
