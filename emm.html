@@ -19,40 +19,16 @@
     .brand{display:flex; align-items:center; gap:12px}
     .mark{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; color:#fff; background:conic-gradient(from 210deg, var(--primary), var(--accent)); box-shadow:var(--shadow)}
     nav ul{display:flex; list-style:none; gap:12px; margin:0; padding:0}
-    .pill-btn{
-      appearance:none; display:inline-flex; align-items:center; gap:6px;
-      text-decoration:none; background:#fff; color:#1f3aa2;
-      border:1.5px solid #dbe6ff; border-radius:14px;
-      padding:12px 18px; font-weight:800; font-size:16px; line-height:1;
-      transition:background .15s ease, box-shadow .15s ease;
-      box-shadow:0 1px 0 rgba(12,23,52,.02);
-    }
-    .pill-btn:hover{ background:#f4f7ff; }
-    .pill-btn.primary{
-      background:linear-gradient(180deg,#2954ff,#1f4aff); color:#fff; border-color:#2140b8;
-      box-shadow:0 6px 18px rgba(31,74,255,.20), inset 0 1px 0 rgba(255,255,255,.25);
-    }
+    .pill-btn{appearance:none; display:inline-flex; align-items:center; gap:6px; text-decoration:none; background:#fff; color:#1f3aa2; border:1.5px solid #dbe6ff; border-radius:14px; padding:12px 18px; font-weight:800; font-size:16px; line-height:1; transition:background .15s ease, box-shadow .15s ease; box-shadow:0 1px 0 rgba(12,23,52,.02)}
+    .pill-btn:hover{ background:#f4f7ff }
+    .pill-btn.primary{ background:linear-gradient(180deg,#2954ff,#1f4aff); color:#fff; border-color:#2140b8; box-shadow:0 6px 18px rgba(31,74,255,.20), inset 0 1px 0 rgba(255,255,255,.25) }
     .pill-row{display:flex; align-items:center; gap:12px}
 
     /* Hero */
     .hero{border-bottom:1px solid var(--line)}
-    .hero.financial{
-      position:relative;
-      background-image:linear-gradient(180deg, rgba(31,74,255,0.12), rgba(0,183,255,0.08)), var(--hero, linear-gradient(180deg,#f7faff 0%,#ffffff 60%));
-      background-size:cover; background-position:center
-    }
-    .hero.financial::before{
-      content:""; position:absolute; inset:0;
-      background-image:
-        linear-gradient(to right, rgba(12,23,52,0.06) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(12,23,52,0.06) 1px, transparent 1px);
-      background-size:48px 48px; pointer-events:none
-    }
-    .hero.financial::after{
-      content:""; position:absolute; top:-30%; right:-20%; width:60%; height:160%;
-      background:radial-gradient(closest-side, rgba(31,74,255,0.18), transparent 70%);
-      pointer-events:none
-    }
+    .hero.financial{ position:relative; background-image:linear-gradient(180deg, rgba(31,74,255,0.12), rgba(0,183,255,0.08)), var(--hero, linear-gradient(180deg,#f7faff 0%,#ffffff 60%)); background-size:cover; background-position:center }
+    .hero.financial::before{ content:""; position:absolute; inset:0; background-image:linear-gradient(to right, rgba(12,23,52,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(12,23,52,0.06) 1px, transparent 1px); background-size:48px 48px; pointer-events:none }
+    .hero.financial::after{ content:""; position:absolute; top:-30%; right:-20%; width:60%; height:160%; background:radial-gradient(closest-side, rgba(31,74,255,0.18), transparent 70%); pointer-events:none }
     .hero .inner{position:relative; max-width:var(--maxw); margin:0 auto; padding:40px 20px}
     .cover-title{font-size: clamp(30px, 3.8vw, 48px); line-height:1.08; margin:6px 0; color:#0b152c}
 
@@ -71,22 +47,21 @@
     .meta{display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:13px}
     .chip{background:var(--chip); border:1px solid #dbe6ff; color:#2140b8; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px}
 
-    /* Prose defaults */
+    /* Prose */
     .prose p{margin:1em 0; line-height:1.68}
     .prose h2{margin-top:1.4em; font-size:1.25rem}
     .prose img{max-width:100%; border-radius:12px; display:block; margin:12px 0}
     .prose figure{margin:14px 0}
     .prose figcaption{font-size:12px; color:#5d6a8e; text-align:center}
     .prose blockquote{border-left:4px solid var(--line); padding:6px 12px; color:#3a4a74; background:#f7faff; border-radius:8px}
-    .prose ul, .prose ol { margin: 1em 0; padding-left: 1.2em; }
-    .prose ul { list-style: disc; }
-    .prose ol { list-style: decimal; }
-    .prose li { margin: .25em 0; }
-    .prose table { width: 100%; border-collapse: collapse; margin: 1em 0; }
-    .prose th, .prose td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
-    .prose thead th { background: #f7faff; }
-    .prose pre, .prose code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-    .prose pre { background: #f7faff; border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow:auto; }
+    .prose ul,.prose ol{margin:1em 0; padding-left:1.2em}
+    .prose ul{list-style:disc} .prose ol{list-style:decimal}
+    .prose li{margin:.25em 0}
+    .prose table{width:100%; border-collapse:collapse; margin:1em 0}
+    .prose th,.prose td{border:1px solid var(--line); padding:8px 10px; text-align:left}
+    .prose thead th{background:#f7faff}
+    .prose pre,.prose code{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+    .prose pre{background:#f7faff; border:1px solid var(--line); border-radius:8px; padding:10px; overflow:auto}
 
     .comments{border-top:1px solid var(--line); padding-top:18px; margin-top:24px}
     .comment-item{padding:12px 0; border-bottom:1px solid var(--line)}
@@ -96,34 +71,26 @@
     .comment-text{margin:8px 0 0 0; white-space:pre-wrap}
 
     /* Cards (feed) */
-    .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px; }
-    .card{
-      display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
-      border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer;
-      transition:transform .12s ease, box-shadow .12s ease;
-    }
+    .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px }
+    .card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease }
     .card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
-    .card .thumb{ aspect-ratio: 16/9; background:#eef4ff; object-fit:cover; width:100%; }
-    .card .body{ padding:12px; }
+    .card .thumb{ aspect-ratio:16/9; background:#eef4ff; object-fit:cover; width:100% }
+    .card .body{ padding:12px }
     .card h4{ margin:0 0 4px 0; font-size:16px; line-height:1.25; font-weight:800; color:#0b152c }
     .card .deck{ margin:0 0 8px 0; color:#4c5c83; font-size:13px }
     .card .meta{ display:flex; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:12px }
 
-    /* Responsive tuning */
+    /* Responsive */
     @media (max-width: 640px){
       .hero .inner{ padding:28px 16px }
       .cover-title{ font-size: clamp(24px, 7vw, 36px) }
-      .cards{ grid-template-columns: 1fr; gap:12px }
+      .cards{ grid-template-columns:1fr; gap:12px }
       .prose p{ line-height:1.72 }
-      .pill-btn{ padding:14px 18px } /* bigger tap targets */
+      .pill-btn{ padding:14px 18px }
       #articleToolbar{ position:sticky; top:76px; background:#fff; z-index:30; padding:8px 0 }
     }
-    @media (min-width: 641px) and (max-width: 1024px){
-      .cards{ grid-template-columns: repeat(2, 1fr) }
-    }
-    @media (min-width: 1025px){
-      .cards{ grid-template-columns: repeat(3, 1fr) }
-    }
+    @media (min-width: 641px) and (max-width: 1024px){ .cards{ grid-template-columns: repeat(2, 1fr) } }
+    @media (min-width: 1025px){ .cards{ grid-template-columns: repeat(3, 1fr) } }
 
     .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
     .hide{display:none}
@@ -151,13 +118,13 @@
   <section class="hero financial" aria-label="Section cover">
     <div class="inner">
       <h2 class="cover-title">European Market Movers</h2>
-      <p class="text-slate-600 max-w-2xl"><i>A weekly wrap of European markets: what moved, why it mattered and what’s next.</i></p>
+      <p class="text-slate-600 max-w-2xl"><i>A weekly wrap of European markets: what moved, why it mattered, and what’s next.</i></p>
     </div>
   </section>
 
   <main class="wrap">
 
-    <!-- Uploader (create posts) -->
+    <!-- Uploader -->
     <section id="upload" class="editor" aria-labelledby="uploader-title">
       <div class="flex items-center justify-between mb-2">
         <strong id="uploader-title">Upload article</strong>
@@ -209,7 +176,7 @@
       <p id="emptyFeed" class="text-slate-500 text-sm mt-2">No posts yet. Publish your first above.</p>
     </section>
 
-    <!-- Toolbar for detail view -->
+    <!-- Toolbar -->
     <div id="articleToolbar" class="mb-2" hidden>
       <button id="backToFeed" class="pill-btn" type="button" data-view-allowed>← Back to posts</button>
     </div>
@@ -232,7 +199,7 @@
         <div id="postBody" class="prose"></div>
       </article>
 
-      <!-- Comments (visible & usable in Viewer) -->
+      <!-- Comments (viewer-safe) -->
       <section id="comments" class="comments" aria-labelledby="commentsTitle" data-view-allowed hidden>
         <div class="flex items-center justify-between">
           <h3 id="commentsTitle" class="text-lg font-extrabold">Comments</h3>
@@ -246,7 +213,7 @@
           </div>
           <div class="field"><label for="cText">Comment</label><textarea id="cText" rows="4" placeholder="Be respectful. No HTML allowed." data-view-allowed></textarea></div>
           <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-500">Stored locally for this article.</span>
+            <span class="text-xs text-slate-500">Stored in Supabase if available (falls back locally).</span>
             <button class="pill-btn primary" type="submit" data-view-allowed>Post comment</button>
           </div>
         </form>
@@ -264,7 +231,7 @@
     </div>
   </footer>
 
-  <!-- Contribute dialog (kept simple) -->
+  <!-- Contribute dialog -->
   <dialog id="contribDialog" class="contrib" data-view-allowed>
     <form method="dialog" id="contribFormContainer" data-view-allowed>
       <div class="dlg-head">
@@ -285,30 +252,25 @@
     </form>
   </dialog>
 
-  <!-- Minimal wiring for dialog -->
+  <!-- Contrib wiring -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const btn = document.getElementById('openContrib');
       const dlg = document.getElementById('contribDialog');
       const closeBtn = document.getElementById('closeContrib');
       const cancelBtn = document.getElementById('cancelContrib');
-
       function open() { if (!dlg) return; if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.style.display = 'block'; }
       function close(e) { if (e) e.preventDefault(); if (!dlg) return; if (dlg.open && typeof dlg.close === 'function') dlg.close(); else dlg.style.display = 'none'; }
-
       if (btn && dlg) btn.addEventListener('click', open, { capture: true });
       if (closeBtn) closeBtn.addEventListener('click', close, { capture: true });
       if (cancelBtn) cancelBtn.addEventListener('click', close, { capture: true });
-      if (dlg) dlg.addEventListener('click', (e) => {
-        const r = dlg.getBoundingClientRect();
-        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
-      }, { capture: true });
+      if (dlg) dlg.addEventListener('click', (e) => { const r = dlg.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close(); }, { capture: true });
     });
   </script>
 
-  <!-- Main: dynamic feed + article view + comments + publish + routing + device tweaks -->
+  <!-- Main app (Supabase + local fallback) -->
   <script>
-    /* ----- device hints (adds .touch/.mobile/.tablet/.desktop on <html>) ----- */
+    /* Device hints */
     (function(){
       const ro = () => {
         const w = window.innerWidth;
@@ -320,7 +282,7 @@
       if (window.matchMedia('(pointer: coarse)').matches) document.documentElement.classList.add('touch');
     })();
 
-    /* ----- sanitizer (keeps content, strips scripts/handlers/unsafe URLs) ----- */
+    /* Sanitizer */
     function sanitizeHTML(html) {
       if (!html) return '';
       const tmpl = document.createElement('template');
@@ -347,102 +309,123 @@
       return tmpl.innerHTML;
     }
 
-    /* ----- utils ----- */
+    /* Utils */
     const $ = id => document.getElementById(id);
-    const STORAGE_KEY = 'emm_posts';
+    const hasSB = () => !!(window.supabase || (window.sb && window.sb.supabase));
+    const sb = () => window.supabase || (window.sb && window.sb.supabase) || null;
+
+    const LS_POSTS = 'emm_posts';
     const COMMENTS_KEY = id => `emm_comments_${id}`;
     const slugify = s => (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,80);
     const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
     function stripToText(html){ const d=document.createElement('div'); d.innerHTML=html; return (d.textContent||'').trim(); }
-    function textToHtml(text){
-      if(!text) return '';
-      const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      return esc.trim().split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('\n');
-    }
+    function textToHtml(text){ if(!text) return ''; const esc=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); return esc.trim().split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('\n'); }
     function wordCount(html){ return (stripToText(html).match(/\S+/g)||[]).length; }
-    function tagsFragment(tagsStr){
-      const frag = document.createDocumentFragment();
-      (tagsStr||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{
-        const span=document.createElement('span'); span.className='chip'; span.textContent=t; frag.appendChild(span);
-      });
-      return frag;
+    function tagsFragment(tagsStr){ const frag=document.createDocumentFragment(); (tagsStr||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{ const span=document.createElement('span'); span.className='chip'; span.textContent=t; frag.appendChild(span); }); return frag; }
+    function setHeroCover(url){ const hero=document.querySelector('.hero.financial'); if(!hero) return; if(url) hero.style.setProperty('--hero', `url("${url}")`); else hero.style.removeProperty('--hero'); }
+    function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+    /* -------- Supabase DATA LAYER (with local fallback) -------- */
+
+    // POSTS
+    async function sbListPosts(){
+      if(!hasSB()) return JSON.parse(localStorage.getItem(LS_POSTS)||'[]');
+      const { data, error } = await sb().from('emm_posts').select('*').order('dateISO', { ascending:false });
+      if(error){ console.warn('Supabase list error:', error); return JSON.parse(localStorage.getItem(LS_POSTS)||'[]'); }
+      return data || [];
     }
-    function setHeroCover(url){
-      const hero=document.querySelector('.hero.financial');
-      if(!hero) return;
-      if(url) hero.style.setProperty('--hero', `url("${url}")`);
-      else hero.style.removeProperty('--hero');
+    async function sbInsertPost(post){
+      if(!hasSB()){
+        // local fallback
+        const list = JSON.parse(localStorage.getItem(LS_POSTS)||'[]');
+        list.unshift(post); localStorage.setItem(LS_POSTS, JSON.stringify(list));
+        return { data: post };
+      }
+      const { data, error } = await sb().from('emm_posts').upsert(post, { onConflict:'id' }).select().single();
+      if(error){ console.error('Supabase upsert error:', error); return { error }; }
+      return { data };
+    }
+    async function sbFindPostById(id){
+      if(!hasSB()){
+        const list = JSON.parse(localStorage.getItem(LS_POSTS)||'[]'); return list.find(p=>p.id===id) || null;
+      }
+      const { data, error } = await sb().from('emm_posts').select('*').eq('id', id).maybeSingle();
+      if(error){ console.warn('findById error:', error); return null; }
+      return data;
+    }
+    async function sbFindPostBySlug(slug){
+      if(!hasSB()){
+        const list = JSON.parse(localStorage.getItem(LS_POSTS)||'[]'); return list.find(p=>(p.slug||'')===slug) || null;
+      }
+      const { data, error } = await sb().from('emm_posts').select('*').eq('slug', slug).maybeSingle();
+      if(error){ console.warn('findBySlug error:', error); return null; }
+      return data;
+    }
+    async function sbLatestPost(){
+      if(!hasSB()){
+        const list = JSON.parse(localStorage.getItem(LS_POSTS)||'[]'); return list.sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''))[0] || null;
+      }
+      const { data, error } = await sb().from('emm_posts').select('*').order('dateISO', { ascending:false }).limit(1).maybeSingle();
+      if(error){ console.warn('latest error:', error); return null; }
+      return data;
     }
 
-    /* ----- storage (localStorage; can swap for Supabase later) ----- */
-    function loadPosts(){
-      try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch{ return []; }
+    // COMMENTS
+    async function sbListComments(postId){
+      if(!hasSB()) return JSON.parse(localStorage.getItem(COMMENTS_KEY(postId))||'[]');
+      const { data, error } = await sb().from('emm_comments').select('*').eq('post_id', postId).order('created_at', { ascending:true });
+      if(error){ console.warn('comments list error:', error); return JSON.parse(localStorage.getItem(COMMENTS_KEY(postId))||'[]'); }
+      return data || [];
     }
-    function savePosts(list){
-      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch{}
-    }
-    function upsertPost(p){
-      const list = loadPosts();
-      const i = list.findIndex(x=>x.id===p.id);
-      if(i>-1) list[i]=p; else list.unshift(p);
-      savePosts(list);
-    }
-    function latestPost(){ return loadPosts().slice().sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''))[0]; }
-    function findBySlug(slug){ return loadPosts().find(p=> (p.slug||'')===slug); }
-    function findById(id){ return loadPosts().find(p=> p.id===id); }
-
-    /* ----- comments (local per post) ----- */
-    function loadComments(postId){
-      try{ return JSON.parse(localStorage.getItem(COMMENTS_KEY(postId))||'[]'); }catch{ return []; }
-    }
-    function saveComments(postId, arr){
-      try{ localStorage.setItem(COMMENTS_KEY(postId), JSON.stringify(arr)); }catch{}
-    }
-    function renderComments(postId){
-      const listEl = $('commentsList'), countEl=$('commentsCount');
-      if (!listEl) return;
-      const items = loadComments(postId);
-      listEl.innerHTML = items.map(c => `
-        <div class="comment-item" data-view-allowed>
-          <div class="comment-author">${c.name||'Anonymous'}</div>
-          <div class="comment-meta">${new Date(c.timeISO).toLocaleString()}</div>
-          <div class="comment-text">${(c.text||'').replace(/[<>&]/g, s=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[s]))}</div>
-        </div>
-      `).join('');
-      if (countEl) countEl.textContent = items.length;
+    async function sbAddComment(postId, {name, email, text}){
+      const item = { post_id: postId, name, email, text, timeISO: new Date().toISOString() };
+      if(!hasSB()){
+        const arr = JSON.parse(localStorage.getItem(COMMENTS_KEY(postId))||'[]'); arr.push(item); localStorage.setItem(COMMENTS_KEY(postId), JSON.stringify(arr)); return { data:item };
+      }
+      const { data, error } = await sb().from('emm_comments').insert(item).select().single();
+      if(error){ console.error('comment insert error:', error); return { error }; }
+      return { data };
     }
 
-    /* ----- FEED (cards like Projects) ----- */
-    function renderFeed(){
+    // COVER UPLOAD (to Supabase Storage; falls back to data URL)
+    async function tryUploadCover(file, postId){
+      if(!hasSB() || !file) return null;
+      try{
+        const path = `covers/${postId}-${(file.name||'cover').replace(/\s+/g,'-')}`;
+        const up = await sb().storage.from('emm-covers').upload(path, file, { upsert:true, contentType: file.type || 'image/*' });
+        if(up.error){ console.warn('Storage upload failed, using data URL fallback', up.error); return null; }
+        const pub = sb().storage.from('emm-covers').getPublicUrl(path);
+        return (pub && pub.data && pub.data.publicUrl) ? pub.data.publicUrl : null;
+      }catch(err){ console.warn('Storage exception, fallback to data URL', err); return null; }
+    }
+
+    /* -------- UI + Routing -------- */
+    function renderFeedItems(items){
       const grid = $('feedGrid'), count=$('feedCount'), empty=$('emptyFeed');
       if(!grid) return;
-      const items = loadPosts().sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
       grid.innerHTML = '';
       count.textContent = items.length;
       empty.hidden = items.length>0;
 
       for(const p of items){
         const card = document.createElement('article');
-        card.className = 'card';
-        card.tabIndex = 0;
-        card.setAttribute('role','link');
-        card.setAttribute('data-view-allowed','');
-        card.dataset.id = p.id;
+        card.className = 'card'; card.tabIndex=0; card.setAttribute('role','link'); card.setAttribute('data-view-allowed',''); card.dataset.id = p.id;
 
         if (p.cover){
           const img = document.createElement('img');
-          img.className = 'thumb';
-          img.alt = '';
+          img.className = 'thumb'; img.alt = '';
+          img.loading = 'lazy';
           img.src = p.cover;
           card.appendChild(img);
         }
 
         const body = document.createElement('div'); body.className='body';
         const h4 = document.createElement('h4'); h4.textContent = p.title || 'Untitled';
-        const deck = document.createElement('p'); deck.className='deck'; deck.textContent = p.excerpt || p.subtitle || stripToText(p.bodyHtml).slice(0,180);
+        const deck = document.createElement('p'); deck.className='deck'; deck.textContent = p.excerpt || p.subtitle || stripToText(p.body_html || p.bodyHtml).slice(0,180);
         const meta = document.createElement('div'); meta.className='meta';
-        const dt = new Date(p.dateISO||Date.now());
-        meta.textContent = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${Math.max(1,Math.round((p.minutes||1)))} min`;
+        const dt = new Date(p.dateISO||p.date_iso||Date.now());
+        const mins = p.minutes || Math.max(1, Math.round(wordCount(p.body_html || p.bodyHtml)/220));
+        meta.textContent = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${mins} min`;
 
         body.append(h4, deck, meta);
         card.appendChild(body);
@@ -455,9 +438,47 @@
       }
     }
 
-    /* ----- ARTICLE view ----- */
-    function renderPost(p){
-      if(!p) return;
+    function normalizePost(p){
+      // Ensure consistent field names from SB or local
+      return {
+        id: p.id,
+        slug: p.slug,
+        title: p.title,
+        subtitle: p.subtitle,
+        author: p.author,
+        dateISO: p.dateISO || p.date_iso,
+        tagsStr: p.tagsStr || p.tags_str,
+        excerpt: p.excerpt,
+        cover: p.cover || p.cover_url,
+        bodyHtml: p.bodyHtml || p.body_html,
+        minutes: p.minutes
+      };
+    }
+
+    async function renderFeed(){
+      const items = await sbListPosts();
+      // Normalize + order
+      const norm = items.map(normalizePost).sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
+      renderFeedItems(norm);
+    }
+
+    function renderCommentsList(items){
+      const listEl = $('commentsList'), countEl=$('commentsCount');
+      if (!listEl) return;
+      listEl.innerHTML = items.map(c => `
+        <div class="comment-item" data-view-allowed>
+          <div class="comment-author">${(c.name||'Anonymous')}</div>
+          <div class="comment-meta">${new Date(c.timeISO || c.time_iso || c.created_at).toLocaleString()}</div>
+          <div class="comment-text">${String(c.text||'').replace(/[<>&]/g, s=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[s]))}</div>
+        </div>
+      `).join('');
+      if (countEl) countEl.textContent = items.length;
+    }
+
+    async function renderPost(pRaw){
+      if(!pRaw) return;
+      const p = normalizePost(pRaw);
+
       const postTitle = $('postTitle'), postSubtitle=$('postSubtitle'), postAuthor=$('postAuthor'),
             postDate=$('postDate'), postReadTime=$('postReadTime'), postTags=$('postTags'),
             postBody=$('postBody'), articleSec=$('article'), toolbar=$('articleToolbar'), commentsSec=$('comments');
@@ -479,76 +500,50 @@
       if(toolbar) toolbar.hidden = false;
       if(commentsSec) { commentsSec.hidden = false; commentsSec.setAttribute('data-view-allowed',''); }
 
-      renderComments(p.id);
+      // Load comments
+      const comments = await sbListComments(p.id);
+      renderCommentsList(comments);
 
       const form = $('commentForm');
-      if (form) {
-        form.onsubmit = (e)=>{
-          e.preventDefault();
+      if (form && !form.dataset.bound) {
+        form.dataset.bound = '1';
+        form.addEventListener('submit', async (e)=>{
+          e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation?.();
           const name = $('cName').value.trim();
-          const email= $('cEmail').value.trim(); // not displayed
+          const email= $('cEmail').value.trim();
           const text = $('cText').value.trim();
           if (!text) return;
-          const arr = loadComments(p.id);
-          arr.push({ name, email, text, timeISO: new Date().toISOString() });
-          saveComments(p.id, arr);
+          const res = await sbAddComment(p.id, {name, email, text});
           $('cText').value = '';
-          renderComments(p.id);
-        };
+          const updated = await sbListComments(p.id);
+          renderCommentsList(updated);
+        }, {capture:true});
       }
     }
 
-    /* ----- ROUTER (supports #post/<id>, #slug/<slug>, #latest, ?id=, ?slug=) ----- */
+    async function goToFeed(){ if($('article')) $('article').hidden = true; if($('articleToolbar')) $('articleToolbar').hidden = true; if($('feed')) $('feed').hidden = false; setHeroCover(''); await renderFeed(); }
+
     async function onRoute(){
       const hash = location.hash || '';
       const q = new URLSearchParams(location.search);
-      const openLatest = () => { const lp = latestPost(); if (lp) renderPost(lp); else goToFeed(); };
-
-      if (hash.startsWith('#post/')) {
-        const id = hash.slice(6);
-        const p = findById(id); p ? renderPost(p) : goToFeed();
-        return;
-      }
-      if (hash.startsWith('#slug/')) {
-        const slug = decodeURIComponent(hash.slice(6));
-        const p = findBySlug(slug); p ? renderPost(p) : goToFeed();
-        return;
-      }
-      if (hash === '#latest') { openLatest(); return; }
-
-      if (q.has('id')) {
-        const p = findById(q.get('id')); p ? renderPost(p) : goToFeed();
-        return;
-      }
-      if (q.has('slug')) {
-        const p = findBySlug(q.get('slug')); p ? renderPost(p) : goToFeed();
-        return;
-      }
-      goToFeed();
-    }
-    function goToFeed(){
-      if($('article')) $('article').hidden = true;
-      if($('articleToolbar')) $('articleToolbar').hidden = true;
-      if($('feed')) $('feed').hidden = false;
-      setHeroCover('');
+      if (hash.startsWith('#post/')) { const p = await sbFindPostById(hash.slice(6)); return p ? renderPost(p) : goToFeed(); }
+      if (hash.startsWith('#slug/')) { const p = await sbFindPostBySlug(decodeURIComponent(hash.slice(6))); return p ? renderPost(p) : goToFeed(); }
+      if (hash === '#latest')       { const p = await sbLatestPost(); return p ? renderPost(p) : goToFeed(); }
+      if (q.has('id'))              { const p = await sbFindPostById(q.get('id')); return p ? renderPost(p) : goToFeed(); }
+      if (q.has('slug'))            { const p = await sbFindPostBySlug(q.get('slug')); return p ? renderPost(p) : goToFeed(); }
+      return goToFeed();
     }
 
-    /* ----- PAGE BOOT ----- */
     document.addEventListener('DOMContentLoaded', () => {
-      // Whitelist controls for Viewer
+      // Whitelist viewer controls
       ['publishBtn','clearBtn','tabText','tabHtml','backToFeed','commentForm','cName','cEmail','cText'].forEach(id=>{
-        const el=$(id); if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-allowed',''); }
+        const el=$(id); if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-allowed',''); el.style.pointerEvents='auto'; }
       });
 
       // Tabs
       const tabText  = $('tabText'), tabHtml = $('tabHtml');
       const paneText = $('paneText'), paneHtml = $('paneHtml');
-      function showTab(which){ const isHtml = which==='html';
-        tabText?.classList.toggle('active', !isHtml);
-        tabHtml?.classList.toggle('active',  isHtml);
-        if(paneText) paneText.hidden =  isHtml;
-        if(paneHtml) paneHtml.hidden = !isHtml;
-      }
+      const showTab = (which)=>{ const isHtml = which==='html'; tabText?.classList.toggle('active', !isHtml); tabHtml?.classList.toggle('active', isHtml); if(paneText) paneText.hidden = isHtml; if(paneHtml) paneHtml.hidden = !isHtml; };
       const safe = fn => e=>{ e.stopImmediatePropagation?.(); e.stopPropagation?.(); e.preventDefault?.(); fn(); };
       tabText?.addEventListener('click', safe(()=>showTab('text')), {capture:true});
       tabHtml?.addEventListener('click', safe(()=>showTab('html')), {capture:true});
@@ -573,22 +568,33 @@
         const tagsStr  = (aTags.value||'').trim();
         const excerpt  = (aExcerpt.value||'').trim();
 
+        // Cover
         let cover = (aCoverUrl.value||'').trim();
         const f = aCoverFile.files && aCoverFile.files[0];
-        if(f) cover = await readFileAsDataURL(f);
+        if (f){
+          const uploaded = await tryUploadCover(f, id);
+          cover = uploaded || await readFileAsDataURL(f); // SB public URL or data URL fallback
+        }
 
+        // Body
         const isHtmlMode = tabHtml?.classList.contains('active');
         const bodyHtml = isHtmlMode ? sanitizeHTML(aHtml.value||'') : textToHtml(aText.value||'');
         const minutes = Math.max(1, Math.round(wordCount(bodyHtml)/220));
         const slug = slugify(title) || ('post-'+id);
 
-        const post = { id, slug, title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
+        const post = {
+          id, slug, title, subtitle, author,
+          dateISO, tagsStr, excerpt,
+          cover, body_html: bodyHtml, minutes
+        };
 
-        upsertPost(post);
+        const res = await sbInsertPost(post);
+        if(res.error){ alert('Could not publish. Check console.'); return; }
+
         draftStatus.textContent = 'Published';
         draftStatus.classList.add('text-green-600');
 
-        renderFeed();                    // refresh list
+        await renderFeed();
         window.scrollTo({ top: $('feed').offsetTop - 10, behavior:'smooth' });
       }), {capture:true});
 
@@ -599,13 +605,14 @@
 
       // Boot
       renderFeed();
-      window.addEventListener('hashchange', onRoute);
+      window.addEventListener('hashchange', ()=>{ onRoute(); });
       onRoute();
     });
   </script>
 
-  <!-- If you also load Supabase/editor modules on this page, keep them here -->
+  <!-- Supabase init (keep yours) -->
   <script type="module" src="assets/sb-init.js"></script>
+  <!-- Optional: your editor helpers -->
   <!-- <script type="module" src="assets/dynamic-emm.js"></script> -->
   <script type="module" src="assets/editor-auth.js"></script>
   <script type="module" src="assets/editor-tray.js"></script>
