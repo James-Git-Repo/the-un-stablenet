@@ -2,6 +2,7 @@
 // Minimal EMM helper: DO NOT change hero/title/deck/content.
 // Only: (1) whitelist Contribute UI for viewers, (2) save contributions to Supabase.
 
+<!-- <script type="module" src="assets/dynamic-emm.js"></script> -->
 import { sb } from "./sb-init.js";
 
 const $ = (id) => document.getElementById(id);
