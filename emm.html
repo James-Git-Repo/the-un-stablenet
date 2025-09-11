@@ -10,18 +10,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px; }
-.card{
-  display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
-  border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer;
-  transition:transform .12s ease, box-shadow .12s ease;
-}
-.card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
-.card .thumb{ aspect-ratio: 16/9; background:#eef4ff; object-fit:cover; width:100%; }
-.card .body{ padding:12px; }
-.card h4{ margin:0 0 4px 0; font-size:16px; line-height:1.25; font-weight:800; color:#0b152c }
-.card .deck{ margin:0 0 8px 0; color:#4c5c83; font-size:13px }
-.card .meta{ display:flex; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:12px }
     :root{ --page:#ffffff; --ink:#0b152c; --muted:#4c5c83; --line:#e7edf7; --card:#ffffff; --primary:#1f4aff; --accent:#00b7ff; --chip:#eef4ff; --maxw:1120px; --shadow:0 10px 30px rgba(12,23,52,.08) }
     *{box-sizing:border-box}
     body{margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--page)}
@@ -68,7 +56,7 @@
     .hero .inner{position:relative; max-width:var(--maxw); margin:0 auto; padding:40px 20px}
     .cover-title{font-size: clamp(30px, 3.8vw, 48px); line-height:1.08; margin:6px 0; color:#0b152c}
 
-    /* Editor/uploader + article + comments */
+    /* Editor + article + comments */
     .editor{background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:14px; margin:18px 0}
     .field{display:flex; flex-direction:column; gap:6px; margin-bottom:10px}
     .field label{font-size:12px; font-weight:700; color:#3a4a74}
@@ -90,7 +78,6 @@
     .prose figure{margin:14px 0}
     .prose figcaption{font-size:12px; color:#5d6a8e; text-align:center}
     .prose blockquote{border-left:4px solid var(--line); padding:6px 12px; color:#3a4a74; background:#f7faff; border-radius:8px}
-    /* Extra formatting for lists/tables/code */
     .prose ul, .prose ol { margin: 1em 0; padding-left: 1.2em; }
     .prose ul { list-style: disc; }
     .prose ol { list-style: decimal; }
@@ -108,21 +95,42 @@
     .comment-meta{font-size:12px; color:#6b7897}
     .comment-text{margin:8px 0 0 0; white-space:pre-wrap}
 
-    /* Contribute dialog */
-    dialog.contrib{border:none; border-radius:16px; width:min(680px, 92vw); padding:0; box-shadow:0 24px 80px rgba(12,23,52,.25)}
-    .dlg-head{display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid var(--line)}
-    .dlg-body{padding:14px 16px}
-    .dlg-actions{display:flex; gap:10px; padding:12px 16px; border-top:1px solid var(--line); justify-content:flex-end}
-    .close-x{appearance:none; border:1px solid #dbe6ff; background:#fff; border-radius:10px; padding:6px 10px; cursor:pointer; font-weight:700}
+    /* Cards (feed) */
+    .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px; }
+    .card{
+      display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
+      border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
+    .card .thumb{ aspect-ratio: 16/9; background:#eef4ff; object-fit:cover; width:100%; }
+    .card .body{ padding:12px; }
+    .card h4{ margin:0 0 4px 0; font-size:16px; line-height:1.25; font-weight:800; color:#0b152c }
+    .card .deck{ margin:0 0 8px 0; color:#4c5c83; font-size:13px }
+    .card .meta{ display:flex; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:12px }
+
+    /* Responsive tuning */
+    @media (max-width: 640px){
+      .hero .inner{ padding:28px 16px }
+      .cover-title{ font-size: clamp(24px, 7vw, 36px) }
+      .cards{ grid-template-columns: 1fr; gap:12px }
+      .prose p{ line-height:1.72 }
+      .pill-btn{ padding:14px 18px } /* bigger tap targets */
+      #articleToolbar{ position:sticky; top:76px; background:#fff; z-index:30; padding:8px 0 }
+    }
+    @media (min-width: 641px) and (max-width: 1024px){
+      .cards{ grid-template-columns: repeat(2, 1fr) }
+    }
+    @media (min-width: 1025px){
+      .cards{ grid-template-columns: repeat(3, 1fr) }
+    }
 
     .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
     .hide{display:none}
-    body.empty #article{display:none}
     footer{border-top:1px solid var(--line); padding:18px 0; color:#6b7897}
-    @media (max-width: 780px){ .two{grid-template-columns:1fr} }
   </style>
 
-  <!-- viewer lock (keep look; whitelist our buttons) -->
+  <!-- viewer lock -->
   <link rel="stylesheet" href="assets/access-mode.css">
   <script defer src="assets/access-mode.js"></script>
 </head>
@@ -133,10 +141,7 @@
       <nav aria-label="Primary">
         <ul class="pill-row">
           <li><a class="pill-btn" href="index.html">Home</a></li>
-          <!-- make Contribute usable for viewers -->
-          <li>
-            <button id="openContrib" class="pill-btn primary" type="button" data-view-allowed>Contribute</button>
-          </li>
+          <li><button id="openContrib" class="pill-btn primary" type="button" data-view-allowed>Contribute</button></li>
         </ul>
       </nav>
     </div>
@@ -151,7 +156,8 @@
   </section>
 
   <main class="wrap">
-    <!-- Uploader -->
+
+    <!-- Uploader (create posts) -->
     <section id="upload" class="editor" aria-labelledby="uploader-title">
       <div class="flex items-center justify-between mb-2">
         <strong id="uploader-title">Upload article</strong>
@@ -192,18 +198,21 @@
         <button id="clearBtn"   class="pill-btn"          type="button" data-view-allowed>Clear form</button>
       </div>
     </section>
-<!-- FEED (add this right before your existing <section id="article">) -->
-<section id="feed" aria-label="Post list" class="mt-6">
-  <div class="flex items-center justify-between mb-2">
-    <h3 class="text-lg font-extrabold">All posts</h3>
-    <span id="feedCount" class="text-xs text-slate-500">0</span>
-  </div>
-  <div id="feedGrid" class="cards"></div>
-  <p id="emptyFeed" class="text-slate-500 text-sm mt-2">No posts yet. Publish your first above.</p>
-</section>
-<div id="articleToolbar" class="mb-2" hidden>
-  <button id="backToFeed" class="pill-btn" type="button" data-view-allowed>← Back to posts</button>
-</div>
+
+    <!-- FEED -->
+    <section id="feed" aria-label="Post list" class="mt-6">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-lg font-extrabold">All posts</h3>
+        <span id="feedCount" class="text-xs text-slate-500">0</span>
+      </div>
+      <div id="feedGrid" class="cards"></div>
+      <p id="emptyFeed" class="text-slate-500 text-sm mt-2">No posts yet. Publish your first above.</p>
+    </section>
+
+    <!-- Toolbar for detail view -->
+    <div id="articleToolbar" class="mb-2" hidden>
+      <button id="backToFeed" class="pill-btn" type="button" data-view-allowed>← Back to posts</button>
+    </div>
 
     <!-- Article -->
     <section id="article" class="article" aria-labelledby="postTitle" hidden>
@@ -223,22 +232,22 @@
         <div id="postBody" class="prose"></div>
       </article>
 
-      <!-- Comments -->
-      <section id="comments" class="comments" aria-labelledby="commentsTitle" hidden>
+      <!-- Comments (visible & usable in Viewer) -->
+      <section id="comments" class="comments" aria-labelledby="commentsTitle" data-view-allowed hidden>
         <div class="flex items-center justify-between">
           <h3 id="commentsTitle" class="text-lg font-extrabold">Comments</h3>
           <span id="commentsCount" class="text-xs text-slate-500">0</span>
         </div>
         <div id="commentsList" class="mt-2"></div>
-        <form id="commentForm" class="editor mt-3" aria-label="Add a comment">
+        <form id="commentForm" class="editor mt-3" aria-label="Add a comment" data-view-allowed>
           <div class="two">
-            <div class="field"><label for="cName">Name</label><input id="cName" autocomplete="name" placeholder="Your name"/></div>
-            <div class="field"><label for="cEmail">Email (not shown)</label><input id="cEmail" type="email" autocomplete="email" placeholder="you@example.com"/></div>
+            <div class="field"><label for="cName">Name</label><input id="cName" autocomplete="name" placeholder="Your name" data-view-allowed/></div>
+            <div class="field"><label for="cEmail">Email (not shown)</label><input id="cEmail" type="email" autocomplete="email" placeholder="you@example.com" data-view-allowed/></div>
           </div>
-          <div class="field"><label for="cText">Comment</label><textarea id="cText" rows="4" placeholder="Be respectful. No HTML allowed."></textarea></div>
+          <div class="field"><label for="cText">Comment</label><textarea id="cText" rows="4" placeholder="Be respectful. No HTML allowed." data-view-allowed></textarea></div>
           <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-500">Stored locally in your browser for this article.</span>
-            <button class="pill-btn primary" type="submit">Post comment</button>
+            <span class="text-xs text-slate-500">Stored locally for this article.</span>
+            <button class="pill-btn primary" type="submit" data-view-allowed>Post comment</button>
           </div>
         </form>
       </section>
@@ -255,7 +264,7 @@
     </div>
   </footer>
 
-  <!-- Contribute dialog -->
+  <!-- Contribute dialog (kept simple) -->
   <dialog id="contribDialog" class="contrib" data-view-allowed>
     <form method="dialog" id="contribFormContainer" data-view-allowed>
       <div class="dlg-head">
@@ -267,26 +276,7 @@
           <div class="field"><label for="ctName">Name</label><input id="ctName" required placeholder="Your name" data-view-allowed/></div>
           <div class="field"><label for="ctEmail">Email</label><input id="ctEmail" type="email" required placeholder="you@example.com" data-view-allowed/></div>
         </div>
-        <div class="two">
-          <div class="field">
-            <label for="ctType">Contribution type</label>
-            <select id="ctType" data-view-allowed>
-              <option value="tip">Market tip / lead</option>
-              <option value="chart">Chart / data point</option>
-              <option value="correction">Correction / feedback</option>
-              <option value="guest">Guest paragraph / op-ed</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="ctFile">Attachment (optional)</label>
-            <input id="ctFile" type="file" data-view-allowed />
-          </div>
-        </div>
         <div class="field"><label for="ctMsg">Message</label><textarea id="ctMsg" rows="5" required placeholder="What would you like to share?" data-view-allowed></textarea></div>
-        <label class="text-xs text-slate-600 flex items-center gap-2">
-          <input id="ctConsent" type="checkbox" required data-view-allowed />
-          I consent to being contacted about this submission.
-        </label>
       </div>
       <div class="dlg-actions">
         <button class="pill-btn" value="cancel" type="button" id="cancelContrib" data-view-allowed>Cancel</button>
@@ -295,10 +285,7 @@
     </form>
   </dialog>
 
-  <!-- Local state (optional) -->
-  <script id="emm-state" type="application/json">{"posts":[]}</script>
-
-  <!-- Contribute dialog wiring -->
+  <!-- Minimal wiring for dialog -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const btn = document.getElementById('openContrib');
@@ -306,514 +293,248 @@
       const closeBtn = document.getElementById('closeContrib');
       const cancelBtn = document.getElementById('cancelContrib');
 
-      function open() {
-        if (!dlg) return;
-        if (typeof dlg.showModal === 'function') dlg.showModal();
-        else dlg.style.display = 'block';
-      }
-      function close(e) {
-        if (e) e.preventDefault();
-        if (!dlg) return;
-        if (dlg.open && typeof dlg.close === 'function') dlg.close();
-        else dlg.style.display = 'none';
-      }
+      function open() { if (!dlg) return; if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.style.display = 'block'; }
+      function close(e) { if (e) e.preventDefault(); if (!dlg) return; if (dlg.open && typeof dlg.close === 'function') dlg.close(); else dlg.style.display = 'none'; }
 
       if (btn && dlg) btn.addEventListener('click', open, { capture: true });
       if (closeBtn) closeBtn.addEventListener('click', close, { capture: true });
       if (cancelBtn) cancelBtn.addEventListener('click', close, { capture: true });
-
-      if (dlg) {
-        dlg.addEventListener('click', (e) => {
-          const r = dlg.getBoundingClientRect();
-          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
-        }, { capture: true });
-      }
+      if (dlg) dlg.addEventListener('click', (e) => {
+        const r = dlg.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
+      }, { capture: true });
     });
   </script>
 
-  <!-- Tabs: Text/HTML -->
+  <!-- Main: dynamic feed + article view + comments + publish + routing + device tweaks -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const textBtn  = document.getElementById('tabText');
-      const htmlBtn  = document.getElementById('tabHtml');
-      const paneText = document.getElementById('paneText');
-      const paneHtml = document.getElementById('paneHtml');
-
-      function show(which){
-        const isHtml = (which === 'html');
-        textBtn?.classList.toggle('active', !isHtml);
-        htmlBtn?.classList.toggle('active',  isHtml);
-        if (paneText) paneText.hidden =  isHtml;
-        if (paneHtml) paneHtml.hidden = !isHtml;
-      }
-
-      // Ensure they aren't left disabled by viewer locks
-      [textBtn, htmlBtn].forEach(b => b && b.removeAttribute('disabled'));
-
-      const safe = (fn) => (e) => {
-        e.stopImmediatePropagation?.();
-        e.stopPropagation?.();
-        e.preventDefault();
-        fn();
+    /* ----- device hints (adds .touch/.mobile/.tablet/.desktop on <html>) ----- */
+    (function(){
+      const ro = () => {
+        const w = window.innerWidth;
+        document.documentElement.classList.toggle('mobile', w < 640);
+        document.documentElement.classList.toggle('tablet', w >= 640 && w < 1024);
+        document.documentElement.classList.toggle('desktop', w >= 1024);
       };
+      ro(); window.addEventListener('resize', () => { clearTimeout(window.__rT); window.__rT=setTimeout(ro,120); });
+      if (window.matchMedia('(pointer: coarse)').matches) document.documentElement.classList.add('touch');
+    })();
 
-      textBtn?.addEventListener('click', safe(() => show('text')), {capture:true});
-      htmlBtn?.addEventListener('click', safe(() => show('html')), {capture:true});
-    });
-  </script>
-
-  <!-- Publish + sanitize + render -->
-  <script>
-    // DOM-based sanitizer: removes scripts/iframes/objects/embeds/links, event handlers, and unsafe protocols
+    /* ----- sanitizer (keeps content, strips scripts/handlers/unsafe URLs) ----- */
     function sanitizeHTML(html) {
       if (!html) return '';
       const tmpl = document.createElement('template');
       tmpl.innerHTML = html;
-
       const BLOCK = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
-      const ALLOW_PROTOCOL = (url, attr) => {
+      const allowProtocol = (url) => {
         try {
           if (url.startsWith('data:')) return /^data:image\//i.test(url);
           const u = new URL(url, location.origin);
           return ['http:','https:','mailto:','tel:'].includes(u.protocol);
-        } catch {
-          return !/^\s*javascript:/i.test(url);
-        }
+        } catch { return !/^\s*javascript:/i.test(url); }
       };
-
-      const walker = document.createNodeIterator(tmpl.content, NodeFilter.SHOW_ELEMENT, null);
-      let node;
-      const nodesToRemove = [];
-
+      const walker = document.createNodeIterator(tmpl.content, NodeFilter.SHOW_ELEMENT);
+      let node, kill = [];
       while ((node = walker.nextNode())) {
-        if (BLOCK.has(node.tagName)) { nodesToRemove.push(node); continue; }
-        if (node.tagName === 'LINK') { nodesToRemove.push(node); continue; }
-
-        [...node.attributes].forEach(attr => {
-          const n = attr.name.toLowerCase();
-          const v = attr.value || '';
-          if (n.startsWith('on')) { node.removeAttribute(attr.name); return; }
-          if ((n === 'href' || n === 'src') && v) {
-            if (!ALLOW_PROTOCOL(v, n)) node.removeAttribute(attr.name);
-          }
+        if (BLOCK.has(node.tagName) || node.tagName === 'LINK') { kill.push(node); continue; }
+        [...node.attributes].forEach(a => {
+          const n=a.name.toLowerCase(), v=a.value||'';
+          if (n.startsWith('on')) node.removeAttribute(a.name);
+          if ((n==='href'||n==='src') && v && !allowProtocol(v)) node.removeAttribute(a.name);
         });
       }
-      nodesToRemove.forEach(el => el.remove());
+      kill.forEach(el => el.remove());
       return tmpl.innerHTML;
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const $ = (id) => document.getElementById(id);
-
-      // fields
-      const aTitle     = $('aTitle');
-      const aSubtitle  = $('aSubtitle');
-      const aAuthor    = $('aAuthor');
-      const aDate      = $('aDate');
-      const aTags      = $('aTags');
-      const aExcerpt   = $('aExcerpt');
-      const aCoverUrl  = $('aCoverUrl');
-      const aCoverFile = $('aCoverFile');
-      const aText      = $('aText');
-      const aHtml      = $('aHtml');
-
-      // UI
-      const btnPublish = $('publishBtn');
-      const btnClear   = $('clearBtn');
-      const draftStatus= $('draftStatus');
-
-      const tabText    = $('tabText');
-      const tabHtml    = $('tabHtml');
-      const paneText   = $('paneText');
-      const paneHtml   = $('paneHtml');
-
-      const articleSec = $('article');
-      const postTitle  = $('postTitle');
-      const postSubtitle = $('postSubtitle');
-      const postAuthor = $('postAuthor');
-      const postDate   = $('postDate');
-      const postReadTime = $('postReadTime');
-      const postTags   = $('postTags');
-      const postBody   = $('postBody');
-
-      // Ensure critical controls are usable even if viewer locks tried to disable them
-      [btnPublish, btnClear, tabText, tabHtml].forEach(el => {
-        if (el) {
-          el.removeAttribute('disabled');
-          el.setAttribute('data-view-allowed','');
-          el.style.pointerEvents = 'auto';
-          el.tabIndex = 0;
-        }
+    /* ----- utils ----- */
+    const $ = id => document.getElementById(id);
+    const STORAGE_KEY = 'emm_posts';
+    const COMMENTS_KEY = id => `emm_comments_${id}`;
+    const slugify = s => (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,80);
+    const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    function stripToText(html){ const d=document.createElement('div'); d.innerHTML=html; return (d.textContent||'').trim(); }
+    function textToHtml(text){
+      if(!text) return '';
+      const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return esc.trim().split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('\n');
+    }
+    function wordCount(html){ return (stripToText(html).match(/\S+/g)||[]).length; }
+    function tagsFragment(tagsStr){
+      const frag = document.createDocumentFragment();
+      (tagsStr||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{
+        const span=document.createElement('span'); span.className='chip'; span.textContent=t; frag.appendChild(span);
       });
-
-      // utilities
-      function textToHtml(text) {
-        if (!text) return '';
-        const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        return esc.trim()
-          .split(/\n{2,}/)
-          .map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`)
-          .join('\n');
-      }
-
-      function wordCountFromHtml(html) {
-        const t = document.createElement('div');
-        t.innerHTML = html;
-        const text = t.textContent || '';
-        const m = text.trim().match(/\S+/g);
-        return m ? m.length : 0;
-      }
-
-      function tagsFragment(tagsStr) {
-        const frag = document.createDocumentFragment();
-        (tagsStr || '').split(',').map(s => s.trim()).filter(Boolean).forEach(t => {
-          const span = document.createElement('span');
-          span.className = 'chip';
-          span.textContent = t;
-          frag.appendChild(span);
-        });
-        return frag;
-      }
-
-      function setCover(coverUrl) {
-        const hero = document.querySelector('.hero.financial');
-        if (!hero) return;
-        if (coverUrl) {
-          hero.style.setProperty('--hero', `url("${coverUrl}")`);
-        } else {
-          hero.style.removeProperty('--hero');
-        }
-      }
-
-      async function readFileAsDataURL(file) {
-        return new Promise((resolve, reject) => {
-          const fr = new FileReader();
-          fr.onload = () => resolve(fr.result);
-          fr.onerror = reject;
-          fr.readAsDataURL(file);
-        });
-      }
-
-      async function publish() {
-        const title    = (aTitle.value || '').trim() || 'Untitled';
-        const subtitle = (aSubtitle.value || '').trim();
-        const author   = (aAuthor.value || '').trim();
-        const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
-        const tagsStr  = (aTags.value || '').trim();
-        const excerpt  = (aExcerpt.value || '').trim();
-
-        // Cover: uploaded file wins over URL
-        let cover = (aCoverUrl.value || '').trim();
-        const file = aCoverFile.files && aCoverFile.files[0];
-        if (file) cover = await readFileAsDataURL(file);
-
-        // Body: based on active tab
-        const isHtmlMode = tabHtml?.classList.contains('active');
-        let bodyHtml = '';
-        if (isHtmlMode) {
-          bodyHtml = sanitizeHTML(aHtml.value || '');
-        } else {
-          bodyHtml = textToHtml(aText.value || '');
-        }
-
-        // Read time
-        const words = wordCountFromHtml(bodyHtml);
-        const minutes = Math.max(1, Math.round(words / 220));
-
-        // Populate post
-        postTitle.textContent = title;
-        postSubtitle.textContent = subtitle;
-        postAuthor.textContent = author || '—';
-        const dt = new Date(dateISO);
-        postDate.textContent = dt.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'});
-        postDate.setAttribute('datetime', dateISO);
-        postReadTime.textContent = `${minutes} min read`;
-        postTags.innerHTML = '';
-        postTags.appendChild(tagsFragment(tagsStr));
-        postBody.innerHTML = bodyHtml;
-
-        setCover(cover);
-
-        // Reveal article & comments
-        articleSec.hidden = false;
-        const comments = document.getElementById('comments');
-        if (comments) comments.hidden = false;
-
-        // Persist locally so a refresh can restore it
-        const post = { title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
-        try { localStorage.setItem('emm_last_post', JSON.stringify(post)); } catch(_) {}
-
-        // Status + scroll
-        draftStatus.textContent = isHtmlMode ? 'Published (HTML)' : 'Published (Text)';
-        draftStatus.classList.add('text-green-600');
-        articleSec.scrollIntoView({ behavior: 'smooth' });
-      }
-
-      // Bind (capture-phase to bypass blockers)
-      btnPublish?.addEventListener('click', (e) => {
-        e.preventDefault(); e.stopImmediatePropagation(); publish();
-      }, {capture:true});
-
-      btnClear?.addEventListener('click', (e) => {
-        e.preventDefault(); e.stopImmediatePropagation();
-        document.querySelectorAll('#upload input, #upload textarea').forEach(el => {
-          if (el.type === 'file') el.value = '';
-          else el.value = '';
-        });
-        draftStatus.textContent = 'Draft';
-        draftStatus.classList.remove('text-green-600');
-      }, {capture:true});
-
-      // Optional: restore last post on load
-      try {
-        const last = localStorage.getItem('emm_last_post');
-        if (last) {
-          const p = JSON.parse(last);
-          aTitle.value = p.title || '';
-          aSubtitle.value = p.subtitle || '';
-          aAuthor.value = p.author || '';
-          aDate.value = p.dateISO || '';
-          aTags.value = p.tagsStr || '';
-          aExcerpt.value = p.excerpt || '';
-          aCoverUrl.value = p.cover || '';
-          aText.value = (p.bodyHtml && !p.bodyHtml.trim().startsWith('<')) ? p.bodyHtml : '';
-          aHtml.value = (p.bodyHtml && p.bodyHtml.trim().startsWith('<')) ? p.bodyHtml : '';
-        }
-      } catch(_) {}
-    });
-  </script>
-
-  <!-- Supabase/editor modules (leave as-is if used elsewhere) -->
-  <script type="module" src="assets/sb-init.js"></script>
-  <script type="module" src="assets/dynamic-emm.js"></script>
-  <script type="module" src="assets/editor-auth.js"></script>
-  <script type="module" src="assets/editor-tray.js"></script>
-  <script type="module" src="assets/editor-quiet.js"></script>
-  <script type="module" src="assets/editor-unlock.js"></script>
-  <script>
-/* ---------- basic sanitizer (keeps tags, strips scripts/handlers/unsafe URLs) ---------- */
-function sanitizeHTML(html) {
-  if (!html) return '';
-  const tmpl = document.createElement('template');
-  tmpl.innerHTML = html;
-  const BLOCK = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
-  const allowProtocol = (url) => {
-    try {
-      if (url.startsWith('data:')) return /^data:image\//i.test(url);
-      const u = new URL(url, location.origin);
-      return ['http:','https:','mailto:','tel:'].includes(u.protocol);
-    } catch { return !/^\s*javascript:/i.test(url); }
-  };
-  const walker = document.createNodeIterator(tmpl.content, NodeFilter.SHOW_ELEMENT);
-  let node, kill = [];
-  while ((node = walker.nextNode())) {
-    if (BLOCK.has(node.tagName) || node.tagName === 'LINK') { kill.push(node); continue; }
-    [...node.attributes].forEach(a => {
-      const n=a.name.toLowerCase(), v=a.value||'';
-      if (n.startsWith('on')) node.removeAttribute(a.name);
-      if ((n==='href'||n==='src') && v && !allowProtocol(v)) node.removeAttribute(a.name);
-    });
-  }
-  kill.forEach(el => el.remove());
-  return tmpl.innerHTML;
-}
-
-/* ---------- small utils ---------- */
-const STORAGE_KEY = 'emm_posts';
-const $ = (id) => document.getElementById(id);
-const slugify = s => (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,80);
-const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
-function stripToText(html){ const d=document.createElement('div'); d.innerHTML=html; return (d.textContent||'').trim(); }
-function textToHtml(text){
-  if(!text) return '';
-  const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  return esc.trim().split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('\n');
-}
-function wordCount(html){ return (stripToText(html).match(/\S+/g)||[]).length; }
-function tagsFragment(tagsStr){
-  const frag = document.createDocumentFragment();
-  (tagsStr||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{
-    const span=document.createElement('span'); span.className='chip'; span.textContent=t; frag.appendChild(span);
-  });
-  return frag;
-}
-function setHeroCover(url){
-  const hero=document.querySelector('.hero.financial');
-  if(!hero) return;
-  if(url) hero.style.setProperty('--hero', `url("${url}")`);
-  else hero.style.removeProperty('--hero');
-}
-
-/* ---------- storage ---------- */
-function loadPosts(){
-  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch{ return []; }
-}
-function savePosts(list){
-  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch{}
-}
-function upsertPost(p){
-  const list = loadPosts();
-  const idx = list.findIndex(x=>x.id===p.id);
-  if(idx>-1) list[idx]=p; else list.unshift(p);
-  savePosts(list);
-}
-
-/* ---------- FEED rendering ---------- */
-function renderFeed(){
-  const grid = $('feedGrid'), count=$('feedCount'), empty=$('emptyFeed');
-  if(!grid) return;
-  const items = loadPosts().sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
-  grid.innerHTML = '';
-  count.textContent = items.length;
-  empty.hidden = items.length>0;
-
-  for(const p of items){
-    const card = document.createElement('article');
-    card.className = 'card'; card.tabIndex = 0; card.setAttribute('role','link'); card.setAttribute('data-view-allowed','');
-    card.dataset.id = p.id;
-
-    if (p.cover){
-      const img = document.createElement('img');
-      img.className = 'thumb';
-      img.alt = '';
-      img.src = p.cover;
-      card.appendChild(img);
+      return frag;
+    }
+    function setHeroCover(url){
+      const hero=document.querySelector('.hero.financial');
+      if(!hero) return;
+      if(url) hero.style.setProperty('--hero', `url("${url}")`);
+      else hero.style.removeProperty('--hero');
     }
 
-    const body = document.createElement('div'); body.className='body';
-    const h4 = document.createElement('h4'); h4.textContent = p.title || 'Untitled';
-    const deck = document.createElement('p'); deck.className='deck'; deck.textContent = p.excerpt || p.subtitle || stripToText(p.bodyHtml).slice(0,180);
-    const meta = document.createElement('div'); meta.className='meta';
-    const dt = new Date(p.dateISO||Date.now());
-    meta.innerHTML = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${Math.max(1,Math.round((p.minutes||1)))} min`;
+    /* ----- storage (localStorage; can swap for Supabase later) ----- */
+    function loadPosts(){
+      try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch{ return []; }
+    }
+    function savePosts(list){
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch{}
+    }
+    function upsertPost(p){
+      const list = loadPosts();
+      const i = list.findIndex(x=>x.id===p.id);
+      if(i>-1) list[i]=p; else list.unshift(p);
+      savePosts(list);
+    }
+    function latestPost(){ return loadPosts().slice().sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''))[0]; }
+    function findBySlug(slug){ return loadPosts().find(p=> (p.slug||'')===slug); }
+    function findById(id){ return loadPosts().find(p=> p.id===id); }
 
-    body.append(h4, deck, meta);
-    card.appendChild(body);
+    /* ----- comments (local per post) ----- */
+    function loadComments(postId){
+      try{ return JSON.parse(localStorage.getItem(COMMENTS_KEY(postId))||'[]'); }catch{ return []; }
+    }
+    function saveComments(postId, arr){
+      try{ localStorage.setItem(COMMENTS_KEY(postId), JSON.stringify(arr)); }catch{}
+    }
+    function renderComments(postId){
+      const listEl = $('commentsList'), countEl=$('commentsCount');
+      if (!listEl) return;
+      const items = loadComments(postId);
+      listEl.innerHTML = items.map(c => `
+        <div class="comment-item" data-view-allowed>
+          <div class="comment-author">${c.name||'Anonymous'}</div>
+          <div class="comment-meta">${new Date(c.timeISO).toLocaleString()}</div>
+          <div class="comment-text">${(c.text||'').replace(/[<>&]/g, s=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[s]))}</div>
+        </div>
+      `).join('');
+      if (countEl) countEl.textContent = items.length;
+    }
 
-    const open = (e)=>{ e?.preventDefault(); e?.stopPropagation(); location.hash = `#post/${p.id}`; };
-    card.addEventListener('click', open, {capture:true});
-    card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') open(e); }, {capture:true});
+    /* ----- FEED (cards like Projects) ----- */
+    function renderFeed(){
+      const grid = $('feedGrid'), count=$('feedCount'), empty=$('emptyFeed');
+      if(!grid) return;
+      const items = loadPosts().sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
+      grid.innerHTML = '';
+      count.textContent = items.length;
+      empty.hidden = items.length>0;
 
-    grid.appendChild(card);
-  }
-}
+      for(const p of items){
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.tabIndex = 0;
+        card.setAttribute('role','link');
+        card.setAttribute('data-view-allowed','');
+        card.dataset.id = p.id;
 
-/* ---------- ARTICLE rendering ---------- */
-function renderPost(p){
-  if(!p) return;
-  const postTitle = $('postTitle'), postSubtitle=$('postSubtitle'), postAuthor=$('postAuthor'),
-        postDate=$('postDate'), postReadTime=$('postReadTime'), postTags=$('postTags'),
-        postBody=$('postBody'), articleSec=$('article'), toolbar=$('articleToolbar');
+        if (p.cover){
+          const img = document.createElement('img');
+          img.className = 'thumb';
+          img.alt = '';
+          img.src = p.cover;
+          card.appendChild(img);
+        }
 
-  postTitle.textContent = p.title || 'Untitled';
-  postSubtitle.textContent = p.subtitle || '';
-  postAuthor.textContent = p.author || '—';
-  const dt = new Date(p.dateISO||Date.now());
-  postDate.textContent = dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
-  postDate.setAttribute('datetime', p.dateISO || '');
-  postReadTime.textContent = `${Math.max(1, Math.round((p.minutes||wordCount(p.bodyHtml)/220)))} min read`;
-  postTags.innerHTML=''; postTags.appendChild(tagsFragment(p.tagsStr||''));
-  postBody.innerHTML = p.bodyHtml || '';
+        const body = document.createElement('div'); body.className='body';
+        const h4 = document.createElement('h4'); h4.textContent = p.title || 'Untitled';
+        const deck = document.createElement('p'); deck.className='deck'; deck.textContent = p.excerpt || p.subtitle || stripToText(p.bodyHtml).slice(0,180);
+        const meta = document.createElement('div'); meta.className='meta';
+        const dt = new Date(p.dateISO||Date.now());
+        meta.textContent = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${Math.max(1,Math.round((p.minutes||1)))} min`;
 
-  setHeroCover(p.cover||'');
+        body.append(h4, deck, meta);
+        card.appendChild(body);
 
-  // show article, hide feed
-  if(articleSec) articleSec.hidden = false;
-  if($('feed')) $('feed').hidden = true;
-  if(toolbar) toolbar.hidden = false;
-}
+        const open = (e)=>{ e?.preventDefault(); e?.stopPropagation(); location.hash = `#post/${p.id}`; };
+        card.addEventListener('click', open, {capture:true});
+        card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') open(e); }, {capture:true});
 
-/* ---------- ROUTER ---------- */
-function goToFeed(){
-  if($('article')) $('article').hidden = true;
-  if($('articleToolbar')) $('articleToolbar').hidden = true;
-  if($('feed')) $('feed').hidden = false;
-  setHeroCover(''); // reset hero
-}
-function findPostById(id){ return loadPosts().find(p=>p.id===id); }
-function onRoute(){
-  const m = location.hash.match(/^#post\/([a-z0-9]+)/i);
-  if(m){
-    const post = findPostById(m[1]);
-    if(post) renderPost(post); else goToFeed();
-  } else {
-    goToFeed();
-  }
-}
+        grid.appendChild(card);
+      }
+    }
 
-/* ---------- PAGE WIRING ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-  // tabs
-  const tabText  = $('tabText'), tabHtml = $('tabHtml');
-  const paneText = $('paneText'), paneHtml = $('paneHtml');
-  function showTab(which){
-    const isHtml = which==='html';
-    tabText?.classList.toggle('active', !isHtml);
-    tabHtml?.classList.toggle('active',  isHtml);
-    if(paneText) paneText.hidden =  isHtml;
-    if(paneHtml) paneHtml.hidden = !isHtml;
-  }
-  const safe = fn => e=>{ e.stopImmediatePropagation?.(); e.stopPropagation?.(); e.preventDefault?.(); fn(); };
-  tabText?.addEventListener('click', safe(()=>showTab('text')), {capture:true});
-  tabHtml?.addEventListener('click', safe(()=>showTab('html')), {capture:true});
+    /* ----- ARTICLE view ----- */
+    function renderPost(p){
+      if(!p) return;
+      const postTitle = $('postTitle'), postSubtitle=$('postSubtitle'), postAuthor=$('postAuthor'),
+            postDate=$('postDate'), postReadTime=$('postReadTime'), postTags=$('postTags'),
+            postBody=$('postBody'), articleSec=$('article'), toolbar=$('articleToolbar'), commentsSec=$('comments');
 
-  // feed + router boot
-  renderFeed();
-  window.addEventListener('hashchange', onRoute);
-  onRoute();
+      postTitle.textContent = p.title || 'Untitled';
+      postSubtitle.textContent = p.subtitle || '';
+      postAuthor.textContent = p.author || '—';
+      const dt = new Date(p.dateISO||Date.now());
+      postDate.textContent = dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+      postDate.setAttribute('datetime', p.dateISO || '');
+      postReadTime.textContent = `${Math.max(1, Math.round((p.minutes||wordCount(p.bodyHtml)/220)))} min read`;
+      postTags.innerHTML=''; postTags.appendChild(tagsFragment(p.tagsStr||''));
+      postBody.innerHTML = p.bodyHtml || '';
 
-  // back button
-  const back = $('backToFeed');
-  back?.addEventListener('click', safe(()=>{ location.hash = ''; }), {capture:true});
+      setHeroCover(p.cover||'');
 
-  // publish
-  const aTitle=$('aTitle'), aSubtitle=$('aSubtitle'), aAuthor=$('aAuthor'), aDate=$('aDate'), aTags=$('aTags'),
-        aExcerpt=$('aExcerpt'), aCoverUrl=$('aCoverUrl'), aCoverFile=$('aCoverFile'),
-        aText=$('aText'), aHtml=$('aHtml');
-  const btnPublish=$('publishBtn'), btnClear=$('clearBtn'), draftStatus=$('draftStatus');
+      if(articleSec) articleSec.hidden = false;
+      if($('feed')) $('feed').hidden = true;
+      if(toolbar) toolbar.hidden = false;
+      if(commentsSec) { commentsSec.hidden = false; commentsSec.setAttribute('data-view-allowed',''); }
 
-  [btnPublish, btnClear, tabText, tabHtml].forEach(el=>{ if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-allowed',''); } });
+      renderComments(p.id);
 
-  function readFileAsDataURL(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(file); }); }
+      const form = $('commentForm');
+      if (form) {
+        form.onsubmit = (e)=>{
+          e.preventDefault();
+          const name = $('cName').value.trim();
+          const email= $('cEmail').value.trim(); // not displayed
+          const text = $('cText').value.trim();
+          if (!text) return;
+          const arr = loadComments(p.id);
+          arr.push({ name, email, text, timeISO: new Date().toISOString() });
+          saveComments(p.id, arr);
+          $('cText').value = '';
+          renderComments(p.id);
+        };
+      }
+    }
 
-  async function publish(){
-    const id = genId();
-    const title    = (aTitle.value||'').trim() || 'Untitled';
-    const subtitle = (aSubtitle.value||'').trim();
-    const author   = (aAuthor.value||'').trim();
-    const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
-    const tagsStr  = (aTags.value||'').trim();
-    const excerpt  = (aExcerpt.value||'').trim();
+    /* ----- ROUTER (supports #post/<id>, #slug/<slug>, #latest, ?id=, ?slug=) ----- */
+    async function onRoute(){
+      const hash = location.hash || '';
+      const q = new URLSearchParams(location.search);
+      const openLatest = () => { const lp = latestPost(); if (lp) renderPost(lp); else goToFeed(); };
 
-    let cover = (aCoverUrl.value||'').trim();
-    const f = aCoverFile.files && aCoverFile.files[0];
-    if(f) cover = await readFileAsDataURL(f);
+      if (hash.startsWith('#post/')) {
+        const id = hash.slice(6);
+        const p = findById(id); p ? renderPost(p) : goToFeed();
+        return;
+      }
+      if (hash.startsWith('#slug/')) {
+        const slug = decodeURIComponent(hash.slice(6));
+        const p = findBySlug(slug); p ? renderPost(p) : goToFeed();
+        return;
+      }
+      if (hash === '#latest') { openLatest(); return; }
 
-    const isHtmlMode = tabHtml?.classList.contains('active');
-    const bodyHtml = isHtmlMode ? sanitizeHTML(aHtml.value||'') : textToHtml(aText.value||'');
-    const minutes = Math.max(1, Math.round(wordCount(bodyHtml)/220));
-    const slug = slugify(title) || ('post-'+id);
+      if (q.has('id')) {
+        const p = findById(q.get('id')); p ? renderPost(p) : goToFeed();
+        return;
+      }
+      if (q.has('slug')) {
+        const p = findBySlug(q.get('slug')); p ? renderPost(p) : goToFeed();
+        return;
+      }
+      goToFeed();
+    }
+    function goToFeed(){
+      if($('article')) $('article').hidden = true;
+      if($('articleToolbar')) $('articleToolbar').hidden = true;
+      if($('feed')) $('feed').hidden = false;
+      setHeroCover('');
+    }
 
-    const post = { id, slug, title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
-
-    upsertPost(post);        // save to localStorage
-    renderFeed();            // refresh feed
-    draftStatus.textContent = 'Published';
-    draftStatus.classList.add('text-green-600');
-
-    // open detail view ONLY when clicked — so we stay on feed after publish:
-    // If you prefer auto-open, uncomment next line:
-    // location.hash = `#post/${id}`;
-    window.scrollTo({ top: document.querySelector('#feed').offsetTop - 10, behavior:'smooth' });
-  }
-
-  btnPublish?.addEventListener('click', safe(publish), {capture:true});
-  btnClear?.addEventListener('click', safe(()=>{
-    document.querySelectorAll('#upload input, #upload textarea').forEach(el=>{ el.type==='file' ? el.value='' : el.value=''; });
-    draftStatus.textContent='Draft'; draftStatus.classList.remove('text-green-600');
-  }), {capture:true});
-});
-</script>
-
-</body>
-</html>
+    /* ----- PAGE BOOT ----- */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Whitelist controls for Viewer
+      ['publishBtn','clearBtn','tabText','tabHtml','backToFeed','commentForm','cName','cEmail','cText'].forEach(id=>{
+        const el=$(id); if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-al
