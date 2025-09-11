@@ -149,8 +149,8 @@
       </div>
 
       <div class="two">
-        <button id="publishBtn" class="pill-btn primary" type="button">Publish</button>
-        <button id="clearBtn" class="pill-btn" type="button">Clear form</button>
+        <button id="publishBtn" class="pill-btn primary" type="button" data-view-allowed>Publish</button>
+        <button id="clearBtn"   class="pill-btn" type="button" data-view-allowed>Clear form</button>
       </div>
     </section>
 
@@ -320,6 +320,208 @@ document.addEventListener('DOMContentLoaded', () => {
 
   textBtn?.addEventListener('click', safe(() => show('text')), {capture:true});
   htmlBtn?.addEventListener('click', safe(() => show('html')), {capture:true});
+});
+</script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // --- helpers
+  const $ = (id) => document.getElementById(id);
+
+  // fields
+  const aTitle     = $('aTitle');
+  const aSubtitle  = $('aSubtitle');
+  const aAuthor    = $('aAuthor');
+  const aDate      = $('aDate');
+  const aTags      = $('aTags');
+  const aExcerpt   = $('aExcerpt');
+  const aCoverUrl  = $('aCoverUrl');
+  const aCoverFile = $('aCoverFile');
+  const aText      = $('aText');
+  const aHtml      = $('aHtml');
+
+  // UI
+  const btnPublish = $('publishBtn');
+  const btnClear   = $('clearBtn');
+  const draftStatus= $('draftStatus');
+
+  const tabText    = $('tabText');
+  const tabHtml    = $('tabHtml');
+  const paneText   = $('paneText');
+  const paneHtml   = $('paneHtml');
+
+  const articleSec = $('article');
+  const postTitle  = $('postTitle');
+  const postSubtitle = $('postSubtitle');
+  const postAuthor = $('postAuthor');
+  const postDate   = $('postDate');
+  const postReadTime = $('postReadTime');
+  const postTags   = $('postTags');
+  const postBody   = $('postBody');
+
+  // Make sure critical buttons work even in locked views
+  [btnPublish, btnClear, tabText, tabHtml].forEach(el => {
+    if (el) {
+      el.removeAttribute('disabled');
+      el.setAttribute('data-view-allowed','');
+    }
+  });
+
+  // --- tab switching (keeps your existing behavior)
+  function showTab(which){
+    const isHtml = which === 'html';
+    tabText?.classList.toggle('active', !isHtml);
+    tabHtml?.classList.toggle('active',  isHtml);
+    if (paneText) paneText.hidden =  isHtml;
+    if (paneHtml) paneHtml.hidden = !isHtml;
+  }
+  const safe = (fn) => (e) => { e.stopImmediatePropagation(); e.stopPropagation(); e.preventDefault(); fn(); };
+  tabText?.addEventListener('click', safe(() => showTab('text')), {capture:true});
+  tabHtml?.addEventListener('click', safe(() => showTab('html')), {capture:true});
+
+  // --- content transforms
+  function stripDangerous(html) {
+    if (!html) return '';
+    // remove <script>…</script>
+    let safe = html.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
+    // strip inline event handlers: onXXX="…"
+    safe = safe.replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi, '');
+    return safe;
+  }
+
+  function textToHtml(text) {
+    if (!text) return '';
+    // escape then convert paragraphs / line breaks
+    const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return esc.trim()
+      .split(/\n{2,}/)
+      .map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`)
+      .join('\n');
+  }
+
+  function wordCountFromHtml(html) {
+    const t = document.createElement('div');
+    t.innerHTML = html;
+    const text = t.textContent || '';
+    const m = text.trim().match(/\S+/g);
+    return m ? m.length : 0;
+  }
+
+  function tagsFragment(tagsStr) {
+    const frag = document.createDocumentFragment();
+    (tagsStr || '').split(',').map(s => s.trim()).filter(Boolean).forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'chip';
+      span.textContent = t;
+      frag.appendChild(span);
+    });
+    return frag;
+  }
+
+  function setCover(coverUrl) {
+    const hero = document.querySelector('.hero.financial');
+    if (!hero) return;
+    if (coverUrl) {
+      hero.style.setProperty('--hero', `url("${coverUrl}")`);
+    } else {
+      hero.style.removeProperty('--hero');
+    }
+  }
+
+  // --- publish flow
+  async function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(fr.result);
+      fr.onerror = reject;
+      fr.readAsDataURL(file);
+    });
+  }
+
+  async function publish() {
+    // Gather fields
+    const title    = (aTitle.value || '').trim() || 'Untitled';
+    const subtitle = (aSubtitle.value || '').trim();
+    const author   = (aAuthor.value || '').trim();
+    const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
+    const tagsStr  = (aTags.value || '').trim();
+    const excerpt  = (aExcerpt.value || '').trim();
+
+    // Cover: uploaded file wins over URL
+    let cover = (aCoverUrl.value || '').trim();
+    const file = aCoverFile.files && aCoverFile.files[0];
+    if (file) cover = await readFileAsDataURL(file);
+
+    // Body: render based on active tab
+    const isHtmlMode = tabHtml?.classList.contains('active');
+    let bodyHtml = '';
+    if (isHtmlMode) {
+      // Render real HTML (not escaped) but strip scripts/handlers
+      bodyHtml = stripDangerous(aHtml.value || '');
+    } else {
+      bodyHtml = textToHtml(aText.value || '');
+    }
+
+    // Read time
+    const words = wordCountFromHtml(bodyHtml);
+    const minutes = Math.max(1, Math.round(words / 220));
+
+    // Populate post
+    postTitle.textContent = title;
+    postSubtitle.textContent = subtitle;
+    postAuthor.textContent = author || '—';
+    const dt = new Date(dateISO);
+    postDate.textContent = dt.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'});
+    postDate.setAttribute('datetime', dateISO);
+    postReadTime.textContent = `${minutes} min read`;
+    postTags.innerHTML = '';
+    postTags.appendChild(tagsFragment(tagsStr));
+    postBody.innerHTML = bodyHtml;
+
+    setCover(cover);
+
+    // Reveal article & comments
+    articleSec.hidden = false;
+    const comments = document.getElementById('comments');
+    if (comments) comments.hidden = false;
+
+    // Persist locally so a refresh can restore it
+    const post = { title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
+    try { localStorage.setItem('emm_last_post', JSON.stringify(post)); } catch(_) {}
+
+    // Status + scroll
+    draftStatus.textContent = 'Published';
+    draftStatus.classList.add('text-green-600');
+    articleSec.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Bind buttons in capture phase to bypass any global blockers
+  btnPublish?.addEventListener('click', (e) => { e.preventDefault(); e.stopImmediatePropagation(); publish(); }, {capture:true});
+  btnClear?.addEventListener('click', (e) => {
+    e.preventDefault(); e.stopImmediatePropagation();
+    document.querySelectorAll('#upload input, #upload textarea').forEach(el => {
+      if (el.type === 'file') el.value = '';
+      else el.value = '';
+    });
+    draftStatus.textContent = 'Draft';
+    draftStatus.classList.remove('text-green-600');
+  }, {capture:true});
+
+  // Optional: restore last post on load (comment out if you prefer a clean slate)
+  try {
+    const last = localStorage.getItem('emm_last_post');
+    if (last) {
+      const p = JSON.parse(last);
+      aTitle.value = p.title || '';
+      aSubtitle.value = p.subtitle || '';
+      aAuthor.value = p.author || '';
+      aDate.value = p.dateISO || '';
+      aTags.value = p.tagsStr || '';
+      aExcerpt.value = p.excerpt || '';
+      aCoverUrl.value = p.cover || '';
+      aText.value = (p.bodyHtml && !p.bodyHtml.trim().startsWith('<')) ? p.bodyHtml : '';
+      aHtml.value = (p.bodyHtml && p.bodyHtml.trim().startsWith('<')) ? p.bodyHtml : '';
+    }
+  } catch(_) {}
 });
 </script>
 </body>
