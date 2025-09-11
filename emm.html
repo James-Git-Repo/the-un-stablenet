@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>European Market Movers — Weekly</title>
@@ -9,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
     :root{ --page:#ffffff; --ink:#0b152c; --muted:#4c5c83; --line:#e7edf7; --card:#ffffff; --primary:#1f4aff; --accent:#00b7ff; --chip:#eef4ff; --maxw:1120px; --shadow:0 10px 30px rgba(12,23,52,.08) }
     *{box-sizing:border-box}
@@ -36,13 +36,27 @@
 
     /* Hero */
     .hero{border-bottom:1px solid var(--line)}
-    .hero.financial{position:relative; background-image:linear-gradient(180deg, rgba(31,74,255,0.12), rgba(0,183,255,0.08)), var(--hero, linear-gradient(180deg,#f7faff 0%,#ffffff 60%)); background-size:cover; background-position:center}
-    .hero.financial::before{content:""; position:absolute; inset:0; background-image:linear-gradient(to right, rgba(12,23,52,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(12,23,52,0.06) 1px, transparent 1px); background-size:48px 48px; pointer-events:none}
-    .hero.financial::after{content:""; position:absolute; top:-30%; right:-20%; width:60%; height:160%; background:radial-gradient(closest-side, rgba(31,74,255,0.18), transparent 70%); pointer-events:none}
+    .hero.financial{
+      position:relative;
+      background-image:linear-gradient(180deg, rgba(31,74,255,0.12), rgba(0,183,255,0.08)), var(--hero, linear-gradient(180deg,#f7faff 0%,#ffffff 60%));
+      background-size:cover; background-position:center
+    }
+    .hero.financial::before{
+      content:""; position:absolute; inset:0;
+      background-image:
+        linear-gradient(to right, rgba(12,23,52,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(12,23,52,0.06) 1px, transparent 1px);
+      background-size:48px 48px; pointer-events:none
+    }
+    .hero.financial::after{
+      content:""; position:absolute; top:-30%; right:-20%; width:60%; height:160%;
+      background:radial-gradient(closest-side, rgba(31,74,255,0.18), transparent 70%);
+      pointer-events:none
+    }
     .hero .inner{position:relative; max-width:var(--maxw); margin:0 auto; padding:40px 20px}
     .cover-title{font-size: clamp(30px, 3.8vw, 48px); line-height:1.08; margin:6px 0; color:#0b152c}
 
-    /* Editor/uploader + article + comments (unchanged) */
+    /* Editor/uploader + article + comments */
     .editor{background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:14px; margin:18px 0}
     .field{display:flex; flex-direction:column; gap:6px; margin-bottom:10px}
     .field label{font-size:12px; font-weight:700; color:#3a4a74}
@@ -56,12 +70,25 @@
     .post-head .subtitle{color:var(--muted); margin:0 0 8px 0}
     .meta{display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:13px}
     .chip{background:var(--chip); border:1px solid #dbe6ff; color:#2140b8; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px}
+
+    /* Prose defaults */
     .prose p{margin:1em 0; line-height:1.68}
     .prose h2{margin-top:1.4em; font-size:1.25rem}
     .prose img{max-width:100%; border-radius:12px; display:block; margin:12px 0}
     .prose figure{margin:14px 0}
     .prose figcaption{font-size:12px; color:#5d6a8e; text-align:center}
     .prose blockquote{border-left:4px solid var(--line); padding:6px 12px; color:#3a4a74; background:#f7faff; border-radius:8px}
+    /* Extra formatting for lists/tables/code */
+    .prose ul, .prose ol { margin: 1em 0; padding-left: 1.2em; }
+    .prose ul { list-style: disc; }
+    .prose ol { list-style: decimal; }
+    .prose li { margin: .25em 0; }
+    .prose table { width: 100%; border-collapse: collapse; margin: 1em 0; }
+    .prose th, .prose td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    .prose thead th { background: #f7faff; }
+    .prose pre, .prose code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .prose pre { background: #f7faff; border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow:auto; }
+
     .comments{border-top:1px solid var(--line); padding-top:18px; margin-top:24px}
     .comment-item{padding:12px 0; border-bottom:1px solid var(--line)}
     .comment-item:last-child{border-bottom:0}
@@ -69,7 +96,7 @@
     .comment-meta{font-size:12px; color:#6b7897}
     .comment-text{margin:8px 0 0 0; white-space:pre-wrap}
 
-    /* Contribute dialog (unchanged styles) */
+    /* Contribute dialog */
     dialog.contrib{border:none; border-radius:16px; width:min(680px, 92vw); padding:0; box-shadow:0 24px 80px rgba(12,23,52,.25)}
     .dlg-head{display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid var(--line)}
     .dlg-body{padding:14px 16px}
@@ -83,7 +110,7 @@
     @media (max-width: 780px){ .two{grid-template-columns:1fr} }
   </style>
 
-  <!-- viewer lock (keeps the look; no visual change) -->
+  <!-- viewer lock (keep look; whitelist our buttons) -->
   <link rel="stylesheet" href="assets/access-mode.css">
   <script defer src="assets/access-mode.js"></script>
 </head>
@@ -95,16 +122,15 @@
         <ul class="pill-row">
           <li><a class="pill-btn" href="index.html">Home</a></li>
           <!-- make Contribute usable for viewers -->
-          <li><button id="openContrib" class="pill-btn primary" type="button" data-view-allowed>
-  Contribute
-</button>
-</li>
+          <li>
+            <button id="openContrib" class="pill-btn primary" type="button" data-view-allowed>Contribute</button>
+          </li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- Hero stays exactly like the old page -->
+  <!-- Hero -->
   <section class="hero financial" aria-label="Section cover">
     <div class="inner">
       <h2 class="cover-title">European Market Movers</h2>
@@ -138,9 +164,10 @@
       </div>
 
       <div class="tabs" role="tablist">
-  <button id="tabText" class="active" type="button" data-view-allowed>Text</button>
-  <button id="tabHtml" type="button" data-view-allowed>HTML</button>
-</div>
+        <button id="tabText" class="active" type="button" data-view-allowed>Text</button>
+        <button id="tabHtml" type="button" data-view-allowed>HTML</button>
+      </div>
+
       <div id="paneText" role="tabpanel">
         <div class="field"><label for="aText">Text content</label><textarea id="aText" rows="10" placeholder="Write your article as plain text. Use blank lines between paragraphs."></textarea></div>
       </div>
@@ -150,7 +177,7 @@
 
       <div class="two">
         <button id="publishBtn" class="pill-btn primary" type="button" data-view-allowed>Publish</button>
-        <button id="clearBtn"   class="pill-btn" type="button" data-view-allowed>Clear form</button>
+        <button id="clearBtn"   class="pill-btn"          type="button" data-view-allowed>Clear form</button>
       </div>
     </section>
 
@@ -204,7 +231,7 @@
     </div>
   </footer>
 
-  <!-- Contribute dialog (original layout; just whitelisted for Viewer) -->
+  <!-- Contribute dialog -->
   <dialog id="contribDialog" class="contrib" data-view-allowed>
     <form method="dialog" id="contribFormContainer" data-view-allowed>
       <div class="dlg-head">
@@ -244,285 +271,300 @@
     </form>
   </dialog>
 
-  <!-- State & Scripts (unchanged behavior) -->
+  <!-- Local state (optional) -->
   <script id="emm-state" type="application/json">{"posts":[]}</script>
+
+  <!-- Contribute dialog wiring -->
   <script>
-    /* (the big inline script you already had — unchanged) */
-    /* It renders the article and handles Contribute locally. */
-    /* ... all your inline JS exactly as in the OLD file ... */
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('openContrib');
+      const dlg = document.getElementById('contribDialog');
+      const closeBtn = document.getElementById('closeContrib');
+      const cancelBtn = document.getElementById('cancelContrib');
+
+      function open() {
+        if (!dlg) return;
+        if (typeof dlg.showModal === 'function') dlg.showModal();
+        else dlg.style.display = 'block';
+      }
+      function close(e) {
+        if (e) e.preventDefault();
+        if (!dlg) return;
+        if (dlg.open && typeof dlg.close === 'function') dlg.close();
+        else dlg.style.display = 'none';
+      }
+
+      if (btn && dlg) btn.addEventListener('click', open, { capture: true });
+      if (closeBtn) closeBtn.addEventListener('click', close, { capture: true });
+      if (cancelBtn) cancelBtn.addEventListener('click', close, { capture: true });
+
+      if (dlg) {
+        dlg.addEventListener('click', (e) => {
+          const r = dlg.getBoundingClientRect();
+          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
+        }, { capture: true });
+      }
+    });
   </script>
 
-  <!-- Keep Supabase client + editor tray, but remove dynamic-emm to preserve the old look -->
-  <script type="module" src="assets/sb-init.js"></script>
-<script type="module" src="assets/dynamic-emm.js"></script>  <!-- add/keep THIS -->
-<script type="module" src="assets/editor-auth.js"></script>
-<script type="module" src="assets/editor-tray.js"></script>
-<script type="module" src="assets/editor-quiet.js"></script>
-<script type="module" src="assets/editor-unlock.js"></script>
- <script>
-  // Minimal wiring so Contribute opens/closes, independent of the old "el" object
-  document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('openContrib');
-    const dlg = document.getElementById('contribDialog');
-    const closeBtn = document.getElementById('closeContrib');
-    const cancelBtn = document.getElementById('cancelContrib');
-
-    function open() {
-      if (!dlg) return;
-      if (typeof dlg.showModal === 'function') dlg.showModal();
-      else dlg.style.display = 'block';
-    }
-    function close(e) {
-      if (e) e.preventDefault();
-      if (!dlg) return;
-      if (dlg.open && typeof dlg.close === 'function') dlg.close();
-      else dlg.style.display = 'none';
-    }
-
-    if (btn && dlg) btn.addEventListener('click', open, { capture: true }); // capture so viewer-lock never blocks it
-    if (closeBtn) closeBtn.addEventListener('click', close, { capture: true });
-    if (cancelBtn) cancelBtn.addEventListener('click', close, { capture: true });
-
-    // close when clicking the backdrop
-    if (dlg) {
-      dlg.addEventListener('click', (e) => {
-        const r = dlg.getBoundingClientRect();
-        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
-      }, { capture: true });
-    }
-  });
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const textBtn  = document.getElementById('tabText');
-  const htmlBtn  = document.getElementById('tabHtml');
-  const paneText = document.getElementById('paneText');
-  const paneHtml = document.getElementById('paneHtml');
-
-  function show(which){
-    const isHtml = (which === 'html');
-    textBtn?.classList.toggle('active', !isHtml);
-    htmlBtn?.classList.toggle('active',  isHtml);
-    if (paneText) paneText.hidden =  isHtml;
-    if (paneHtml) paneHtml.hidden = !isHtml;
-  }
-
-  // Ensure they aren't left disabled by viewer locks
-  [textBtn, htmlBtn].forEach(b => b && b.removeAttribute('disabled'));
-
-  const safe = (fn) => (e) => {
-    // defeat any global capture listeners that might block clicks
-    e.stopImmediatePropagation?.();
-    e.stopPropagation?.();
-    e.preventDefault();
-    fn();
-  };
-
-  textBtn?.addEventListener('click', safe(() => show('text')), {capture:true});
-  htmlBtn?.addEventListener('click', safe(() => show('html')), {capture:true});
-});
-</script>
+  <!-- Tabs: Text/HTML -->
   <script>
-document.addEventListener('DOMContentLoaded', () => {
-  // --- helpers
-  const $ = (id) => document.getElementById(id);
+    document.addEventListener('DOMContentLoaded', () => {
+      const textBtn  = document.getElementById('tabText');
+      const htmlBtn  = document.getElementById('tabHtml');
+      const paneText = document.getElementById('paneText');
+      const paneHtml = document.getElementById('paneHtml');
 
-  // fields
-  const aTitle     = $('aTitle');
-  const aSubtitle  = $('aSubtitle');
-  const aAuthor    = $('aAuthor');
-  const aDate      = $('aDate');
-  const aTags      = $('aTags');
-  const aExcerpt   = $('aExcerpt');
-  const aCoverUrl  = $('aCoverUrl');
-  const aCoverFile = $('aCoverFile');
-  const aText      = $('aText');
-  const aHtml      = $('aHtml');
+      function show(which){
+        const isHtml = (which === 'html');
+        textBtn?.classList.toggle('active', !isHtml);
+        htmlBtn?.classList.toggle('active',  isHtml);
+        if (paneText) paneText.hidden =  isHtml;
+        if (paneHtml) paneHtml.hidden = !isHtml;
+      }
 
-  // UI
-  const btnPublish = $('publishBtn');
-  const btnClear   = $('clearBtn');
-  const draftStatus= $('draftStatus');
+      // Ensure they aren't left disabled by viewer locks
+      [textBtn, htmlBtn].forEach(b => b && b.removeAttribute('disabled'));
 
-  const tabText    = $('tabText');
-  const tabHtml    = $('tabHtml');
-  const paneText   = $('paneText');
-  const paneHtml   = $('paneHtml');
+      const safe = (fn) => (e) => {
+        e.stopImmediatePropagation?.();
+        e.stopPropagation?.();
+        e.preventDefault();
+        fn();
+      };
 
-  const articleSec = $('article');
-  const postTitle  = $('postTitle');
-  const postSubtitle = $('postSubtitle');
-  const postAuthor = $('postAuthor');
-  const postDate   = $('postDate');
-  const postReadTime = $('postReadTime');
-  const postTags   = $('postTags');
-  const postBody   = $('postBody');
-
-  // Make sure critical buttons work even in locked views
-  [btnPublish, btnClear, tabText, tabHtml].forEach(el => {
-    if (el) {
-      el.removeAttribute('disabled');
-      el.setAttribute('data-view-allowed','');
-    }
-  });
-
-  // --- tab switching (keeps your existing behavior)
-  function showTab(which){
-    const isHtml = which === 'html';
-    tabText?.classList.toggle('active', !isHtml);
-    tabHtml?.classList.toggle('active',  isHtml);
-    if (paneText) paneText.hidden =  isHtml;
-    if (paneHtml) paneHtml.hidden = !isHtml;
-  }
-  const safe = (fn) => (e) => { e.stopImmediatePropagation(); e.stopPropagation(); e.preventDefault(); fn(); };
-  tabText?.addEventListener('click', safe(() => showTab('text')), {capture:true});
-  tabHtml?.addEventListener('click', safe(() => showTab('html')), {capture:true});
-
-  // --- content transforms
-  function stripDangerous(html) {
-    if (!html) return '';
-    // remove <script>…</script>
-    let safe = html.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
-    // strip inline event handlers: onXXX="…"
-    safe = safe.replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi, '');
-    return safe;
-  }
-
-  function textToHtml(text) {
-    if (!text) return '';
-    // escape then convert paragraphs / line breaks
-    const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    return esc.trim()
-      .split(/\n{2,}/)
-      .map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`)
-      .join('\n');
-  }
-
-  function wordCountFromHtml(html) {
-    const t = document.createElement('div');
-    t.innerHTML = html;
-    const text = t.textContent || '';
-    const m = text.trim().match(/\S+/g);
-    return m ? m.length : 0;
-  }
-
-  function tagsFragment(tagsStr) {
-    const frag = document.createDocumentFragment();
-    (tagsStr || '').split(',').map(s => s.trim()).filter(Boolean).forEach(t => {
-      const span = document.createElement('span');
-      span.className = 'chip';
-      span.textContent = t;
-      frag.appendChild(span);
+      textBtn?.addEventListener('click', safe(() => show('text')), {capture:true});
+      htmlBtn?.addEventListener('click', safe(() => show('html')), {capture:true});
     });
-    return frag;
-  }
+  </script>
 
-  function setCover(coverUrl) {
-    const hero = document.querySelector('.hero.financial');
-    if (!hero) return;
-    if (coverUrl) {
-      hero.style.setProperty('--hero', `url("${coverUrl}")`);
-    } else {
-      hero.style.removeProperty('--hero');
+  <!-- Publish + sanitize + render -->
+  <script>
+    // DOM-based sanitizer: removes scripts/iframes/objects/embeds/links, event handlers, and unsafe protocols
+    function sanitizeHTML(html) {
+      if (!html) return '';
+      const tmpl = document.createElement('template');
+      tmpl.innerHTML = html;
+
+      const BLOCK = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
+      const ALLOW_PROTOCOL = (url, attr) => {
+        try {
+          if (url.startsWith('data:')) return /^data:image\//i.test(url);
+          const u = new URL(url, location.origin);
+          return ['http:','https:','mailto:','tel:'].includes(u.protocol);
+        } catch {
+          return !/^\s*javascript:/i.test(url);
+        }
+      };
+
+      const walker = document.createNodeIterator(tmpl.content, NodeFilter.SHOW_ELEMENT, null);
+      let node;
+      const nodesToRemove = [];
+
+      while ((node = walker.nextNode())) {
+        if (BLOCK.has(node.tagName)) { nodesToRemove.push(node); continue; }
+        if (node.tagName === 'LINK') { nodesToRemove.push(node); continue; }
+
+        [...node.attributes].forEach(attr => {
+          const n = attr.name.toLowerCase();
+          const v = attr.value || '';
+          if (n.startsWith('on')) { node.removeAttribute(attr.name); return; }
+          if ((n === 'href' || n === 'src') && v) {
+            if (!ALLOW_PROTOCOL(v, n)) node.removeAttribute(attr.name);
+          }
+        });
+      }
+      nodesToRemove.forEach(el => el.remove());
+      return tmpl.innerHTML;
     }
-  }
 
-  // --- publish flow
-  async function readFileAsDataURL(file) {
-    return new Promise((resolve, reject) => {
-      const fr = new FileReader();
-      fr.onload = () => resolve(fr.result);
-      fr.onerror = reject;
-      fr.readAsDataURL(file);
+    document.addEventListener('DOMContentLoaded', () => {
+      const $ = (id) => document.getElementById(id);
+
+      // fields
+      const aTitle     = $('aTitle');
+      const aSubtitle  = $('aSubtitle');
+      const aAuthor    = $('aAuthor');
+      const aDate      = $('aDate');
+      const aTags      = $('aTags');
+      const aExcerpt   = $('aExcerpt');
+      const aCoverUrl  = $('aCoverUrl');
+      const aCoverFile = $('aCoverFile');
+      const aText      = $('aText');
+      const aHtml      = $('aHtml');
+
+      // UI
+      const btnPublish = $('publishBtn');
+      const btnClear   = $('clearBtn');
+      const draftStatus= $('draftStatus');
+
+      const tabText    = $('tabText');
+      const tabHtml    = $('tabHtml');
+      const paneText   = $('paneText');
+      const paneHtml   = $('paneHtml');
+
+      const articleSec = $('article');
+      const postTitle  = $('postTitle');
+      const postSubtitle = $('postSubtitle');
+      const postAuthor = $('postAuthor');
+      const postDate   = $('postDate');
+      const postReadTime = $('postReadTime');
+      const postTags   = $('postTags');
+      const postBody   = $('postBody');
+
+      // Ensure critical controls are usable even if viewer locks tried to disable them
+      [btnPublish, btnClear, tabText, tabHtml].forEach(el => {
+        if (el) {
+          el.removeAttribute('disabled');
+          el.setAttribute('data-view-allowed','');
+          el.style.pointerEvents = 'auto';
+          el.tabIndex = 0;
+        }
+      });
+
+      // utilities
+      function textToHtml(text) {
+        if (!text) return '';
+        const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        return esc.trim()
+          .split(/\n{2,}/)
+          .map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`)
+          .join('\n');
+      }
+
+      function wordCountFromHtml(html) {
+        const t = document.createElement('div');
+        t.innerHTML = html;
+        const text = t.textContent || '';
+        const m = text.trim().match(/\S+/g);
+        return m ? m.length : 0;
+      }
+
+      function tagsFragment(tagsStr) {
+        const frag = document.createDocumentFragment();
+        (tagsStr || '').split(',').map(s => s.trim()).filter(Boolean).forEach(t => {
+          const span = document.createElement('span');
+          span.className = 'chip';
+          span.textContent = t;
+          frag.appendChild(span);
+        });
+        return frag;
+      }
+
+      function setCover(coverUrl) {
+        const hero = document.querySelector('.hero.financial');
+        if (!hero) return;
+        if (coverUrl) {
+          hero.style.setProperty('--hero', `url("${coverUrl}")`);
+        } else {
+          hero.style.removeProperty('--hero');
+        }
+      }
+
+      async function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+          const fr = new FileReader();
+          fr.onload = () => resolve(fr.result);
+          fr.onerror = reject;
+          fr.readAsDataURL(file);
+        });
+      }
+
+      async function publish() {
+        const title    = (aTitle.value || '').trim() || 'Untitled';
+        const subtitle = (aSubtitle.value || '').trim();
+        const author   = (aAuthor.value || '').trim();
+        const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
+        const tagsStr  = (aTags.value || '').trim();
+        const excerpt  = (aExcerpt.value || '').trim();
+
+        // Cover: uploaded file wins over URL
+        let cover = (aCoverUrl.value || '').trim();
+        const file = aCoverFile.files && aCoverFile.files[0];
+        if (file) cover = await readFileAsDataURL(file);
+
+        // Body: based on active tab
+        const isHtmlMode = tabHtml?.classList.contains('active');
+        let bodyHtml = '';
+        if (isHtmlMode) {
+          bodyHtml = sanitizeHTML(aHtml.value || '');
+        } else {
+          bodyHtml = textToHtml(aText.value || '');
+        }
+
+        // Read time
+        const words = wordCountFromHtml(bodyHtml);
+        const minutes = Math.max(1, Math.round(words / 220));
+
+        // Populate post
+        postTitle.textContent = title;
+        postSubtitle.textContent = subtitle;
+        postAuthor.textContent = author || '—';
+        const dt = new Date(dateISO);
+        postDate.textContent = dt.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'});
+        postDate.setAttribute('datetime', dateISO);
+        postReadTime.textContent = `${minutes} min read`;
+        postTags.innerHTML = '';
+        postTags.appendChild(tagsFragment(tagsStr));
+        postBody.innerHTML = bodyHtml;
+
+        setCover(cover);
+
+        // Reveal article & comments
+        articleSec.hidden = false;
+        const comments = document.getElementById('comments');
+        if (comments) comments.hidden = false;
+
+        // Persist locally so a refresh can restore it
+        const post = { title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
+        try { localStorage.setItem('emm_last_post', JSON.stringify(post)); } catch(_) {}
+
+        // Status + scroll
+        draftStatus.textContent = isHtmlMode ? 'Published (HTML)' : 'Published (Text)';
+        draftStatus.classList.add('text-green-600');
+        articleSec.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Bind (capture-phase to bypass blockers)
+      btnPublish?.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopImmediatePropagation(); publish();
+      }, {capture:true});
+
+      btnClear?.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopImmediatePropagation();
+        document.querySelectorAll('#upload input, #upload textarea').forEach(el => {
+          if (el.type === 'file') el.value = '';
+          else el.value = '';
+        });
+        draftStatus.textContent = 'Draft';
+        draftStatus.classList.remove('text-green-600');
+      }, {capture:true});
+
+      // Optional: restore last post on load
+      try {
+        const last = localStorage.getItem('emm_last_post');
+        if (last) {
+          const p = JSON.parse(last);
+          aTitle.value = p.title || '';
+          aSubtitle.value = p.subtitle || '';
+          aAuthor.value = p.author || '';
+          aDate.value = p.dateISO || '';
+          aTags.value = p.tagsStr || '';
+          aExcerpt.value = p.excerpt || '';
+          aCoverUrl.value = p.cover || '';
+          aText.value = (p.bodyHtml && !p.bodyHtml.trim().startsWith('<')) ? p.bodyHtml : '';
+          aHtml.value = (p.bodyHtml && p.bodyHtml.trim().startsWith('<')) ? p.bodyHtml : '';
+        }
+      } catch(_) {}
     });
-  }
+  </script>
 
-  async function publish() {
-    // Gather fields
-    const title    = (aTitle.value || '').trim() || 'Untitled';
-    const subtitle = (aSubtitle.value || '').trim();
-    const author   = (aAuthor.value || '').trim();
-    const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
-    const tagsStr  = (aTags.value || '').trim();
-    const excerpt  = (aExcerpt.value || '').trim();
-
-    // Cover: uploaded file wins over URL
-    let cover = (aCoverUrl.value || '').trim();
-    const file = aCoverFile.files && aCoverFile.files[0];
-    if (file) cover = await readFileAsDataURL(file);
-
-    // Body: render based on active tab
-    const isHtmlMode = tabHtml?.classList.contains('active');
-    let bodyHtml = '';
-    if (isHtmlMode) {
-      // Render real HTML (not escaped) but strip scripts/handlers
-      bodyHtml = stripDangerous(aHtml.value || '');
-    } else {
-      bodyHtml = textToHtml(aText.value || '');
-    }
-
-    // Read time
-    const words = wordCountFromHtml(bodyHtml);
-    const minutes = Math.max(1, Math.round(words / 220));
-
-    // Populate post
-    postTitle.textContent = title;
-    postSubtitle.textContent = subtitle;
-    postAuthor.textContent = author || '—';
-    const dt = new Date(dateISO);
-    postDate.textContent = dt.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'});
-    postDate.setAttribute('datetime', dateISO);
-    postReadTime.textContent = `${minutes} min read`;
-    postTags.innerHTML = '';
-    postTags.appendChild(tagsFragment(tagsStr));
-    postBody.innerHTML = bodyHtml;
-
-    setCover(cover);
-
-    // Reveal article & comments
-    articleSec.hidden = false;
-    const comments = document.getElementById('comments');
-    if (comments) comments.hidden = false;
-
-    // Persist locally so a refresh can restore it
-    const post = { title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
-    try { localStorage.setItem('emm_last_post', JSON.stringify(post)); } catch(_) {}
-
-    // Status + scroll
-    draftStatus.textContent = 'Published';
-    draftStatus.classList.add('text-green-600');
-    articleSec.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // Bind buttons in capture phase to bypass any global blockers
-  btnPublish?.addEventListener('click', (e) => { e.preventDefault(); e.stopImmediatePropagation(); publish(); }, {capture:true});
-  btnClear?.addEventListener('click', (e) => {
-    e.preventDefault(); e.stopImmediatePropagation();
-    document.querySelectorAll('#upload input, #upload textarea').forEach(el => {
-      if (el.type === 'file') el.value = '';
-      else el.value = '';
-    });
-    draftStatus.textContent = 'Draft';
-    draftStatus.classList.remove('text-green-600');
-  }, {capture:true});
-
-  // Optional: restore last post on load (comment out if you prefer a clean slate)
-  try {
-    const last = localStorage.getItem('emm_last_post');
-    if (last) {
-      const p = JSON.parse(last);
-      aTitle.value = p.title || '';
-      aSubtitle.value = p.subtitle || '';
-      aAuthor.value = p.author || '';
-      aDate.value = p.dateISO || '';
-      aTags.value = p.tagsStr || '';
-      aExcerpt.value = p.excerpt || '';
-      aCoverUrl.value = p.cover || '';
-      aText.value = (p.bodyHtml && !p.bodyHtml.trim().startsWith('<')) ? p.bodyHtml : '';
-      aHtml.value = (p.bodyHtml && p.bodyHtml.trim().startsWith('<')) ? p.bodyHtml : '';
-    }
-  } catch(_) {}
-});
-</script>
+  <!-- Supabase/editor modules (leave as-is if used elsewhere) -->
+  <script type="module" src="assets/sb-init.js"></script>
+  <script type="module" src="assets/dynamic-emm.js"></script>
+  <script type="module" src="assets/editor-auth.js"></script>
+  <script type="module" src="assets/editor-tray.js"></script>
+  <script type="module" src="assets/editor-quiet.js"></script>
+  <script type="module" src="assets/editor-unlock.js"></script>
 </body>
 </html>
