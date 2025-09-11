@@ -10,6 +10,18 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px; }
+.card{
+  display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
+  border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
+.card .thumb{ aspect-ratio: 16/9; background:#eef4ff; object-fit:cover; width:100%; }
+.card .body{ padding:12px; }
+.card h4{ margin:0 0 4px 0; font-size:16px; line-height:1.25; font-weight:800; color:#0b152c }
+.card .deck{ margin:0 0 8px 0; color:#4c5c83; font-size:13px }
+.card .meta{ display:flex; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:12px }
     :root{ --page:#ffffff; --ink:#0b152c; --muted:#4c5c83; --line:#e7edf7; --card:#ffffff; --primary:#1f4aff; --accent:#00b7ff; --chip:#eef4ff; --maxw:1120px; --shadow:0 10px 30px rgba(12,23,52,.08) }
     *{box-sizing:border-box}
     body{margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--page)}
@@ -180,6 +192,18 @@
         <button id="clearBtn"   class="pill-btn"          type="button" data-view-allowed>Clear form</button>
       </div>
     </section>
+<!-- FEED (add this right before your existing <section id="article">) -->
+<section id="feed" aria-label="Post list" class="mt-6">
+  <div class="flex items-center justify-between mb-2">
+    <h3 class="text-lg font-extrabold">All posts</h3>
+    <span id="feedCount" class="text-xs text-slate-500">0</span>
+  </div>
+  <div id="feedGrid" class="cards"></div>
+  <p id="emptyFeed" class="text-slate-500 text-sm mt-2">No posts yet. Publish your first above.</p>
+</section>
+<div id="articleToolbar" class="mb-2" hidden>
+  <button id="backToFeed" class="pill-btn" type="button" data-view-allowed>← Back to posts</button>
+</div>
 
     <!-- Article -->
     <section id="article" class="article" aria-labelledby="postTitle" hidden>
@@ -566,5 +590,230 @@
   <script type="module" src="assets/editor-tray.js"></script>
   <script type="module" src="assets/editor-quiet.js"></script>
   <script type="module" src="assets/editor-unlock.js"></script>
+  <script>
+/* ---------- basic sanitizer (keeps tags, strips scripts/handlers/unsafe URLs) ---------- */
+function sanitizeHTML(html) {
+  if (!html) return '';
+  const tmpl = document.createElement('template');
+  tmpl.innerHTML = html;
+  const BLOCK = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
+  const allowProtocol = (url) => {
+    try {
+      if (url.startsWith('data:')) return /^data:image\//i.test(url);
+      const u = new URL(url, location.origin);
+      return ['http:','https:','mailto:','tel:'].includes(u.protocol);
+    } catch { return !/^\s*javascript:/i.test(url); }
+  };
+  const walker = document.createNodeIterator(tmpl.content, NodeFilter.SHOW_ELEMENT);
+  let node, kill = [];
+  while ((node = walker.nextNode())) {
+    if (BLOCK.has(node.tagName) || node.tagName === 'LINK') { kill.push(node); continue; }
+    [...node.attributes].forEach(a => {
+      const n=a.name.toLowerCase(), v=a.value||'';
+      if (n.startsWith('on')) node.removeAttribute(a.name);
+      if ((n==='href'||n==='src') && v && !allowProtocol(v)) node.removeAttribute(a.name);
+    });
+  }
+  kill.forEach(el => el.remove());
+  return tmpl.innerHTML;
+}
+
+/* ---------- small utils ---------- */
+const STORAGE_KEY = 'emm_posts';
+const $ = (id) => document.getElementById(id);
+const slugify = s => (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,80);
+const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+function stripToText(html){ const d=document.createElement('div'); d.innerHTML=html; return (d.textContent||'').trim(); }
+function textToHtml(text){
+  if(!text) return '';
+  const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return esc.trim().split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('\n');
+}
+function wordCount(html){ return (stripToText(html).match(/\S+/g)||[]).length; }
+function tagsFragment(tagsStr){
+  const frag = document.createDocumentFragment();
+  (tagsStr||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{
+    const span=document.createElement('span'); span.className='chip'; span.textContent=t; frag.appendChild(span);
+  });
+  return frag;
+}
+function setHeroCover(url){
+  const hero=document.querySelector('.hero.financial');
+  if(!hero) return;
+  if(url) hero.style.setProperty('--hero', `url("${url}")`);
+  else hero.style.removeProperty('--hero');
+}
+
+/* ---------- storage ---------- */
+function loadPosts(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch{ return []; }
+}
+function savePosts(list){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch{}
+}
+function upsertPost(p){
+  const list = loadPosts();
+  const idx = list.findIndex(x=>x.id===p.id);
+  if(idx>-1) list[idx]=p; else list.unshift(p);
+  savePosts(list);
+}
+
+/* ---------- FEED rendering ---------- */
+function renderFeed(){
+  const grid = $('feedGrid'), count=$('feedCount'), empty=$('emptyFeed');
+  if(!grid) return;
+  const items = loadPosts().sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
+  grid.innerHTML = '';
+  count.textContent = items.length;
+  empty.hidden = items.length>0;
+
+  for(const p of items){
+    const card = document.createElement('article');
+    card.className = 'card'; card.tabIndex = 0; card.setAttribute('role','link'); card.setAttribute('data-view-allowed','');
+    card.dataset.id = p.id;
+
+    if (p.cover){
+      const img = document.createElement('img');
+      img.className = 'thumb';
+      img.alt = '';
+      img.src = p.cover;
+      card.appendChild(img);
+    }
+
+    const body = document.createElement('div'); body.className='body';
+    const h4 = document.createElement('h4'); h4.textContent = p.title || 'Untitled';
+    const deck = document.createElement('p'); deck.className='deck'; deck.textContent = p.excerpt || p.subtitle || stripToText(p.bodyHtml).slice(0,180);
+    const meta = document.createElement('div'); meta.className='meta';
+    const dt = new Date(p.dateISO||Date.now());
+    meta.innerHTML = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${Math.max(1,Math.round((p.minutes||1)))} min`;
+
+    body.append(h4, deck, meta);
+    card.appendChild(body);
+
+    const open = (e)=>{ e?.preventDefault(); e?.stopPropagation(); location.hash = `#post/${p.id}`; };
+    card.addEventListener('click', open, {capture:true});
+    card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') open(e); }, {capture:true});
+
+    grid.appendChild(card);
+  }
+}
+
+/* ---------- ARTICLE rendering ---------- */
+function renderPost(p){
+  if(!p) return;
+  const postTitle = $('postTitle'), postSubtitle=$('postSubtitle'), postAuthor=$('postAuthor'),
+        postDate=$('postDate'), postReadTime=$('postReadTime'), postTags=$('postTags'),
+        postBody=$('postBody'), articleSec=$('article'), toolbar=$('articleToolbar');
+
+  postTitle.textContent = p.title || 'Untitled';
+  postSubtitle.textContent = p.subtitle || '';
+  postAuthor.textContent = p.author || '—';
+  const dt = new Date(p.dateISO||Date.now());
+  postDate.textContent = dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+  postDate.setAttribute('datetime', p.dateISO || '');
+  postReadTime.textContent = `${Math.max(1, Math.round((p.minutes||wordCount(p.bodyHtml)/220)))} min read`;
+  postTags.innerHTML=''; postTags.appendChild(tagsFragment(p.tagsStr||''));
+  postBody.innerHTML = p.bodyHtml || '';
+
+  setHeroCover(p.cover||'');
+
+  // show article, hide feed
+  if(articleSec) articleSec.hidden = false;
+  if($('feed')) $('feed').hidden = true;
+  if(toolbar) toolbar.hidden = false;
+}
+
+/* ---------- ROUTER ---------- */
+function goToFeed(){
+  if($('article')) $('article').hidden = true;
+  if($('articleToolbar')) $('articleToolbar').hidden = true;
+  if($('feed')) $('feed').hidden = false;
+  setHeroCover(''); // reset hero
+}
+function findPostById(id){ return loadPosts().find(p=>p.id===id); }
+function onRoute(){
+  const m = location.hash.match(/^#post\/([a-z0-9]+)/i);
+  if(m){
+    const post = findPostById(m[1]);
+    if(post) renderPost(post); else goToFeed();
+  } else {
+    goToFeed();
+  }
+}
+
+/* ---------- PAGE WIRING ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  // tabs
+  const tabText  = $('tabText'), tabHtml = $('tabHtml');
+  const paneText = $('paneText'), paneHtml = $('paneHtml');
+  function showTab(which){
+    const isHtml = which==='html';
+    tabText?.classList.toggle('active', !isHtml);
+    tabHtml?.classList.toggle('active',  isHtml);
+    if(paneText) paneText.hidden =  isHtml;
+    if(paneHtml) paneHtml.hidden = !isHtml;
+  }
+  const safe = fn => e=>{ e.stopImmediatePropagation?.(); e.stopPropagation?.(); e.preventDefault?.(); fn(); };
+  tabText?.addEventListener('click', safe(()=>showTab('text')), {capture:true});
+  tabHtml?.addEventListener('click', safe(()=>showTab('html')), {capture:true});
+
+  // feed + router boot
+  renderFeed();
+  window.addEventListener('hashchange', onRoute);
+  onRoute();
+
+  // back button
+  const back = $('backToFeed');
+  back?.addEventListener('click', safe(()=>{ location.hash = ''; }), {capture:true});
+
+  // publish
+  const aTitle=$('aTitle'), aSubtitle=$('aSubtitle'), aAuthor=$('aAuthor'), aDate=$('aDate'), aTags=$('aTags'),
+        aExcerpt=$('aExcerpt'), aCoverUrl=$('aCoverUrl'), aCoverFile=$('aCoverFile'),
+        aText=$('aText'), aHtml=$('aHtml');
+  const btnPublish=$('publishBtn'), btnClear=$('clearBtn'), draftStatus=$('draftStatus');
+
+  [btnPublish, btnClear, tabText, tabHtml].forEach(el=>{ if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-allowed',''); } });
+
+  function readFileAsDataURL(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(file); }); }
+
+  async function publish(){
+    const id = genId();
+    const title    = (aTitle.value||'').trim() || 'Untitled';
+    const subtitle = (aSubtitle.value||'').trim();
+    const author   = (aAuthor.value||'').trim();
+    const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
+    const tagsStr  = (aTags.value||'').trim();
+    const excerpt  = (aExcerpt.value||'').trim();
+
+    let cover = (aCoverUrl.value||'').trim();
+    const f = aCoverFile.files && aCoverFile.files[0];
+    if(f) cover = await readFileAsDataURL(f);
+
+    const isHtmlMode = tabHtml?.classList.contains('active');
+    const bodyHtml = isHtmlMode ? sanitizeHTML(aHtml.value||'') : textToHtml(aText.value||'');
+    const minutes = Math.max(1, Math.round(wordCount(bodyHtml)/220));
+    const slug = slugify(title) || ('post-'+id);
+
+    const post = { id, slug, title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
+
+    upsertPost(post);        // save to localStorage
+    renderFeed();            // refresh feed
+    draftStatus.textContent = 'Published';
+    draftStatus.classList.add('text-green-600');
+
+    // open detail view ONLY when clicked — so we stay on feed after publish:
+    // If you prefer auto-open, uncomment next line:
+    // location.hash = `#post/${id}`;
+    window.scrollTo({ top: document.querySelector('#feed').offsetTop - 10, behavior:'smooth' });
+  }
+
+  btnPublish?.addEventListener('click', safe(publish), {capture:true});
+  btnClear?.addEventListener('click', safe(()=>{
+    document.querySelectorAll('#upload input, #upload textarea').forEach(el=>{ el.type==='file' ? el.value='' : el.value=''; });
+    draftStatus.textContent='Draft'; draftStatus.classList.remove('text-green-600');
+  }), {capture:true});
+});
+</script>
+
 </body>
 </html>
