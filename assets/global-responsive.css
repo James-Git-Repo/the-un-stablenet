@@ -1,0 +1,123 @@
+/* ====================== Global Responsive Layer =======================
+   Drop this in every page:
+   <link rel="stylesheet" href="assets/global-responsive.css">
+   <script defer src="assets/global-responsive.js"></script>
+   ===================================================================== */
+
+/* 1) Root + theming */
+:root{
+  --page:#ffffff; --ink:#0b152c; --muted:#4c5c83; --line:#e7edf7;
+  --card:#ffffff; --primary:#1f4aff; --accent:#00b7ff; --chip:#eef4ff;
+  --shadow:0 10px 30px rgba(12,23,52,.08);
+  --maxw:1120px; --maxw-narrow:880px;
+}
+
+/* 2) Resets */
+*{ box-sizing:border-box }
+html, body{ height:100% }
+body{ margin:0; color:var(--ink); background:var(--page); -webkit-text-size-adjust:100% }
+img, video{ max-width:100%; height:auto }
+img[loading="lazy"]{ background:#f3f6ff }
+svg{ display:inline-block; vertical-align:middle }
+button, input, select, textarea{ font: inherit }
+a{ color:inherit }
+
+/* 3) Containers */
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 20px }
+.wrap.narrow{ max-width:var(--maxw-narrow) }
+.section{ padding:22px 0 }
+@media (max-width:640px){ .wrap{ padding:0 16px } }
+
+/* 4) Header/Nav (mobile-first) */
+.site-header{
+  position:sticky; top:0; z-index:40;
+  backdrop-filter:saturate(140%) blur(8px);
+  background:rgba(255,255,255,.9); border-bottom:1px solid var(--line);
+}
+.navbar{ height:72px; display:flex; align-items:center; justify-content:space-between; gap:16px }
+.brand{ display:flex; align-items:center; gap:12px }
+.brand .mark{ width:36px; height:36px; border-radius:12px; display:grid; place-items:center; color:#fff; background:conic-gradient(from 210deg, var(--primary), var(--accent)); box-shadow:var(--shadow) }
+.nav-primary{ display:flex; align-items:center; gap:12px }
+.nav-primary a, .pill-btn{
+  appearance:none; display:inline-flex; align-items:center; gap:6px;
+  text-decoration:none; background:#fff; color:#1f3aa2;
+  border:1.5px solid #dbe6ff; border-radius:14px; padding:10px 14px;
+  font-weight:800; font-size:15px; line-height:1; transition:background .15s ease, box-shadow .15s ease; box-shadow:0 1px 0 rgba(12,23,52,.02)
+}
+.pill-btn:hover, .nav-primary a:hover{ background:#f4f7ff }
+.pill-btn.primary{
+  background:linear-gradient(180deg,#2954ff,#1f4aff); color:#fff; border-color:#2140b8;
+  box-shadow:0 6px 18px rgba(31,74,255,.20), inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+/* Mobile menu */
+.nav-toggle{ display:none; appearance:none; border:1.5px solid #dbe6ff; background:#fff; border-radius:12px; padding:10px 12px; font-weight:800 }
+@media (max-width: 900px){
+  .nav-toggle{ display:inline-flex }
+  .nav-primary{ display:none }
+  .nav-open .nav-primary{ display:flex; position:absolute; top:72px; left:0; right:0; padding:12px 20px; background:#fff; border-bottom:1px solid var(--line); box-shadow:0 10px 24px rgba(12,23,52,.08); flex-wrap:wrap }
+}
+
+/* 5) Cards grid (projects/posts) */
+.cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:14px }
+.card{
+  display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
+  border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
+.card .thumb{ aspect-ratio:16/9; background:#eef4ff; object-fit:cover; width:100% }
+.card .body{ padding:12px }
+.card h4{ margin:0 0 4px 0; font-size:16px; line-height:1.25; font-weight:800; color:#0b152c }
+.card .deck{ margin:0 0 8px 0; color:#4c5c83; font-size:13px }
+.card .meta{ display:flex; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:12px }
+
+/* 6) Typography + content */
+.hero .inner{ position:relative; max-width:var(--maxw); margin:0 auto; padding:40px 20px }
+.cover-title{ font-size: clamp(30px, 3.8vw, 48px); line-height:1.08; margin:6px 0; color:#0b152c }
+.prose p{ margin:1em 0; line-height:1.68 }
+.prose h2{ margin-top:1.4em; font-size:1.25rem }
+.prose img{ max-width:100%; border-radius:12px; display:block; margin:12px 0 }
+.prose figure{ margin:14px 0 }
+.prose figcaption{ font-size:12px; color:#5d6a8e; text-align:center }
+.prose blockquote{ border-left:4px solid var(--line); padding:6px 12px; color:#3a4a74; background:#f7faff; border-radius:8px }
+.prose ul, .prose ol { margin:1em 0; padding-left:1.2em }
+.prose ul{ list-style:disc } .prose ol{ list-style:decimal }
+.prose li{ margin:.25em 0 }
+.prose table{ width:100%; border-collapse:collapse; margin:1em 0 }
+.prose th, .prose td{ border:1px solid var(--line); padding:8px 10px; text-align:left }
+.prose thead th{ background:#f7faff }
+.prose pre, .prose code{ font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace }
+.prose pre{ background:#f7faff; border:1px solid var(--line); border-radius:8px; padding:10px; overflow:auto }
+
+/* 7) Responsive helpers */
+.hide-sm{ display:none }
+@media (min-width:641px){ .hide-sm{ display:initial } }
+.stack-sm{ display:flex; gap:12px; align-items:center; }
+@media (max-width:640px){ .stack-sm{ flex-direction:column; align-items:stretch } }
+
+/* 8) Hero background utility */
+.hero.financial{ position:relative; background-image:linear-gradient(180deg, rgba(31,74,255,0.12), rgba(0,183,255,0.08)), var(--hero, linear-gradient(180deg,#f7faff 0%,#ffffff 60%)); background-size:cover; background-position:center }
+.hero.financial::before{ content:""; position:absolute; inset:0; background-image:linear-gradient(to right, rgba(12,23,52,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(12,23,52,0.06) 1px, transparent 1px); background-size:48px 48px; pointer-events:none }
+.hero.financial::after{ content:""; position:absolute; top:-30%; right:-20%; width:60%; height:160%; background:radial-gradient(closest-side, rgba(31,74,255,0.18), transparent 70%); pointer-events:none }
+
+/* 9) Footer */
+.site-footer{ border-top:1px solid var(--line); padding:18px 0; color:#6b7897 }
+
+/* 10) Mobile tweaks */
+@media (max-width:640px){
+  .hero .inner{ padding:28px 16px }
+  .cards{ grid-template-columns:1fr; gap:12px }
+  .prose p{ line-height:1.72 }
+  .pill-btn{ padding:14px 18px }
+  .sticky-toolbar{ position:sticky; top:76px; background:#fff; z-index:30; padding:8px 0 }
+}
+
+/* 11) Accessibility + motion */
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important }
+}
+
+/* 12) Tables on small screens */
+.table-scroll { overflow:auto; -webkit-overflow-scrolling: touch; }
+.table-scroll > table { min-width:640px }
