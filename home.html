@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>European Market Movers — Weekly</title>
-  <meta name="description" content="European Market Movers — a PM-style weekly wrap of European markets: what moved, why it mattered, what’s next."/>
+  <title>The (un)Stable Net — Home</title>
+  <meta name="description" content="The (un)Stable Net — a blog about Business, Tech, AI & Content."/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,276 +19,122 @@
     .brand{display:flex; align-items:center; gap:12px}
     .mark{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; color:#fff; background:conic-gradient(from 210deg, var(--primary), var(--accent)); box-shadow:var(--shadow)}
     nav ul{display:flex; list-style:none; gap:12px; margin:0; padding:0}
-    .pill-btn{
-      appearance:none; display:inline-flex; align-items:center; gap:6px;
-      text-decoration:none; background:#fff; color:#1f3aa2;
-      border:1.5px solid #dbe6ff; border-radius:14px;
-      padding:12px 18px; font-weight:800; font-size:16px; line-height:1;
-      transition:background .15s ease, box-shadow .15s ease;
-      box-shadow:0 1px 0 rgba(12,23,52,.02);
-    }
-    .pill-btn:hover{ background:#f4f7ff; }
-    .pill-btn.primary{
-      background:linear-gradient(180deg,#2954ff,#1f4aff); color:#fff; border-color:#2140b8;
-      box-shadow:0 6px 18px rgba(31,74,255,.20), inset 0 1px 0 rgba(255,255,255,.25);
-    }
+    .pill-btn{appearance:none; display:inline-flex; align-items:center; gap:6px; text-decoration:none; background:#fff; color:#1f3aa2; border:1.5px solid #dbe6ff; border-radius:14px; padding:12px 18px; font-weight:800; font-size:16px; line-height:1; transition:background .15s ease, box-shadow .15s ease; box-shadow:0 1px 0 rgba(12,23,52,.02)}
+    .pill-btn:hover{ background:#f4f7ff }
+    .pill-btn.primary{ background:linear-gradient(180deg,#2954ff,#1f4aff); color:#fff; border-color:#2140b8; box-shadow:0 6px 18px rgba(31,74,255,.20), inset 0 1px 0 rgba(255,255,255,.25) }
     .pill-row{display:flex; align-items:center; gap:12px}
 
     /* Hero */
     .hero{border-bottom:1px solid var(--line)}
-    .hero.financial{
-      position:relative;
-      background-image:linear-gradient(180deg, rgba(31,74,255,0.12), rgba(0,183,255,0.08)), var(--hero, linear-gradient(180deg,#f7faff 0%,#ffffff 60%));
-      background-size:cover; background-position:center
-    }
-    .hero.financial::before{
-      content:""; position:absolute; inset:0;
-      background-image:
-        linear-gradient(to right, rgba(12,23,52,0.06) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(12,23,52,0.06) 1px, transparent 1px);
-      background-size:48px 48px; pointer-events:none
-    }
-    .hero.financial::after{
-      content:""; position:absolute; top:-30%; right:-20%; width:60%; height:160%;
-      background:radial-gradient(closest-side, rgba(31,74,255,0.18), transparent 70%);
-      pointer-events:none
-    }
+    .hero.financial{ position:relative; background-image:linear-gradient(180deg, rgba(31,74,255,0.12), rgba(0,183,255,0.08)), var(--hero, linear-gradient(180deg,#f7faff 0%,#ffffff 60%)); background-size:cover; background-position:center }
+    .hero.financial::before{ content:""; position:absolute; inset:0; background-image:linear-gradient(to right, rgba(12,23,52,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(12,23,52,0.06) 1px, transparent 1px); background-size:48px 48px; pointer-events:none }
+    .hero.financial::after{ content:""; position:absolute; top:-30%; right:-20%; width:60%; height:160%; background:radial-gradient(closest-side, rgba(31,74,255,0.18), transparent 70%); pointer-events:none }
     .hero .inner{position:relative; max-width:var(--maxw); margin:0 auto; padding:40px 20px}
     .cover-title{font-size: clamp(30px, 3.8vw, 48px); line-height:1.08; margin:6px 0; color:#0b152c}
+    .muted{ color: var(--muted); }
 
-    /* Editor + article + comments */
-    .editor{background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:14px; margin:18px 0}
-    .field{display:flex; flex-direction:column; gap:6px; margin-bottom:10px}
-    .field label{font-size:12px; font-weight:700; color:#3a4a74}
-    .field input,.field textarea,.field select{font:inherit; padding:10px 12px; border:1px solid #cad7f5; border-radius:10px}
-    .two{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-    .tabs{display:flex; gap:8px; margin:6px 0}
-    .tabs button{padding:6px 10px; border:1px solid #cad7f5; background:#fff; border-radius:999px; font-weight:700; cursor:pointer}
-    .tabs button.active{background:#e9f1ff}
-    .article{margin:0 0 40px}
-    .post-head h1{font-size: clamp(28px, 4vw, 46px); line-height:1.08; margin:6px 0}
-    .post-head .subtitle{color:var(--muted); margin:0 0 8px 0}
-    .meta{display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:13px}
+    /* Chips, cards, grid */
     .chip{background:var(--chip); border:1px solid #dbe6ff; color:#2140b8; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px}
-
-    /* Prose defaults */
-    .prose p{margin:1em 0; line-height:1.68}
-    .prose h2{margin-top:1.4em; font-size:1.25rem}
-    .prose img{max-width:100%; border-radius:12px; display:block; margin:12px 0}
-    .prose figure{margin:14px 0}
-    .prose figcaption{font-size:12px; color:#5d6a8e; text-align:center}
-    .prose blockquote{border-left:4px solid var(--line); padding:6px 12px; color:#3a4a74; background:#f7faff; border-radius:8px}
-    .prose ul, .prose ol { margin: 1em 0; padding-left: 1.2em; }
-    .prose ul { list-style: disc; }
-    .prose ol { list-style: decimal; }
-    .prose li { margin: .25em 0; }
-    .prose table { width: 100%; border-collapse: collapse; margin: 1em 0; }
-    .prose th, .prose td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
-    .prose thead th { background: #f7faff; }
-    .prose pre, .prose code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-    .prose pre { background: #f7faff; border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow:auto; }
-
-    .comments{border-top:1px solid var(--line); padding-top:18px; margin-top:24px}
-    .comment-item{padding:12px 0; border-bottom:1px solid var(--line)}
-    .comment-item:last-child{border-bottom:0}
-    .comment-author{font-weight:700}
-    .comment-meta{font-size:12px; color:#6b7897}
-    .comment-text{margin:8px 0 0 0; white-space:pre-wrap}
-
-    /* Cards (feed) */
-    .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px; }
-    .card{
-      display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
-      border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer;
-      transition:transform .12s ease, box-shadow .12s ease;
-    }
+    .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px }
+    .card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; transition:transform .12s ease, box-shadow .12s ease; text-decoration:none; color:inherit; }
     .card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
-    .card .thumb{ aspect-ratio: 16/9; background:#eef4ff; object-fit:cover; width:100%; }
-    .card .body{ padding:12px; }
+    .card .thumb{ aspect-ratio:16/9; background:#0b1b3a; object-fit:cover; width:100% }
+    .card .body{ padding:12px }
     .card h4{ margin:0 0 4px 0; font-size:16px; line-height:1.25; font-weight:800; color:#0b152c }
     .card .deck{ margin:0 0 8px 0; color:#4c5c83; font-size:13px }
-    .card .meta{ display:flex; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:12px }
-    /* Make anchor-cards look like cards */
-.card { text-decoration:none; color:inherit }
+    .card.disabled{ pointer-events:none; opacity:.65 }
 
-/* Coming soon = not clickable + dimmed */
-.card.disabled { pointer-events:none; opacity:.6 }
-
-
+    /* Prose bits */
     .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
-    .hide{display:none}
-    body.empty #article{display:none}
     footer{border-top:1px solid var(--line); padding:18px 0; color:#6b7897}
-    @media (max-width: 780px){ .two{grid-template-columns:1fr} }
+
+    @media (max-width: 640px){
+      .hero .inner{ padding:28px 16px }
+      .cover-title{ font-size: clamp(24px, 7vw, 36px) }
+      .cards{ grid-template-columns:1fr; gap:12px }
+    }
   </style>
 
-  <!-- viewer lock (keep look; whitelist our buttons) -->
+  <!-- Viewer lock (no changes to your policy files) -->
   <link rel="stylesheet" href="assets/access-mode.css">
   <script defer src="assets/access-mode.js"></script>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand"><div class="mark" aria-hidden="true">TSN</div><h1 class="text-lg font-extrabold">The (un)Stable Net</h1></div>
+      <div class="brand">
+        <div class="mark" aria-hidden="true">TSN</div>
+        <h1 class="text-lg font-extrabold">The (un)Stable Net</h1>
+      </div>
       <nav aria-label="Primary">
         <ul class="pill-row">
-  <li><a class="pill-btn" href="home.html">Home</a></li>
-  <li><a class="pill-btn" href="emm.html#latest">Newsletter</a></li>
-  <li><a class="pill-btn" href="msab.html">MSAB</a></li>
-  <li><a class="pill-btn" href="bio.html">About</a></li>
-  <li><a class="pill-btn primary" href="project-new.html">New project</a></li>
-  <li><button id="openContrib" class="pill-btn primary" type="button" data-view-allowed>Contribute</button></li>
-</ul>
-          <li><button id="openContrib" class="pill-btn primary" type="button" data-view-allowed>Contribute</button></li>
+          <li><a class="pill-btn" href="home.html">Home</a></li>
+          <li><a class="pill-btn" href="#projects">Projects</a></li>
+          <li><a class="pill-btn" href="emm.html#latest">Newsletter</a></li>
+          <li><a class="pill-btn" href="bio.html">About me</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="hero financial" aria-label="Section cover">
+  <section class="hero financial" aria-label="Cover">
     <div class="inner">
-      <h2 class="cover-title">European Market Movers</h2>
-      <p class="text-slate-600 max-w-2xl"><i>A weekly wrap of European markets: what moved, why it mattered and what’s next.</i></p>
+      <h2 class="cover-title">The (un)Stable Net</h2>
+      <p class="muted">A blog about Business, Tech, AI & Content.</p>
+
+      <!-- Newsletter callout + preview -->
+      <div class="mt-4" style="display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:10px;">
+        <div>
+          <div class="chip" aria-hidden="true">Newsletter</div>
+          <div class="font-semibold mt-1">European Market Movers</div>
+          <div id="emm-subtitle" class="text-sm muted">A weekly, PM-style wrap of European markets: what moved, why it mattered, and what’s next.</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center">
+          <input type="email" placeholder="info@example.com" aria-label="Email" style="border:1px solid #cad7f5; border-radius:10px; padding:10px 12px; font:inherit;">
+          <a id="emm-cta" class="pill-btn primary" href="emm.html#latest">Read latest</a>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- Projects -->
   <main class="wrap">
-    <!-- Hub cards -->
-<section id="hub" class="mt-6" aria-label="Site sections">
-  <div class="cards">
-    <a class="card" data-view-allowed href="emm.html">
-      <img class="thumb" alt="" src="assets/thumbs/emm.jpg">
-      <div class="body">
-        <h4>European Market Movers</h4>
-        <p class="deck">Weekly wrap of European markets.</p>
-        <div class="meta">Newsletter • Updated weekly</div>
-      </div>
-    </a>
+    <section id="projects" aria-label="Projects" class="mt-6">
+      <h3 class="text-lg font-extrabold mb-2">Projects</h3>
+      <div class="cards">
 
-    <a class="card" data-view-allowed href="msab.html">
-      <img class="thumb" alt="" src="assets/thumbs/msab.jpg">
-      <div class="body">
-        <h4>MSAB</h4>
-        <p class="deck">Project description here.</p>
-        <div class="meta">Research</div>
-      </div>
-    </a>
-
-    <article class="card disabled" aria-disabled="true">
-      <img class="thumb" alt="" src="assets/thumbs/new-project.jpg">
-      <div class="body">
-        <h4>New Project</h4>
-        <p class="deck">Coming soon.</p>
-        <div class="meta"><span class="chip">Coming soon</span></div>
-      </div>
-    </article>
-
-    <a class="card" data-view-allowed href="bio.html">
-      <img class="thumb" alt="" src="assets/thumbs/about.jpg">
-      <div class="body">
-        <h4>About</h4>
-        <p class="deck">What The (un)Stable Net is about.</p>
-        <div class="meta">Overview</div>
-      </div>
-    </a>
-  </div>
-</section>
-
-    <!-- Uploader -->
-    <section id="upload" class="editor" aria-labelledby="uploader-title">
-      <div class="flex items-center justify-between mb-2">
-        <strong id="uploader-title">Upload article</strong>
-        <span class="text-xs text-slate-500" id="draftStatus">Draft</span>
-      </div>
-
-      <div class="field"><label for="aTitle">Title</label><input id="aTitle" placeholder="Week NN — headline"/></div>
-      <div class="field"><label for="aSubtitle">Subtitle / Deck</label><textarea id="aSubtitle" rows="2" placeholder="Short deck as in the example"></textarea></div>
-      <div class="two">
-        <div class="field"><label for="aAuthor">Author</label><input id="aAuthor" placeholder="Your name" value="Jacopo Berton"/></div>
-        <div class="field"><label for="aDate">Date</label><input id="aDate" type="date"/></div>
-      </div>
-
-      <div class="two">
-        <div class="field"><label for="aTags">Tags (comma-separated)</label><input id="aTags" placeholder="Equities, Rates, FX"/></div>
-        <div class="field"><label for="aExcerpt">Excerpt (optional)</label><input id="aExcerpt" placeholder="Short summary used in previews"/></div>
-      </div>
-
-      <div class="two">
-        <div class="field"><label for="aCoverUrl">Cover image URL</label><input id="aCoverUrl" placeholder="https://... (optional)"/></div>
-        <div class="field"><label for="aCoverFile">Or upload cover file</label><input id="aCoverFile" type="file" accept="image/*"/></div>
-      </div>
-
-      <div class="tabs" role="tablist">
-        <button id="tabText" class="active" type="button" data-view-allowed>Text</button>
-        <button id="tabHtml" type="button" data-view-allowed>HTML</button>
-      </div>
-
-      <div id="paneText" role="tabpanel">
-        <div class="field"><label for="aText">Text content</label><textarea id="aText" rows="10" placeholder="Write your article as plain text. Use blank lines between paragraphs."></textarea></div>
-      </div>
-      <div id="paneHtml" role="tabpanel" hidden>
-        <div class="field"><label for="aHtml">HTML content</label><textarea id="aHtml" rows="12" placeholder="Paste full HTML or snippets (e.g. &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, callouts)"></textarea></div>
-      </div>
-
-      <div class="two">
-        <button id="publishBtn" class="pill-btn primary" type="button" data-view-allowed>Publish</button>
-        <button id="clearBtn"   class="pill-btn"          type="button" data-view-allowed>Clear form</button>
-      </div>
-    </section>
-
-    <!-- FEED -->
-    <section id="feed" aria-label="Post list" class="mt-6">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-lg font-extrabold">All posts</h3>
-        <span id="feedCount" class="text-xs text-slate-500">0</span>
-      </div>
-      <div id="feedGrid" class="cards"></div>
-      <p id="emptyFeed" class="text-slate-500 text-sm mt-2">No posts yet. Publish your first above.</p>
-    </section>
-
-    <!-- Toolbar for detail view -->
-    <div id="articleToolbar" class="mb-2" hidden>
-      <button id="backToFeed" class="pill-btn" type="button" data-view-allowed>← Back to posts</button>
-    </div>
-
-    <!-- Article -->
-    <section id="article" class="article" aria-labelledby="postTitle" hidden>
-      <article class="post">
-        <header class="post-head">
-          <h1 id="postTitle"></h1>
-          <p id="postSubtitle" class="subtitle"></p>
-          <div class="meta">
-            <span id="postAuthor"></span>
-            <span>•</span>
-            <time id="postDate" datetime=""></time>
-            <span>•</span>
-            <span id="postReadTime"></span>
-            <div id="postTags" class="flex gap-2" style="margin-left:8px"></div>
+        <!-- MSAB -->
+        <a class="card" href="msab.html">
+          <img class="thumb" alt="" src="" aria-hidden="true">
+          <div class="body">
+            <div class="chip">Platform</div>
+            <h4>Million Slots Billboard</h4>
+            <p class="deck">A permanent AI video mosaic with 1,000,000 micro-slots. Claim space and publish.</p>
           </div>
-        </header>
-        <div id="postBody" class="prose"></div>
-      </article>
+        </a>
 
-      <!-- Comments (visible & usable in Viewer mode) -->
-      <section id="comments" class="comments" aria-labelledby="commentsTitle" data-view-allowed hidden>
-        <div class="flex items-center justify-between">
-          <h3 id="commentsTitle" class="text-lg font-extrabold">Comments</h3>
-          <span id="commentsCount" class="text-xs text-slate-500">0</span>
-        </div>
-        <div id="commentsList" class="mt-2"></div>
-        <form id="commentForm" class="editor mt-3" aria-label="Add a comment" data-view-allowed>
-          <div class="two">
-            <div class="field"><label for="cName">Name</label><input id="cName" autocomplete="name" placeholder="Your name" data-view-allowed/></div>
-            <div class="field"><label for="cEmail">Email (not shown)</label><input id="cEmail" type="email" autocomplete="email" placeholder="you@example.com" data-view-allowed/></div>
+        <!-- EMM (auto-updates to latest if available) -->
+        <a id="emmCardLink" class="card" href="emm.html#latest">
+          <img id="emmCardThumb" class="thumb" alt="" src="" aria-hidden="true">
+          <div class="body">
+            <div class="chip">Newsletter</div>
+            <h4 id="emmCardTitle">European Market Movers</h4>
+            <p id="emmCardDeck" class="deck">Weekly, PM-style wrap of European markets.</p>
           </div>
-          <div class="field"><label for="cText">Comment</label><textarea id="cText" rows="4" placeholder="Be respectful. No HTML allowed." data-view-allowed></textarea></div>
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-500">Stored locally for this article.</span>
-            <button class="pill-btn primary" type="submit" data-view-allowed>Post comment</button>
+        </a>
+
+        <!-- Coming soon (not clickable) -->
+        <article class="card disabled" aria-disabled="true">
+          <img class="thumb" alt="" src="" aria-hidden="true">
+          <div class="body">
+            <div class="chip">Coming up</div>
+            <h4>New projects coming soon…</h4>
+            <p class="deck">Stay tuned</p>
           </div>
-        </form>
-      </section>
+        </article>
+
+      </div>
     </section>
   </main>
 
@@ -302,351 +148,73 @@
     </div>
   </footer>
 
-  <!-- Contribute dialog -->
-  <dialog id="contribDialog" class="contrib" data-view-allowed>
-    <form method="dialog" id="contribFormContainer" data-view-allowed>
-      <div class="dlg-head">
-        <strong>Contribute to EMM</strong>
-        <button class="close-x" id="closeContrib" value="cancel" aria-label="Close" data-view-allowed>Close</button>
-      </div>
-      <div class="dlg-body">
-        <div class="two">
-          <div class="field"><label for="ctName">Name</label><input id="ctName" required placeholder="Your name" data-view-allowed/></div>
-          <div class="field"><label for="ctEmail">Email</label><input id="ctEmail" type="email" required placeholder="you@example.com" data-view-allowed/></div>
-        </div>
-        <div class="two">
-          <div class="field">
-            <label for="ctType">Contribution type</label>
-            <select id="ctType" data-view-allowed>
-              <option value="tip">Market tip / lead</option>
-              <option value="chart">Chart / data point</option>
-              <option value="correction">Correction / feedback</option>
-              <option value="guest">Guest paragraph / op-ed</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="ctFile">Attachment (optional)</label>
-            <input id="ctFile" type="file" data-view-allowed />
-          </div>
-        </div>
-        <div class="field"><label for="ctMsg">Message</label><textarea id="ctMsg" rows="5" required placeholder="What would you like to share?" data-view-allowed></textarea></div>
-        <label class="text-xs text-slate-600 flex items-center gap-2">
-          <input id="ctConsent" type="checkbox" required data-view-allowed />
-          I consent to being contacted about this submission.
-        </label>
-      </div>
-      <div class="dlg-actions">
-        <button class="pill-btn" value="cancel" type="button" id="cancelContrib" data-view-allowed>Cancel</button>
-        <button class="pill-btn primary" id="submitContrib" type="button" data-view-allowed>Send</button>
-      </div>
-    </form>
-  </dialog>
-
-  <!-- Local state (optional) -->
-  <script id="emm-state" type="application/json">{"posts":[]}</script>
-
-  <!-- Contribute dialog wiring -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const btn = document.getElementById('openContrib');
-      const dlg = document.getElementById('contribDialog');
-      const closeBtn = document.getElementById('closeContrib');
-      const cancelBtn = document.getElementById('cancelContrib');
-
-      function open() {
-        if (!dlg) return;
-        if (typeof dlg.showModal === 'function') dlg.showModal();
-        else dlg.style.display = 'block';
-      }
-      function close(e) {
-        if (e) e.preventDefault();
-        if (!dlg) return;
-        if (dlg.open && typeof dlg.close === 'function') dlg.close();
-        else dlg.style.display = 'none';
-      }
-
-      if (btn && dlg) btn.addEventListener('click', open, { capture: true });
-      if (closeBtn) closeBtn.addEventListener('click', close, { capture: true });
-      if (cancelBtn) cancelBtn.addEventListener('click', close, { capture: true });
-
-      if (dlg) {
-        dlg.addEventListener('click', (e) => {
-          const r = dlg.getBoundingClientRect();
-          if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close();
-        }, { capture: true });
-      }
-    });
-  </script>
-
-  <!-- Feed + detail + comments + publish -->
-  <script>
-    /* ---------- sanitizer ---------- */
-    function sanitizeHTML(html) {
-      if (!html) return '';
-      const tmpl = document.createElement('template');
-      tmpl.innerHTML = html;
-      const BLOCK = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
-      const allowProtocol = (url) => {
-        try {
-          if (url.startsWith('data:')) return /^data:image\//i.test(url);
-          const u = new URL(url, location.origin);
-          return ['http:','https:','mailto:','tel:'].includes(u.protocol);
-        } catch { return !/^\s*javascript:/i.test(url); }
-      };
-      const walker = document.createNodeIterator(tmpl.content, NodeFilter.SHOW_ELEMENT);
-      let node, kill = [];
-      while ((node = walker.nextNode())) {
-        if (BLOCK.has(node.tagName) || node.tagName === 'LINK') { kill.push(node); continue; }
-        [...node.attributes].forEach(a => {
-          const n=a.name.toLowerCase(), v=a.value||'';
-          if (n.startsWith('on')) node.removeAttribute(a.name);
-          if ((n==='href'||n==='src') && v && !allowProtocol(v)) node.removeAttribute(a.name);
-        });
-      }
-      kill.forEach(el => el.remove());
-      return tmpl.innerHTML;
-    }
-
-    /* ---------- utils ---------- */
-    const $ = id => document.getElementById(id);
-    const STORAGE_KEY = 'emm_posts';
-    const COMMENTS_KEY = id => `emm_comments_${id}`;
-    const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
-    function stripToText(html){ const d=document.createElement('div'); d.innerHTML=html; return (d.textContent||'').trim(); }
-    function textToHtml(text){
-      if(!text) return '';
-      const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      return esc.trim().split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('\n');
-    }
-    function wordCount(html){ return (stripToText(html).match(/\S+/g)||[]).length; }
-    function tagsFragment(tagsStr){
-      const frag = document.createDocumentFragment();
-      (tagsStr||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{
-        const span=document.createElement('span'); span.className='chip'; span.textContent=t; frag.appendChild(span);
-      });
-      return frag;
-    }
-    function setHeroCover(url){
-      const hero=document.querySelector('.hero.financial');
-      if(!hero) return;
-      if(url) hero.style.setProperty('--hero', `url("${url}")`);
-      else hero.style.removeProperty('--hero');
-    }
-
-    /* ---------- storage (local) ---------- */
-    function loadPosts(){
-      try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch{ return []; }
-    }
-    function savePosts(list){
-      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch{}
-    }
-    function upsertPost(p){
-      const list = loadPosts();
-      const idx = list.findIndex(x=>x.id===p.id);
-      if(idx>-1) list[idx]=p; else list.unshift(p);
-      savePosts(list);
-    }
-
-    /* ---------- comments (local per post) ---------- */
-    function loadComments(postId){
-      try{ return JSON.parse(localStorage.getItem(COMMENTS_KEY(postId))||'[]'); }catch{ return []; }
-    }
-    function saveComments(postId, arr){
-      try{ localStorage.setItem(COMMENTS_KEY(postId), JSON.stringify(arr)); }catch{}
-    }
-    function renderComments(postId){
-      const listEl = $('commentsList'), countEl=$('commentsCount');
-      if (!listEl) return;
-      const items = loadComments(postId);
-      listEl.innerHTML = items.map(c => `
-        <div class="comment-item" data-view-allowed>
-          <div class="comment-author">${c.name||'Anonymous'}</div>
-          <div class="comment-meta">${new Date(c.timeISO).toLocaleString()}</div>
-          <div class="comment-text">${(c.text||'').replace(/[<>&]/g, s=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[s]))}</div>
-        </div>
-      `).join('');
-      if (countEl) countEl.textContent = items.length;
-    }
-
-    /* ---------- feed ---------- */
-    function renderFeed(){
-      const grid = $('feedGrid'), count=$('feedCount'), empty=$('emptyFeed');
-      if(!grid) return;
-      const items = loadPosts().sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
-      grid.innerHTML = '';
-      count.textContent = items.length;
-      empty.hidden = items.length>0;
-
-      for(const p of items){
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.tabIndex = 0;
-        card.setAttribute('role','link');
-        card.setAttribute('data-view-allowed','');
-        card.dataset.id = p.id;
-
-        if (p.cover){
-          const img = document.createElement('img');
-          img.className = 'thumb';
-          img.alt = '';
-          img.src = p.cover;
-          card.appendChild(img);
-        }
-
-        const body = document.createElement('div'); body.className='body';
-        const h4 = document.createElement('h4'); h4.textContent = p.title || 'Untitled';
-        const deck = document.createElement('p'); deck.className='deck'; deck.textContent = p.excerpt || p.subtitle || stripToText(p.bodyHtml).slice(0,180);
-        const meta = document.createElement('div'); meta.className='meta';
-        const dt = new Date(p.dateISO||Date.now());
-        meta.textContent = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${Math.max(1,Math.round((p.minutes||1)))} min`;
-
-        body.append(h4, deck, meta);
-        card.appendChild(body);
-
-        const open = (e)=>{ e?.preventDefault(); e?.stopPropagation(); location.hash = `#post/${p.id}`; };
-        card.addEventListener('click', open, {capture:true});
-        card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') open(e); }, {capture:true});
-
-        grid.appendChild(card);
-      }
-    }
-
-    /* ---------- article view ---------- */
-    function renderPost(p){
-      if(!p) return;
-      const postTitle = $('postTitle'), postSubtitle=$('postSubtitle'), postAuthor=$('postAuthor'),
-            postDate=$('postDate'), postReadTime=$('postReadTime'), postTags=$('postTags'),
-            postBody=$('postBody'), articleSec=$('article'), toolbar=$('articleToolbar'), commentsSec=$('comments');
-
-      postTitle.textContent = p.title || 'Untitled';
-      postSubtitle.textContent = p.subtitle || '';
-      postAuthor.textContent = p.author || '—';
-      const dt = new Date(p.dateISO||Date.now());
-      postDate.textContent = dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
-      postDate.setAttribute('datetime', p.dateISO || '');
-      postReadTime.textContent = `${Math.max(1, Math.round((p.minutes||wordCount(p.bodyHtml)/220)))} min read`;
-      postTags.innerHTML=''; postTags.appendChild(tagsFragment(p.tagsStr||''));
-      postBody.innerHTML = p.bodyHtml || '';
-
-      setHeroCover(p.cover||'');
-
-      if(articleSec) articleSec.hidden = false;
-      if($('feed')) $('feed').hidden = true;
-      if(toolbar) toolbar.hidden = false;
-      if(commentsSec) { commentsSec.hidden = false; commentsSec.setAttribute('data-view-allowed',''); }
-
-      renderComments(p.id);
-
-      const form = $('commentForm');
-      if (form && !form.dataset.bound) {
-        form.dataset.bound = '1';
-        form.addEventListener('submit', (e)=>{
-          e.preventDefault();
-          const name = $('cName').value.trim();
-          const email= $('cEmail').value.trim(); // not displayed
-          const text = $('cText').value.trim();
-          if (!text) return;
-          const curId = location.hash.replace(/^#post\//,'');
-          const arr = loadComments(curId);
-          arr.push({ name, email, text, timeISO: new Date().toISOString() });
-          saveComments(curId, arr);
-          $('cText').value = '';
-          renderComments(curId);
-        }, {capture:true});
-      }
-    }
-
-    /* ---------- router ---------- */
-    function goToFeed(){
-      if($('article')) $('article').hidden = true;
-      if($('articleToolbar')) $('articleToolbar').hidden = true;
-      if($('feed')) $('feed').hidden = false;
-      setHeroCover('');
-    }
-    function findPostById(id){ return loadPosts().find(p=>p.id===id); }
-    function onRoute(){
-      const m = location.hash.match(/^#post\/([a-z0-9]+)/i);
-      if(m){
-        const post = findPostById(m[1]);
-        if(post) renderPost(post); else goToFeed();
-      } else {
-        goToFeed();
-      }
-    }
-
-    /* ---------- boot ---------- */
-    document.addEventListener('DOMContentLoaded', () => {
-      // Allow controls in Viewer
-      ['publishBtn','clearBtn','tabText','tabHtml','backToFeed','commentForm','cName','cEmail','cText'].forEach(id=>{
-        const el=$(id); if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-allowed',''); }
-      });
-
-      // Tabs
-      const tabText  = $('tabText'), tabHtml = $('tabHtml');
-      const paneText = $('paneText'), paneHtml = $('paneHtml');
-      function showTab(which){ const isHtml = which==='html';
-        tabText?.classList.toggle('active', !isHtml);
-        tabHtml?.classList.toggle('active',  isHtml);
-        if(paneText) paneText.hidden =  isHtml;
-        if(paneHtml) paneHtml.hidden = !isHtml;
-      }
-      const safe = fn => e=>{ e.stopImmediatePropagation?.(); e.stopPropagation?.(); e.preventDefault?.(); fn(); };
-      tabText?.addEventListener('click', safe(()=>showTab('text')), {capture:true});
-      tabHtml?.addEventListener('click', safe(()=>showTab('html')), {capture:true});
-
-      // Back
-      $('backToFeed')?.addEventListener('click', safe(()=>{ location.hash=''; }), {capture:true});
-
-      // Publish
-      const aTitle=$('aTitle'), aSubtitle=$('aSubtitle'), aAuthor=$('aAuthor'), aDate=$('aDate'), aTags=$('aTags'),
-            aExcerpt=$('aExcerpt'), aCoverUrl=$('aCoverUrl'), aCoverFile=$('aCoverFile'),
-            aText=$('aText'), aHtml=$('aHtml');
-      const btnPublish=$('publishBtn'), btnClear=$('clearBtn'), draftStatus=$('draftStatus');
-
-      function readFileAsDataURL(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(file); }); }
-
-      btnPublish?.addEventListener('click', safe(async ()=>{
-        const id = genId();
-        const title    = (aTitle.value||'').trim() || 'Untitled';
-        const subtitle = (aSubtitle.value||'').trim();
-        const author   = (aAuthor.value||'').trim();
-        const dateISO  = aDate.value || new Date().toISOString().slice(0,10);
-        const tagsStr  = (aTags.value||'').trim();
-        const excerpt  = (aExcerpt.value||'').trim();
-
-        let cover = (aCoverUrl.value||'').trim();
-        const f = aCoverFile.files && aCoverFile.files[0];
-        if(f) cover = await readFileAsDataURL(f);
-
-        const isHtmlMode = tabHtml?.classList.contains('active');
-        const bodyHtml = isHtmlMode ? sanitizeHTML(aHtml.value||'') : textToHtml(aText.value||'');
-        const minutes = Math.max(1, Math.round(wordCount(bodyHtml)/220));
-
-        const post = { id, title, subtitle, author, dateISO, tagsStr, excerpt, cover, bodyHtml, minutes };
-
-        upsertPost(post);
-        draftStatus.textContent = 'Published';
-        draftStatus.classList.add('text-green-600');
-
-        renderFeed();      // refresh list
-        window.scrollTo({ top: $('feed').offsetTop - 10, behavior:'smooth' });
-      }), {capture:true});
-
-      btnClear?.addEventListener('click', safe(()=>{
-        document.querySelectorAll('#upload input, #upload textarea').forEach(el=>{ el.type==='file' ? el.value='' : el.value=''; });
-        draftStatus.textContent='Draft'; draftStatus.classList.remove('text-green-600');
-      }), {capture:true});
-
-      // Boot
-      renderFeed();
-      window.addEventListener('hashchange', onRoute);
-      onRoute();
-    });
-  </script>
-
-  <!-- Supabase/editor modules (leave or edit per your setup) -->
+  <!-- Optional Supabase init (keeps working even if not present) -->
   <script type="module" src="assets/sb-init.js"></script>
-  <script type="module" src="assets/dynamic-emm.js"></script> <!-- You said you'll handle this separately -->
+
+  <!-- Dynamic: preview latest EMM (SB if available, else localStorage) -->
+  <script>
+    const hasSB = () => !!(window.supabase || (window.sb && window.sb.supabase));
+    const sb = () => window.supabase || (window.sb && window.sb.supabase) || null;
+
+    function stripToText(html){ const d=document.createElement('div'); d.innerHTML=html||''; return (d.textContent||'').trim(); }
+    function normalizePost(p){
+      if(!p) return null;
+      return {
+        id: p.id,
+        title: p.title,
+        subtitle: p.subtitle,
+        excerpt: p.excerpt,
+        cover: p.cover || p.cover_url,
+        bodyHtml: p.bodyHtml || p.body_html,
+        dateISO: p.dateISO || p.date_iso
+      };
+    }
+
+    async function getLatestEMM(){
+      // 1) Try Supabase
+      if(hasSB()){
+        try{
+          const { data, error } = await sb().from('emm_posts').select('*').order('dateISO', { ascending:false }).limit(1).maybeSingle();
+          if(!error && data) return normalizePost(data);
+        }catch(e){}
+      }
+      // 2) Fallback to localStorage (set by emm.html after you publish there)
+      try{
+        const arr = JSON.parse(localStorage.getItem('emm_posts')||'[]');
+        if(Array.isArray(arr) && arr.length){
+          arr.sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
+          return normalizePost(arr[0]);
+        }
+      }catch(e){}
+      return null;
+    }
+
+    (async function hydrateEMM(){
+      const latest = await getLatestEMM();
+      if(!latest) return;
+
+      // Hero callout
+      const sub = document.getElementById('emm-subtitle');
+      const cta = document.getElementById('emm-cta');
+      if(sub) sub.textContent = latest.subtitle || latest.excerpt || stripToText(latest.bodyHtml).slice(0,160);
+      if(cta) cta.href = `emm.html#post/${latest.id}`;
+
+      // Projects card
+      const link = document.getElementById('emmCardLink');
+      const title = document.getElementById('emmCardTitle');
+      const deck = document.getElementById('emmCardDeck');
+      const thumb = document.getElementById('emmCardThumb');
+      if(title) title.textContent = latest.title || 'European Market Movers';
+      if(deck) deck.textContent = latest.excerpt || latest.subtitle || stripToText(latest.bodyHtml).slice(0,180);
+      if(link) link.href = `emm.html#post/${latest.id}`;
+      if(thumb && latest.cover){
+        thumb.src = latest.cover;
+        thumb.alt = '';
+      }
+    })();
+  </script>
+
+  <!-- Keep your viewer policy scripts if needed on Home too -->
   <script type="module" src="assets/editor-auth.js"></script>
   <script type="module" src="assets/editor-tray.js"></script>
   <script type="module" src="assets/editor-quiet.js"></script>
