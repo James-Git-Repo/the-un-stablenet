@@ -315,10 +315,21 @@ function getCover(p){
 
 function cardTemplate(p){
   const cover = getCover(p);
-  const clickable = !!(p.href && p.href.trim());
-  const open = clickable ? `onclick="location.href='${p.href}'"` : '';
-  const cursor = clickable ? 'pointer' : 'default';
-  return `<article class="card" ${open} style="cursor:${cursor}">
+  const hasHref = !!(p.href && p.href.trim());
+
+  // allow viewer clicks only for real projects (msb, emm)
+  const viewerAllowed = (p.id !== 'coming');
+
+  // if viewerAllowed, whitelist the card for access-mode
+  const allowAttr = viewerAllowed ? ' data-view-allowed' : '';
+
+  // keep onclick for all cards so it still works in Editor mode;
+  // in Viewer, access-mode will block pointer events on the “coming” card
+  const on = hasHref ? ` onclick="location.href='${p.href}'"` : '';
+
+  const cursor = hasHref ? 'pointer' : 'default';
+
+  return `<article class="card"${allowAttr}${on} style="cursor:${cursor}">
     <div class="cover" style="background-image:url('${cover}')" title="${p.title||''}"></div>
     <div class="inner">
       <span class="tag">${p.tag||''}</span>
@@ -327,6 +338,7 @@ function cardTemplate(p){
     </div>
   </article>`;
 }
+
 
 function render(){
   grid.innerHTML = (DATA.projects || []).map(cardTemplate).join('');
