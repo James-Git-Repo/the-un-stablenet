@@ -72,7 +72,12 @@
 
     /* Cards (feed) */
     .cards{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:14px }
-    .card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease }
+    .card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease; card{ 
+  /* existing props ... */
+  text-decoration:none; 
+  color:inherit;
+}
+}
     .card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
     .card .thumb{ aspect-ratio:16/9; background:#eef4ff; object-fit:cover; width:100% }
     .card .body{ padding:12px }
