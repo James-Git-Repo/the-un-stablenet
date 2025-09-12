@@ -327,14 +327,14 @@ function getCover(p){
 function cardTemplate(p){
   const cover = getCover(p);
   const hasHref = !!(p.href && p.href.trim());
-  const viewerAllowed = (p.id !== 'coming');      // coming soon stays disabled in Viewer
+  const viewerAllowed = (p.id !== 'coming'); // "coming soon" stays disabled in Viewer
   const allowAttr = viewerAllowed ? ' data-view-allowed' : '';
-  const go = hasHref ? `location.href='${p.href}'` : '';
+  const go = (hasHref && viewerAllowed) ? `location.href='${p.href}'` : '';
   const cursor = (hasHref && viewerAllowed) ? 'pointer' : 'default';
 
-  return `<article class="card"${allowAttr} style="cursor:${cursor}" ${hasHref ? `onclick="${go}"` : ''}>
-    <div class="cover" style="background-image:url('${cover}')" title="${p.title||''}" ${hasHref ? `onclick="${go}"` : ''}></div>
-    <div class="inner">
+  return `<article class="card"${allowAttr} style="cursor:${cursor}" ${go ? `onclick="${go}"` : ''} role="link" tabindex="0">
+    <div class="cover"${allowAttr} style="background-image:url('${cover}')" title="${p.title||''}" ${go ? `onclick="${go}"` : ''}></div>
+    <div class="inner"${allowAttr}>
       <span class="tag">${p.tag||''}</span>
       <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
       <p><em>${p.blurb||''}</em></p>
