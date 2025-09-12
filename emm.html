@@ -399,44 +399,41 @@
       }catch(err){ console.warn('Storage exception, fallback to data URL', err); return null; }
     }
 
-    /* -------- UI + Routing -------- */
-    function renderFeedItems(items){
-      const grid = $('feedGrid'), count=$('feedCount'), empty=$('emptyFeed');
-      if(!grid) return;
-      grid.innerHTML = '';
-      count.textContent = items.length;
-      empty.hidden = items.length>0;
+function renderFeedItems(items){
+  const grid = $('feedGrid'), count=$('feedCount'), empty=$('emptyFeed');
+  if(!grid) return;
+  grid.innerHTML = '';
+  count.textContent = items.length;
+  empty.hidden = items.length>0;
 
-      for(const p of items){
-        const card = document.createElement('article');
-        card.className = 'card'; card.tabIndex=0; card.setAttribute('role','link'); card.setAttribute('data-view-allowed',''); card.dataset.id = p.id;
+  for(const p of items){
+    const card = document.createElement('a');   // anchor = native link
+    card.className = 'card';
+    card.href = `#post/${p.id}`;
+    card.setAttribute('data-view-allowed','');
+    card.dataset.id = p.id;
 
-        if (p.cover){
-          const img = document.createElement('img');
-          img.className = 'thumb'; img.alt = '';
-          img.loading = 'lazy';
-          img.src = p.cover;
-          card.appendChild(img);
-        }
-
-        const body = document.createElement('div'); body.className='body';
-        const h4 = document.createElement('h4'); h4.textContent = p.title || 'Untitled';
-        const deck = document.createElement('p'); deck.className='deck'; deck.textContent = p.excerpt || p.subtitle || stripToText(p.body_html || p.bodyHtml).slice(0,180);
-        const meta = document.createElement('div'); meta.className='meta';
-        const dt = new Date(p.dateISO||p.date_iso||Date.now());
-        const mins = p.minutes || Math.max(1, Math.round(wordCount(p.body_html || p.bodyHtml)/220));
-        meta.textContent = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${mins} min`;
-
-        body.append(h4, deck, meta);
-        card.appendChild(body);
-
-        const open = (e)=>{ e?.preventDefault(); e?.stopPropagation(); location.hash = `#post/${p.id}`; };
-        card.addEventListener('click', open, {capture:true});
-        card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') open(e); }, {capture:true});
-
-        grid.appendChild(card);
-      }
+    if (p.cover){
+      const img = document.createElement('img');
+      img.className = 'thumb'; img.alt = ''; img.loading = 'lazy';
+      img.src = p.cover;
+      card.appendChild(img);
     }
+
+    const body = document.createElement('div'); body.className='body';
+    const h4 = document.createElement('h4'); h4.textContent = p.title || 'Untitled';
+    const deck = document.createElement('p'); deck.className='deck';
+    deck.textContent = p.excerpt || p.subtitle || stripToText(p.body_html || p.bodyHtml).slice(0,180);
+    const meta = document.createElement('div'); meta.className='meta';
+    const dt = new Date(p.dateISO||p.date_iso||Date.now());
+    const mins = p.minutes || Math.max(1, Math.round(wordCount(p.body_html || p.bodyHtml)/220));
+    meta.textContent = `${dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})} • ${mins} min`;
+
+    body.append(h4, deck, meta);
+    card.appendChild(body);
+    grid.appendChild(card);
+  }
+}
 
     function normalizePost(p){
       // Ensure consistent field names from SB or local
