@@ -341,6 +341,15 @@ function cardTemplate(p){
     </div>
   </article>`;
 }
+    grid.addEventListener('keydown', (e)=>{
+  const card = e.target.closest('.card[data-view-allowed]');
+  if (!card) return;
+  if ((e.key === 'Enter' || e.key === ' ') && card.onclick) {
+    e.preventDefault();
+    card.onclick();
+  }
+});
+
 
 
 
