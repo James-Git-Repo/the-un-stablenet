@@ -110,7 +110,8 @@
         <ul>
           <li><a href="index.html" data-view-allowed>Home</a></li>
           <li><a href="#projects" data-view-allowed>Projects</a></li>
-          <li><a id="navEmm" href="/emm.html#latest" data-view-allowed>Newsletter</a></li>
+          <!-- FIX: relative link to avoid 404s on static hosts -->
+          <li><a id="navEmm" href="emm.html#latest" data-view-allowed>Newsletter</a></li>
           <li><a href="bio.html" data-view-allowed>About me</a></li>
         </ul>
       </nav>
@@ -244,7 +245,7 @@
 
     const API_PROJECTS = 'api/projects.json';
 
-    /* Default projects (root-relative link for EMM by default) */
+    /* Default projects (RELATIVE link for EMM to avoid 404s) */
     const DEFAULTS = {
       "projects": [
         { "id":"msb", "title":"Million Slots Billboard", "tag":"Platform",
@@ -252,7 +253,7 @@
           "href":"msab.html", "cover":"" },
         { "id":"emm", "title":"European Market Movers", "tag":"Newsletter",
           "blurb":"Weekly, PM-style wrap of European markets.",
-          "href":"/emm.html#latest", "cover":"" },
+          "href":"emm.html#latest", "cover":"" },
         { "id":"coming", "title":"New projects coming soon…", "tag":"Coming up",
           "blurb":"Stay tuned", "href":"project-new.html", "cover":"" }
       ]
@@ -303,8 +304,10 @@
     /* ---- Robust EMM link resolution (prevents 404s) ---- */
     async function resolveEmmHref(){
       const candidates = [
-        '/emm.html#latest', '/newsletter.html',
-        'emm.html#latest',  'newsletter.html'
+        'emm.html#latest',   // prefer relative
+        'newsletter.html',
+        '/emm.html#latest',
+        '/newsletter.html'
       ];
       for (const u of candidates){
         const test = u.replace('#latest','');   // HEAD cannot include hash
@@ -313,7 +316,7 @@
           if (r.ok) return u;
         }catch{}
       }
-      return '/emm.html#latest'; // default
+      return 'emm.html#latest'; // default relative
     }
 
     /* Customizer UI wiring (unchanged) */
