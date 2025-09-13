@@ -422,10 +422,11 @@ dialog{
 
       // Resolve a working newsletter URL (prevents 404s) and update card + navbar
       const emmHref = await resolveEmmHref();
-      const emmItem = (DATA.projects || []).find(p=>p.id==='emm');
-      if (emmItem) emmItem.href = emmHref;
-      const navEmm = document.getElementById('navEmm');
-      if (navEmm) navEmm.setAttribute('href', emmHref);
+const emmItem = (DATA.projects || []).find(p=>p.id==='emm');
+if (emmItem) emmItem.href = emmHref;
+const navEmm = document.getElementById('navEmm');
+if (navEmm) navEmm.setAttribute('href', emmHref);
+
 
       buildCustomizer();
       render();
