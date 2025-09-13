@@ -292,28 +292,33 @@ dialog{
     }
     function cardTemplate(p){
   const cover = getCover(p);
-  const hasHref = !!(p.href && p.href.trim());
-  const viewerAllowed = (p.id !== 'coming');
-  const href = (hasHref && viewerAllowed) ? p.href : null;
+  const viewerAllowed = (p.id !== 'coming'); // keep "coming soon" disabled in Viewer
   const allowAttr = viewerAllowed ? ' data-view-allowed' : '';
+  const href = (p.href || '').trim();
+  const clickable = href && viewerAllowed;
 
-  return href
-    ? `<a class="card"${allowAttr} href="${href}">
-         <div class="cover" style="background-image:url('${cover}')" title="${p.title||''}"></div>
-         <div class="inner">
-           <span class="tag">${p.tag||''}</span>
-           <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
-           <p><em>${p.blurb||''}</em></p>
-         </div>
-       </a>`
-    : `<article class="card"${allowAttr} style="cursor:default">
-         <div class="cover" style="background-image:url('${cover}')" title="${p.title||''}"></div>
-         <div class="inner">
-           <span class="tag">${p.tag||''}</span>
-           <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
-           <p><em>${p.blurb||''}</em></p>
-         </div>
-       </article>`;
+  // Make the whole card an <a> when clickable; fallback to <article> when not.
+  if (clickable) {
+    return `
+      <a class="card"${allowAttr} href="${href}" role="link" tabindex="0" aria-label="${p.title||'Project'}">
+        <div class="cover"${allowAttr} style="background-image:url('${cover}')" title="${p.title||''}"></div>
+        <div class="inner"${allowAttr}>
+          <span class="tag">${p.tag||''}</span>
+          <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
+          <p><em>${p.blurb||''}</em></p>
+        </div>
+      </a>`;
+  } else {
+    return `
+      <article class="card"${allowAttr} aria-label="${p.title||'Project'}">
+        <div class="cover"${allowAttr} style="background-image:url('${cover}')" title="${p.title||''}"></div>
+        <div class="inner"${allowAttr}>
+          <span class="tag">${p.tag||''}</span>
+          <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
+          <p><em>${p.blurb||''}</em></p>
+        </div>
+      </article>`;
+  }
 }
     grid.addEventListener('keydown', (e)=>{
       const card = e.target.closest('.card[data-view-allowed]');
