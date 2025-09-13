@@ -3,7 +3,7 @@ This package keeps your **five pages unchanged** and only adds thin wrappers so 
 
 - `index.html` → redirects to `home.html` (your Home).
 - `bio.html` → redirects to `about.html`.
-- `articles.html` → redirects to `emm.html`.
+- `newsletter.html` → redirects to `emm.html`.
 - `msb.html` → redirects to `msab.html`.
 - `project-new.html` → redirects to `project_new.html`.
 - `api/projects.json` → minimal API consumed by Home.
