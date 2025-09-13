@@ -8,6 +8,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* --- Modal footer layout fix (overrides viewer CSS) --- */
+  .dlg-actions button,
+  .dialog-foot button {
+    width: auto !important;
+    display: inline-flex !important;
+  }
+
+  /* Make sure the footers themselves lay out correctly */
+  .dlg-actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; }
+  .dialog-foot{ display:flex; gap:10px; justify-content:space-between; align-items:center; }
+</style>
 
   <style>
     :root{ --page:#ffffff; --ink:#0b152c; --muted:#4c5c83; --line:#e7edf7; --card:#ffffff; --primary:#1f4aff; --accent:#00b7ff; --chip:#eef4ff; --maxw:1120px; --shadow:0 10px 30px rgba(12,23,52,.08) }
