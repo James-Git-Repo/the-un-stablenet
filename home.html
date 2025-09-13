@@ -276,7 +276,178 @@ dialog{
       size(); reset(); step(); addEventListener('resize',size); if(R) step();
     })();
 
-   
+    const API_PROJECTS = 'api/projects.json';
+
+    /* Default projects (RELATIVE link for EMM to avoid 404s) */
+    const DEFAULTS = {
+      "projects": [
+        { "id":"msb", "title":"Million Slots Billboard", "tag":"Platform",
+          "blurb":"A permanent AI video mosaic with 1,000,000 micro-slots. Claim space and publish.",
+          "href":"msab.html", "cover":"" },
+        { "id":"emm", "title":"European Market Movers", "tag":"Newsletter",
+    "blurb":"Weekly, PM-style wrap of European markets.",
+    "href":"emm.html#latest", "cover":"" },
+        { "id":"coming", "title":"New projects coming soon…", "tag":"Coming up",
+          "blurb":"Stay tuned", "href":"project-new.html", "cover":"" }
+      ]
+    };
+
+    const grid = document.getElementById('projectGrid');
+    let DATA = DEFAULTS;
+
+    function genCover(title, tag){
+      const svg=`<?xml version="1.0"?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='675'>
+      <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='#1f4aff'/><stop offset='100%' stop-color='#00b7ff'/></linearGradient></defs>
+      <rect width='1200' height='675' fill='#0b1226'/><rect width='1200' height='675' fill='url(#g)' opacity='0.18'/>
+      <text x='40' y='80' fill='#dbe5ff' font-family='Inter,Arial' font-weight='700' font-size='42'>${(title||'Project').replace(/</g,'&lt;')}</text>
+      <text x='40' y='120' fill='#a9b7d9' font-family='Inter,Arial' font-size='24'>${(tag||'')}</text></svg>`;
+      return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+    }
+    function getCover(p){
+      const override = localStorage.getItem('project_cover_'+p.id);
+      return override || p.cover || genCover(p.title,p.tag);
+    }
+    function cardTemplate(p){
+  const cover = getCover(p);
+  const viewerAllowed = (p.id !== 'coming'); // keep "coming soon" disabled in Viewer
+  const allowAttr = viewerAllowed ? ' data-view-allowed' : '';
+  const href = (p.href || '').trim();
+  const clickable = href && viewerAllowed;
+
+  // Make the whole card an <a> when clickable; fallback to <article> when not.
+  if (clickable) {
+    return `
+      <a class="card"${allowAttr} href="${href}" role="link" tabindex="0" aria-label="${p.title||'Project'}">
+        <div class="cover"${allowAttr} style="background-image:url('${cover}')" title="${p.title||''}"></div>
+        <div class="inner"${allowAttr}>
+          <span class="tag">${p.tag||''}</span>
+          <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
+          <p><em>${p.blurb||''}</em></p>
+        </div>
+      </a>`;
+  } else {
+    return `
+      <article class="card"${allowAttr} aria-label="${p.title||'Project'}">
+        <div class="cover"${allowAttr} style="background-image:url('${cover}')" title="${p.title||''}"></div>
+        <div class="inner"${allowAttr}>
+          <span class="tag">${p.tag||''}</span>
+          <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
+          <p><em>${p.blurb||''}</em></p>
+        </div>
+      </article>`;
+  }
+}
+    grid.addEventListener('keydown', (e)=>{
+      const card = e.target.closest('.card[data-view-allowed]');
+      if (!card) return;
+      if ((e.key === 'Enter' || e.key === ' ') && card.onclick) {
+        e.preventDefault();
+        card.onclick();
+      }
+    });
+    function render(){ grid.innerHTML = (DATA.projects || []).map(cardTemplate).join(''); }
+
+    async function resolveEmmHref(){
+  const candidates = [
+    'emm.html#latest', 'emm.html#latest',
+    '/emm.html#latest', '/emm.html#latest'
+  ];
+  for (const u of candidates){
+    const test = u.replace('#latest','');
+    try{
+      const r = await fetch(test, { method:'HEAD', cache:'no-store' });
+      if (r.ok) return u;
+    }catch{}
+  }
+  return 'emm.html#latest';
+}
+
+
+    /* Customizer UI wiring (unchanged) */
+    const panel = document.getElementById('customizePanel');
+    const openBtn = document.getElementById('openCustomizer');
+    const closeBtn = document.getElementById('czClose');
+    const saveBtn = document.getElementById('czSave');
+    const resetBtn = document.getElementById('czReset');
+    const projInputsWrap = document.getElementById('projectInputs');
+    const bioUrlInput = document.getElementById('bioUrl');
+    const bioFileInput = document.getElementById('bioFile');
+    function togglePanel(show){ panel.classList.toggle('hidden', !show); }
+    openBtn.addEventListener('click', ()=>togglePanel(true));
+    closeBtn.addEventListener('click', ()=>togglePanel(false));
+    resetBtn.addEventListener('click', ()=>{
+      localStorage.removeItem('bio_photo');
+      if (DATA && DATA.projects){ DATA.projects.forEach(p=> localStorage.removeItem('project_cover_'+p.id)); }
+      bioUrlInput.value=''; document.querySelectorAll('.proj-url').forEach(i => { i.value = ''; });
+      render(); alert('All custom images cleared.');
+    });
+    function buildCustomizer(){
+      const existingBio = localStorage.getItem('bio_photo');
+      if (existingBio) bioUrlInput.value = existingBio;
+      projInputsWrap.innerHTML = '';
+      (DATA.projects||[]).forEach(p=>{
+        const existing = localStorage.getItem('project_cover_'+p.id) || p.cover || '';
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.innerHTML = `
+          <strong style="min-width:140px">${p.title}</strong>
+          <input class="ft-input proj-url" type="url" placeholder="https://…/cover.jpg" data-pid="${p.id}" value="${existing?existing:''}" aria-label="${p.title} cover URL">
+          <input class="ft-input proj-file" type="file" accept="image/*" data-pid="${p.id}" aria-label="Upload ${p.title} cover">
+        `;
+        projInputsWrap.appendChild(row);
+      });
+    }
+    function readFileAsDataURL(file){
+      return new Promise((resolve,reject)=>{ const fr = new FileReader(); fr.onload = ()=> resolve(fr.result); fr.onerror = reject; fr.readAsDataURL(file); });
+    }
+    saveBtn.addEventListener('click', async ()=>{
+      try{
+        if (bioFileInput.files && bioFileInput.files[0]){
+          const dataUrl = await readFileAsDataURL(bioFileInput.files[0]);
+          localStorage.setItem('bio_photo', dataUrl); bioUrlInput.value = dataUrl;
+        } else if (bioUrlInput.value.trim()){
+          localStorage.setItem('bio_photo', bioUrlInput.value.trim());
+        }
+        const fileInputs = Array.from(document.querySelectorAll('.proj-file'));
+        const urlInputs  = Array.from(document.querySelectorAll('.proj-url'));
+        for (const finput of fileInputs){
+          const pid = finput.getAttribute('data-pid');
+          if (finput.files && finput.files[0]){
+            const dataUrl = await readFileAsDataURL(finput.files[0]);
+            localStorage.setItem('project_cover_'+pid, dataUrl);
+            const u = urlInputs.find(el=>el.getAttribute('data-pid')===pid);
+            if (u) u.value = dataUrl;
+          }
+        }
+        for (const uinput of urlInputs){
+          const pid = uinput.getAttribute('data-pid');
+          const val = uinput.value.trim();
+          if (val) localStorage.setItem('project_cover_'+pid, val);
+        }
+        render(); alert('Saved! Your custom images are now applied.'); togglePanel(false);
+      }catch(err){ console.error(err); alert('Oops—there was a problem saving your images.'); }
+    });
+
+    /* Single load() — fetch projects, resolve EMM path, render */
+    async function load(){
+      try{
+        const r = await fetch(API_PROJECTS,{cache:'no-store'});
+        if(!r.ok) throw new Error('no api');
+        DATA = await r.json();
+      }catch{ DATA = DEFAULTS; }
+
+      // Resolve a working newsletter URL (prevents 404s) and update card + navbar
+      const emmHref = await resolveEmmHref();
+const emmItem = (DATA.projects || []).find(p=>p.id==='emm');
+if (emmItem) emmItem.href = emmHref;
+const navEmm = document.getElementById('navEmm');
+if (navEmm) navEmm.setAttribute('href', emmHref);
+
+
+      buildCustomizer();
+      render();
+    }
+    load();
   </script>
 
   <script>
