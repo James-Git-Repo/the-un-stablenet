@@ -264,43 +264,46 @@
     </div>
 
     <!-- Article -->
-    <section id="article" class="article" aria-labelledby="postTitle" hidden>
-      <article class="post">
-        <header class="post-head">
-          <h1 id="postTitle"></h1>
-          <p id="postSubtitle" class="subtitle"></p>
-          <div class="meta">
-            <span id="postAuthor"></span>
-            <span>•</span>
-            <time id="postDate" datetime=""></time>
-            <span>•</span>
-            <span id="postReadTime"></span>
-            <div id="postTags" class="flex gap-2" style="margin-left:8px"></div>
-          </div>
-        </header>
-        <div id="postBody" class="prose"></div>
-      </article>
-
-      <!-- Comments (viewer-safe) -->
-      <section id="comments" class="comments" aria-labelledby="commentsTitle" data-view-allowed hidden>
-        <div class="flex items-center justify-between">
-          <h3 id="commentsTitle" class="text-lg font-extrabold">Comments</h3>
-          <span id="commentsCount" class="text-xs text-slate-500">0</span>
+   <section id="article" class="article" aria-labelledby="postTitle" hidden>
+  <div class="layout">
+    <article class="post">
+      <header class="post-head">
+        <h1 id="postTitle"></h1>
+        <p id="postSubtitle" class="subtitle"></p>
+        <div class="meta">
+          <span id="postAuthor"></span>
+          <span>•</span>
+          <time id="postDate" datetime=""></time>
+          <span>•</span>
+          <span id="postReadTime"></span>
+          <div id="postTags" class="flex gap-2" style="margin-left:8px"></div>
         </div>
-        <div id="commentsList" class="mt-2"></div>
-        <form id="commentForm" class="editor mt-3" aria-label="Add a comment" data-view-allowed>
-          <div class="two">
-            <div class="field"><label for="cName">Name</label><input id="cName" autocomplete="name" placeholder="Your name" data-view-allowed/></div>
-            <div class="field"><label for="cEmail">Email (not shown)</label><input id="cEmail" type="email" autocomplete="email" placeholder="you@example.com" data-view-allowed/></div>
-          </div>
-          <div class="field"><label for="cText">Comment</label><textarea id="cText" rows="4" placeholder="Be respectful. No HTML allowed." data-view-allowed></textarea></div>
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-500">Stored in Supabase if available (falls back locally).</span>
-            <button class="pill-btn primary" type="submit" data-view-allowed>Post comment</button>
-          </div>
-        </form>
-      </section>
+      </header>
+      <div id="postBody" class="prose"></div>
+    </article>
+
+    <!-- Comments (viewer-safe) -->
+    <section id="comments" class="comments" aria-labelledby="commentsTitle" data-view-allowed hidden>
+      <div class="flex items-center justify-between">
+        <h3 id="commentsTitle" class="text-lg font-extrabold">Comments</h3>
+        <span id="commentsCount" class="text-xs text-slate-500">0</span>
+      </div>
+      <div id="commentsList" class="mt-2"></div>
+      <form id="commentForm" class="editor mt-3" aria-label="Add a comment" data-view-allowed>
+        <div class="two">
+          <div class="field"><label for="cName">Name</label><input id="cName" autocomplete="name" placeholder="Your name" data-view-allowed/></div>
+          <div class="field"><label for="cEmail">Email (not shown)</label><input id="cEmail" type="email" autocomplete="email" placeholder="you@example.com" data-view-allowed/></div>
+        </div>
+        <div class="field"><label for="cText">Comment</label><textarea id="cText" rows="4" placeholder="Be respectful. No HTML allowed." data-view-allowed></textarea></div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-slate-500">Stored in Supabase if available (falls back locally).</span>
+          <button class="pill-btn primary" type="submit" data-view-allowed>Post comment</button>
+        </div>
+      </form>
     </section>
+  </div>
+</section>
+
   </main>
 
   <footer>
