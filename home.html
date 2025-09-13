@@ -291,22 +291,30 @@ dialog{
       return override || p.cover || genCover(p.title,p.tag);
     }
     function cardTemplate(p){
-      const cover = getCover(p);
-      const hasHref = !!(p.href && p.href.trim());
-      const viewerAllowed = (p.id !== 'coming');          // disable only "coming soon" in Viewer
-      const allowAttr = viewerAllowed ? ' data-view-allowed' : '';
-      const go = (hasHref && viewerAllowed) ? `location.href='${p.href}'` : '';
-      const cursor = (hasHref && viewerAllowed) ? 'pointer' : 'default';
+  const cover = getCover(p);
+  const hasHref = !!(p.href && p.href.trim());
+  const viewerAllowed = (p.id !== 'coming');
+  const href = (hasHref && viewerAllowed) ? p.href : null;
+  const allowAttr = viewerAllowed ? ' data-view-allowed' : '';
 
-      return `<article class="card"${allowAttr} style="cursor:${cursor}" ${go ? `onclick="${go}"` : ''} role="link" tabindex="0">
-        <div class="cover"${allowAttr} style="background-image:url('${cover}')" title="${p.title||''}" ${go ? `onclick="${go}"` : ''}></div>
-        <div class="inner"${allowAttr}>
-          <span class="tag">${p.tag||''}</span>
-          <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
-          <p><em>${p.blurb||''}</em></p>
-        </div>
-      </article>`;
-    }
+  return href
+    ? `<a class="card"${allowAttr} href="${href}">
+         <div class="cover" style="background-image:url('${cover}')" title="${p.title||''}"></div>
+         <div class="inner">
+           <span class="tag">${p.tag||''}</span>
+           <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
+           <p><em>${p.blurb||''}</em></p>
+         </div>
+       </a>`
+    : `<article class="card"${allowAttr} style="cursor:default">
+         <div class="cover" style="background-image:url('${cover}')" title="${p.title||''}"></div>
+         <div class="inner">
+           <span class="tag">${p.tag||''}</span>
+           <h3 style="margin:8px 0 6px; font-weight:800">${p.title||''}</h3>
+           <p><em>${p.blurb||''}</em></p>
+         </div>
+       </article>`;
+}
     grid.addEventListener('keydown', (e)=>{
       const card = e.target.closest('.card[data-view-allowed]');
       if (!card) return;
