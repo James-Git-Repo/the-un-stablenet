@@ -16,8 +16,6 @@
       width: auto !important;
       display: inline-flex !important;
     }
-
-    /* Make sure the footers themselves lay out correctly */
     .dlg-actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; }
     .dialog-foot{ display:flex; gap:10px; justify-content:space-between; align-items:center; }
   </style>
@@ -58,7 +56,7 @@
     .post-head h1{font-size: clamp(28px, 4vw, 46px); line-height:1.08; margin:6px 0}
     .post-head .subtitle{color:var(--muted); margin:0 0 8px 0}
     .meta{display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:13px}
-    .chip{background:var(--chip); border:1px solid #dbe6ff; color:#2140b8; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px}
+    .chip{background:var(--chip); border:1.5px solid #dbe6ff; color:#2140b8; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px}
 
     /* Prose */
     .prose p{margin:1em 0; line-height:1.68}
@@ -89,7 +87,7 @@
       display:flex; flex-direction:column; background:#fff; border:1px solid var(--line);
       border-radius:16px; box-shadow:var(--shadow); overflow:hidden; cursor:pointer;
       transition:transform .12s ease, box-shadow .12s ease;
-      text-decoration:none; color:inherit; /* make <a class="card"> look like a card */
+      text-decoration:none; color:inherit;
     }
     .card:focus-visible{ outline:3px solid #99b3ff; outline-offset:3px }
     .card:hover{ transform:translateY(-1px); box-shadow:0 12px 36px rgba(12,23,52,.10) }
@@ -104,22 +102,15 @@
       display:flex; gap:10px; justify-content:flex-end; align-items:center;
       margin-top:12px;
     }
-    /* kill any global width:100%/block rules inside modals */
     .modal-actions button{
       width:auto; display:inline-flex; align-items:center; justify-content:center;
       appearance:none; cursor:pointer;
       padding:10px 16px; border-radius:14px; font-weight:800; line-height:1.1;
       border:1.5px solid #dbe6ff; background:#fff; color:#1f3aa2;
     }
-
-    /* primary (Send) */
     .modal-actions .btn-primary{ background:#1f4aff; color:#fff; border-color:#1f4aff; }
-    /* ghost (Cancel/Close) */
     .modal-actions .btn-ghost{ background:transparent; color:#0b152c; border-color:transparent; }
-    /* focus */
     .modal-actions button:focus-visible{ outline:2px solid #1f4aff; outline-offset:2px; }
-
-    /* small screens: keep them side-by-side, wrap only if needed */
     @media (max-width:480px){ .modal-actions{ flex-wrap:wrap; justify-content:flex-end; } }
 
     /* Responsive */
@@ -143,42 +134,53 @@
   <link rel="stylesheet" href="assets/access-mode.css">
   <script defer src="assets/access-mode.js"></script>
 
+  <!-- === Contribute dialog — bright layout (matches your screenshot) === -->
   <style>
-    /* Make fields full width and fix the two-column rows */
-    #contribDialog .dlg-body input,
-    #contribDialog .dlg-body textarea,
-    #contribDialog .dlg-body select{
-      display:block !important;
-      width:100% !important;
-      box-sizing:border-box !important;
-      padding:12px !important;
-      border-radius:12px !important;
-      border:1.5px solid #cad7f5 !important;
-      background:#fff !important;
+    #contribDialog{
+      padding:0; border:none; border-radius:18px;
+      width:min(880px, calc(100vw - 32px));
+      box-shadow:0 30px 80px rgba(12,23,52,.28);
     }
-    #contribDialog .two{
-      display:grid !important;
-      grid-template-columns: 1fr 1fr !important;
-      gap:10px !important;
+    #contribDialog::backdrop{
+      background:rgba(11,21,44,.45);
+      backdrop-filter:blur(2px);
     }
-    @media (max-width:640px){
-      #contribDialog .two{ grid-template-columns:1fr !important; }
+    #contribDialog .dlg-head{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; padding:16px 18px;
+      font-weight:800; border-bottom:1px solid #e7edf7;
+      background:linear-gradient(180deg,#f7faff,#eef4ff);
+      border-radius:18px 18px 0 0;
     }
+    #contribDialog .dlg-head .close-x{
+      appearance:none; border:1.5px solid #dbe6ff; border-radius:12px;
+      padding:8px 14px; font-weight:800; background:#fff; color:#1f3aa2; cursor:pointer;
+    }
+    #contribDialog .dlg-body{
+      padding:16px 18px; background:#fff; color:#0b152c;
+    }
+    #contribDialog .two{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media (max-width:640px){ #contribDialog .two{ grid-template-columns:1fr; } }
+    #contribDialog .field{ display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
+    #contribDialog .field label{ font-size:12px; font-weight:800; color:#3a4a74; }
+    #contribDialog input, #contribDialog textarea, #contribDialog select{
+      display:block; width:100%; padding:12px; border-radius:12px;
+      border:1.5px solid #cad7f5; background:#fff; color:#0b152c; box-sizing:border-box;
+    }
+    #contribDialog input[type="file"]{ padding:9px 12px; }
+    #contribDialog textarea{ min-height:180px; resize:vertical; }
+    #contribDialog .consent{ display:flex; align-items:center; gap:8px; font-size:14px; color:#3a4a74; margin:6px 0 0 2px; }
+    #contribDialog small.hint{ display:block; margin-top:8px; color:#6b7897; }
 
-    /* Footer */
     #contribDialog .dlg-actions{
-      display:flex !important;
-      justify-content:flex-end !important;
-      align-items:center !important;
-      gap:10px !important;
+      display:flex; justify-content:flex-end; align-items:center; gap:10px;
+      padding:12px 16px; background:#f7faff; border-top:1px solid #e7edf7;
+      border-radius:0 0 18px 18px;
     }
-    #contribDialog .pill-btn{
-      display:inline-flex !important;
-      width:auto !important;
-      align-items:center; justify-content:center;
-    }
+    #contribDialog .pill-btn{ display:inline-flex; width:auto; align-items:center; justify-content:center; }
+    #contribDialog .btn-primary{ background:#1f4aff; color:#fff; border-color:#1f4aff; }
+    #contribDialog .btn-ghost{ background:transparent; color:#0b152c; border-color:transparent; }
   </style>
-
 </head>
 <body>
   <header>
@@ -315,14 +317,34 @@
     <form method="dialog" id="contribFormContainer" data-view-allowed>
       <div class="dlg-head">
         <strong>Contribute to EMM</strong>
-        <button class="close-x" id="closeContrib" value="cancel" aria-label="Close" data-view-allowed>Close</button>
+        <button class="close-x" id="closeContrib" value="cancel" aria-label="Close" type="button" data-view-allowed>Close</button>
       </div>
       <div class="dlg-body">
         <div class="two">
           <div class="field"><label for="ctName">Name</label><input id="ctName" required placeholder="Your name" data-view-allowed/></div>
           <div class="field"><label for="ctEmail">Email</label><input id="ctEmail" type="email" required placeholder="you@example.com" data-view-allowed/></div>
         </div>
-        <div class="field"><label for="ctMsg">Message</label><textarea id="ctMsg" rows="5" required placeholder="What would you like to share?" data-view-allowed></textarea></div>
+
+        <div class="two">
+          <div class="field">
+            <label for="ctType">Contribution type</label>
+            <select id="ctType" data-view-allowed>
+              <option>Market tip / lead</option>
+              <option>Chart / data point</option>
+              <option>Event / macro idea</option>
+              <option>Product feedback</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ctFile">Attachment (optional)</label>
+            <input id="ctFile" type="file" data-view-allowed/>
+          </div>
+        </div>
+
+        <div class="field"><label for="ctMsg">Message</label><textarea id="ctMsg" rows="6" required placeholder="What would you like to share?" data-view-allowed></textarea></div>
+        <label class="consent"><input type="checkbox" id="ctConsent" data-view-allowed/> <span>I consent to being contacted about this submission.</span></label>
+        <small class="hint">On submit, your mail app opens with a pre‑filled email to the contact address.</small>
       </div>
       <div class="dlg-actions modal-actions">
         <button class="pill-btn btn-ghost" value="cancel" type="button" id="cancelContrib" data-view-allowed>Cancel</button>
@@ -340,6 +362,7 @@
       const cancelBtn = document.getElementById('cancelContrib');
       const submitBtn = document.getElementById('submitContrib');
       const form = document.getElementById('contribFormContainer');
+      const fileInput = document.getElementById('ctFile');
 
       function open() { if (!dlg) return; if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.style.display = 'block'; }
       function close(e) { if (e) e.preventDefault(); if (!dlg) return; if (dlg.open && typeof dlg.close === 'function') dlg.close(); else dlg.style.display = 'none'; }
@@ -349,14 +372,51 @@
       if (cancelBtn) cancelBtn.addEventListener('click', close, { capture: true });
       if (dlg) dlg.addEventListener('click', (e) => { const r = dlg.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) close(); }, { capture: true });
 
-      function sendMail() {
+      // Supabase helpers (reuse if present)
+      const hasSB = () => !!(window.supabase || (window.sb && window.sb.supabase));
+      const sb = () => window.supabase || (window.sb && window.sb.supabase) || null;
+
+      async function tryUploadAttachment(file){
+        if(!hasSB() || !file) return null;
+        try{
+          const safeName = (file.name || 'upload').replace(/\\s+/g,'-');
+          const path = `contrib/${Date.now()}-${safeName}`;
+          const up = await sb().storage.from('emm-contrib').upload(path, file, { upsert:true, contentType: file.type || 'application/octet-stream' });
+          if(up.error){ console.warn('Upload failed', up.error); return null; }
+          const pub = sb().storage.from('emm-contrib').getPublicUrl(path);
+          return (pub && pub.data && pub.data.publicUrl) ? pub.data.publicUrl : null;
+        }catch(err){ console.warn('Storage exception', err); return null; }
+      }
+
+      function allowURL(u){
+        if(!u) return null;
+        try{
+          if(/^data:image\\//i.test(u) || /^blob:/i.test(u)) return u;
+          const url = new URL(u, location.origin);
+          if(url.protocol === 'https:') return url.href;
+        }catch{}
+        return null;
+      }
+
+      async function sendMail() {
         const name = (document.getElementById('ctName').value || '').trim();
         const email = (document.getElementById('ctEmail').value || '').trim();
         const msg = (document.getElementById('ctMsg').value || '').trim();
+        const type = (document.getElementById('ctType').value || '').trim();
+        const consent = document.getElementById('ctConsent').checked ? 'Yes' : 'No';
         if (!msg) return;
+
+        let attachmentNote = '';
+        const f = fileInput && fileInput.files && fileInput.files[0];
+        if (f){
+          const uploaded = await tryUploadAttachment(f);
+          if (uploaded && allowURL(uploaded)) attachmentNote = `\\nAttachment: ${uploaded}`;
+          else attachmentNote = `\\nAttachment selected but not included via email (mailto limitations).`;
+        }
+
         const to = (dlg && dlg.dataset.toEmail) || 'jacopoberton98@gmail.com';
-        const subject = `EMM Contribution — from ${name || 'Anonymous'}`;
-        const body = `Name: ${name}\nEmail: ${email}\n\n${msg}\n\n— sent from EMM page`;
+        const subject = `EMM Contribution — ${type || 'Submission'} — from ${name || 'Anonymous'}`;
+        const body = `Name: ${name}\\nEmail: ${email}\\nType: ${type}\\nConsent to contact: ${consent}${attachmentNote}\\n\\n${msg}\\n\\n— sent from EMM page`;
         window.location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         close();
       }
@@ -388,10 +448,10 @@
       const BLOCK = new Set(['SCRIPT','IFRAME','OBJECT','EMBED','LINK','STYLE']);
       const allowProtocol = (url) => {
         try {
-          if (url.startsWith('data:')) return /^data:image\//i.test(url);
+          if (url.startsWith('data:')) return /^data:image\\//i.test(url);
           const u = new URL(url, location.origin);
           return ['http:','https:','mailto:','tel:'].includes(u.protocol);
-        } catch { return !/^\s*javascript:/i.test(url); }
+        } catch { return !/^\\s*javascript:/i.test(url); }
       };
       const walker = document.createNodeIterator(tmpl.content, NodeFilter.SHOW_ELEMENT);
       let node, kill = [];
@@ -417,15 +477,15 @@
     const slugify = s => (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,80);
     const genId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
     function stripToText(html){ const d=document.createElement('div'); d.innerHTML=html; return (d.textContent||'').trim(); }
-    function textToHtml(text){ if(!text) return ''; const esc=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); return esc.trim().split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('\n'); }
-    function wordCount(html){ return (stripToText(html).match(/\S+/g)||[]).length; }
+    function textToHtml(text){ if(!text) return ''; const esc=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); return esc.trim().split(/\\n{2,}/).map(p=>`<p>${p.replace(/\\n/g,'<br>')}</p>`).join('\\n'); }
+    function wordCount(html){ return (stripToText(html).match(/\\S+/g)||[]).length; }
     function tagsFragment(tagsStr){ const frag=document.createDocumentFragment(); (tagsStr||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{ const span=document.createElement('span'); span.className='chip'; span.textContent=t; frag.appendChild(span); }); return frag; }
 
     // safer cover setter
     const allowCoverURL = (u)=>{
       if(!u) return null;
       try{
-        if(/^data:image\//i.test(u)) return u;
+        if(/^data:image\\//i.test(u)) return u;
         if(/^blob:/i.test(u)) return u;
         const url = new URL(u, location.origin);
         if(url.protocol === 'https:') return url.href;
@@ -505,7 +565,7 @@
     async function tryUploadCover(file, postId){
       if(!hasSB() || !file) return null;
       try{
-        const path = `covers/${postId}-${(file.name||'cover').replace(/\s+/g,'-')}`;
+        const path = `covers/${postId}-${(file.name||'cover').replace(/\\s+/g,'-')}`;
         const up = await sb().storage.from('emm-covers').upload(path, file, { upsert:true, contentType: file.type || 'image/*' });
         if(up.error){ console.warn('Storage upload failed, using data URL fallback', up.error); return null; }
         const pub = sb().storage.from('emm-covers').getPublicUrl(path);
@@ -550,7 +610,6 @@
     }
 
     function normalizePost(p){
-      // Ensure consistent field names from SB or local
       return {
         id: p.id,
         slug: p.slug,
@@ -568,7 +627,6 @@
 
     async function renderFeed(){
       const items = await sbListPosts();
-      // Normalize + order
       const norm = items.map(normalizePost).sort((a,b)=> (b.dateISO||'').localeCompare(a.dateISO||''));
       renderFeedItems(norm);
     }
@@ -602,7 +660,7 @@
       postDate.setAttribute('datetime', p.dateISO || '');
       postReadTime.textContent = `${Math.max(1, Math.round((p.minutes||wordCount(p.bodyHtml)/220)))} min read`;
       postTags.innerHTML=''; postTags.appendChild(tagsFragment(p.tagsStr||''));
-      postBody.innerHTML = sanitizeHTML(p.bodyHtml || ''); // extra safety
+      postBody.innerHTML = sanitizeHTML(p.bodyHtml || '');
 
       setHeroCover(p.cover||'');
 
@@ -611,7 +669,6 @@
       if(toolbar) toolbar.hidden = false;
       if(commentsSec) { commentsSec.hidden = false; commentsSec.setAttribute('data-view-allowed',''); }
 
-      // Load comments
       const comments = await sbListComments(p.id);
       renderCommentsList(comments);
 
@@ -646,12 +703,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Whitelist viewer controls
       ['publishBtn','clearBtn','tabText','tabHtml','backToFeed','commentForm','cName','cEmail','cText'].forEach(id=>{
         const el=$(id); if(el){ el.removeAttribute('disabled'); el.setAttribute('data-view-allowed',''); el.style.pointerEvents='auto'; }
       });
 
-      // Tabs
       const tabText  = $('tabText'), tabHtml = $('tabHtml');
       const paneText = $('paneText'), paneHtml = $('paneHtml');
       const showTab = (which)=>{ const isHtml = which==='html'; tabText?.classList.toggle('active', !isHtml); tabHtml?.classList.toggle('active', isHtml); if(paneText) paneText.hidden = isHtml; if(paneHtml) paneHtml.hidden = !isHtml; };
@@ -659,10 +714,8 @@
       tabText?.addEventListener('click', safe(()=>showTab('text')), {capture:true});
       tabHtml?.addEventListener('click', safe(()=>showTab('html')), {capture:true});
 
-      // Back
       $('backToFeed')?.addEventListener('click', safe(()=>{ location.hash=''; }), {capture:true});
 
-      // Publish
       const aTitle=$('aTitle'), aSubtitle=$('aSubtitle'), aAuthor=$('aAuthor'), aDate=$('aDate'), aTags=$('aTags'),
             aExcerpt=$('aExcerpt'), aCoverUrl=$('aCoverUrl'), aCoverFile=$('aCoverFile'),
             aText=$('aText'), aHtml=$('aHtml');
@@ -679,17 +732,15 @@
         const tagsStr  = (aTags.value||'').trim();
         const excerpt  = (aExcerpt.value||'').trim();
 
-        // Cover
         let cover = allowCoverURL((aCoverUrl.value||'').trim());
         const f = aCoverFile.files && aCoverFile.files[0];
         if (f){
           const uploaded = await tryUploadCover(f, id);
-          cover = allowCoverURL(uploaded) || await readFileAsDataURL(f); // SB public URL or data URL fallback
+          cover = allowCoverURL(uploaded) || await readFileAsDataURL(f);
         }
 
-        // Body
         const isHtmlMode = tabHtml?.classList.contains('active');
-        const bodyHtml = isHtmlMode ? sanitizeHTML(aHtml.value||'') : sanitizeHTML(textToHtml(aText.value||'')); // sanitize both paths
+        const bodyHtml = isHtmlMode ? sanitizeHTML(aHtml.value||'') : sanitizeHTML(textToHtml(aText.value||''));
         const minutes = Math.max(1, Math.round(wordCount(bodyHtml)/220));
         const slug = slugify(title) || ('post-'+id);
 
@@ -714,7 +765,6 @@
         draftStatus.textContent='Draft'; draftStatus.classList.remove('text-green-600');
       }), {capture:true});
 
-      // Boot
       renderFeed();
       window.addEventListener('hashchange', ()=>{ onRoute(); });
       onRoute();
@@ -731,4 +781,3 @@
   <script type="module" src="assets/editor-unlock.js"></script>
 </body>
 </html>
-
