@@ -253,14 +253,17 @@
         <input name="topic" placeholder="Topic (optional)" data-view-allowed />
         <textarea name="message" rows="6" placeholder="Your message" required data-view-allowed></textarea>
         <small style="color:#c7d2fe">
+          <div class="modal-actions" id="inqFoot">
+  <button class="ft-btn btn-ghost" id="closeInq" type="button" data-view-allowed>Close</button>
+  <button class="ft-btn btn-primary" id="sendInq" type="button" data-view-allowed>Send</button>
+</div>
+     /* About dialog: split buttons to left/right */
+#inqFoot{ justify-content: space-between !important; }
+     
           On submit, your mail app opens with a pre-filled email to the contact address.
         </small>
       </form>
     </div>
-   <div class="modal-actions">
-  <button class="btn-ghost ft-btn" id="closeInq" type="button" data-view-allowed>Close</button>
-  <button class="btn-primary ft-btn" id="sendInq" type="button" data-view-allowed>Send</button>
-</div>
 
   </dialog>
 
