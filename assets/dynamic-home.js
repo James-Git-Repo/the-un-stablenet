@@ -49,7 +49,7 @@ function wireNewsletterForm(){
     if (!val) return;
     const { error } = await sb.from("subscriptions").insert({ email: val, source: "home" });
     if (error) { alert("Thanks! (fallback email opened)"); location.href=`mailto:you@example.com?subject=Subscribe&body=${encodeURIComponent(val)}`; return; }
-    form.innerHTML = `<div class="text-green-600 font-semibold">Thanks! You're on the list.</div>`;
+    form.innerHTML = `<div class="text-green-600 font-semibold">Thank You and Welcome to European Market Movers, the newsletter that cuts through the noise to make sense of the Old Continent's financial markets.</div>`;
   });
 }
 
