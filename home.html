@@ -55,6 +55,8 @@ a.card{
 a.card *{ pointer-events:none; }              /* click passa all'anchor */
 a.card [data-allow-interact]{ pointer-events:auto; }
 a.card::before, a.card::after{ pointer-events:none !important; }
+   /* opzionale, contro overlay esterni */
+.grid{ position:relative; z-index:1; } 
 
 /* Sicurezza contro overlay del viewer/editor */
 [data-view-block]{ pointer-events:none !important; }
