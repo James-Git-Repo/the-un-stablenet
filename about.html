@@ -163,46 +163,76 @@
     }
 
     /* ---- Inquiry dialog overrides (moved here; no nested <style>) ---- */
-    /* Force stacked, full-width fields */
-    #inqDialog .dialog-body form{
-      display:grid !important;
-      grid-template-columns: 1fr !important;
-      gap:12px !important;
-    }
-    #inqDialog .dialog-body input,
-    #inqDialog .dialog-body textarea,
-    #inqDialog .dialog-body select{
-      display:block !important;
-      width:100% !important;
-      box-sizing:border-box !important;
-      padding:12px !important;
-      border-radius:12px !important;
-      border:2px solid #0b152c !important;
-      background:#fff !important;
-      color:#0b152c !important;
-    }
-    #inqDialog small{ display:block; margin-top:2px; color:#c7d2fe }
+    <style>
+/* === Inquiry dialog — restore previous layout === */
 
-    /* Footer layout + buttons (your .modal-actions variant) */
-    #inqDialog .modal-actions{
-      display:flex !important;
-      justify-content:space-between !important;  /* Close ← → Send */
-      align-items:center !important;
-      gap:12px !important;
-      padding:12px 16px !important;
-      background:#f7faff !important;
-      border-top:1px solid #e7edf7 !important;
-    }
-    #inqDialog .ft-btn{
-      display:inline-flex !important;
-      width:auto !important;
-      align-items:center; justify-content:center;
-      border:1.5px solid #dbe6ff; border-radius:14px;
-      padding:12px 18px; font-weight:800; line-height:1.1;
-      background:#fff; color:#1f3aa2;
-    }
-    #inqDialog .btn-primary{ background:#1f4aff; color:#fff; border-color:#1f4aff }
-    #inqDialog .btn-ghost{ background:transparent; border-color:transparent; color:#0b152c }
+/* Shell */
+#inqDialog{
+  padding:0; border:none; border-radius:18px;
+  width:min(860px, calc(100vw - 32px));
+  box-shadow:0 30px 80px rgba(12,23,52,.35);
+}
+#inqDialog::backdrop{
+  background:rgba(11,21,44,.65);
+  backdrop-filter:blur(2px);
+}
+
+/* Header */
+#inqDialog .dialog-head{
+  padding:14px 18px;
+  font-weight:800;
+  background:linear-gradient(180deg,#f7faff,#eef4ff);
+  border-bottom:1px solid #e7edf7;
+  border-radius:18px 18px 0 0;
+}
+
+/* Body: navy band with white fields */
+#inqDialog .dialog-body{
+  padding:16px 18px;
+  background:#0b152c;            /* ← navy band */
+  color:#e6edff;
+}
+#inqDialog .dialog-body form{
+  display:grid; gap:12px;         /* stacked full width */
+}
+#inqDialog .dialog-body input,
+#inqDialog .dialog-body textarea,
+#inqDialog .dialog-body select{
+  display:block;
+  width:100%;
+  box-sizing:border-box;
+  padding:12px;
+  border-radius:12px;
+  border:1.5px solid #dbe6ff;     /* ← soft/light border (was 2px dark) */
+  background:#fff;
+  color:#0b152c;
+}
+#inqDialog .dialog-body ::placeholder{ color:#6b7897; }
+#inqDialog small{ display:block; margin-top:2px; color:#c7d2fe; }
+
+/* Footer: split buttons left/right */
+#inqDialog .modal-actions{
+  display:flex !important;
+  justify-content:space-between !important;   /* Close ← → Send */
+  align-items:center !important;
+  gap:12px !important;
+  padding:12px 16px !important;
+  background:#f7faff !important;
+  border-top:1px solid #e7edf7 !important;
+  border-radius:0 0 18px 18px;
+}
+#inqDialog .ft-btn{
+  display:inline-flex !important;
+  width:auto !important;
+  align-items:center; justify-content:center;
+  border:1.5px solid #dbe6ff; border-radius:14px;
+  padding:12px 18px; font-weight:800; line-height:1.1;
+  background:#fff; color:#1f3aa2;
+}
+#inqDialog .btn-primary{ background:#1f4aff; color:#fff; border-color:#1f4aff }
+#inqDialog .btn-ghost{ background:transparent; border-color:transparent; color:#0b152c }
+</style>
+
 
     /* Footer */
     footer{ border-top:1px solid var(--line); padding:18px 0; color:#6b7897 }
