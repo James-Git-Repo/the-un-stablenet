@@ -57,4 +57,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   wireNewsletterForm();
   const items = await fetchProjects();
   renderProjects(items);
+  function makeCardsClickProof(){
+  document.querySelectorAll('a.card').forEach(card => {
+    card.setAttribute('data-view-allowed','');
+    card.querySelectorAll('*').forEach(el => el.setAttribute('data-view-allowed',''));
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  wireNewsletterForm();
+  const items = await fetchProjects();
+  renderProjects(items);
+  makeCardsClickProof(); // <— qui
+});
+
 });
