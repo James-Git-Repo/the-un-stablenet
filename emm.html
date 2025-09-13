@@ -154,6 +154,42 @@
   <!-- viewer lock -->
   <link rel="stylesheet" href="assets/access-mode.css">
   <script defer src="assets/access-mode.js"></script>
+  <style>
+/* Make fields full width and fix the two-column rows */
+#contribDialog .dlg-body input,
+#contribDialog .dlg-body textarea,
+#contribDialog .dlg-body select{
+  display:block !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+  padding:12px !important;
+  border-radius:12px !important;
+  border:1.5px solid #cad7f5 !important;
+  background:#fff !important;
+}
+#contribDialog .two{
+  display:grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap:10px !important;
+}
+@media (max-width:640px){
+  #contribDialog .two{ grid-template-columns:1fr !important; }
+}
+
+/* Footer */
+#contribDialog .dlg-actions{
+  display:flex !important;
+  justify-content:flex-end !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+#contribDialog .pill-btn{
+  display:inline-flex !important;
+  width:auto !important;
+  align-items:center; justify-content:center;
+}
+</style>
+
 </head>
 <body>
   <header>
