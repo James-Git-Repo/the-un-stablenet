@@ -242,30 +242,29 @@
       <a href="assets/legal/terms.pdf" target="_blank" rel="noopener">Terms &amp; Conditions (PDF)</a>
     </div>
   </footer>
+<!-- Inquiry Dialog -->
+<dialog id="inqDialog" data-to-email="jacopoberton98@gmail.com" data-view-allowed>
+  <div class="dialog-head">Question / Collaboration Inquiry</div>
+  <div class="dialog-body">
+    <form id="inqForm" data-view-allowed>
+      <input name="name" placeholder="Your name" required data-view-allowed />
+      <input name="email" type="email" placeholder="Your email" required data-view-allowed />
+      <input name="topic" placeholder="Topic (optional)" data-view-allowed />
+      <textarea name="message" rows="6" placeholder="Your message" required data-view-allowed></textarea>
+      <small style="color:#c7d2fe">
+        On submit, your mail app opens with a pre-filled email to the contact address.
+      </small>
+    </form>
+  </div>
 
-  <!-- Inquiry Dialog -->
-  <dialog id="inqDialog" data-to-email="jacopoberton98@gmail.com" data-view-allowed>
-    <div class="dialog-head">Question / Collaboration Inquiry</div>
-    <div class="dialog-body">
-      <form id="inqForm" data-view-allowed>
-        <input name="name" placeholder="Your name" required data-view-allowed />
-        <input name="email" type="email" placeholder="Your email" required data-view-allowed />
-        <input name="topic" placeholder="Topic (optional)" data-view-allowed />
-        <textarea name="message" rows="6" placeholder="Your message" required data-view-allowed></textarea>
-        <small style="color:#c7d2fe">
-          <div class="modal-actions" id="inqFoot">
-  <button class="ft-btn btn-ghost" id="closeInq" type="button" data-view-allowed>Close</button>
-  <button class="ft-btn btn-primary" id="sendInq" type="button" data-view-allowed>Send</button>
-</div>
-     /* About dialog: split buttons to left/right */
-#inqFoot{ justify-content: space-between !important; }
-     
-          On submit, your mail app opens with a pre-filled email to the contact address.
-        </small>
-      </form>
-    </div>
+  <!-- Footer (buttons split left/right) -->
+  <div class="modal-actions" id="inqFoot">
+    <button class="ft-btn btn-ghost" id="closeInq" type="button" data-view-allowed>Close</button>
+    <button class="ft-btn btn-primary" id="sendInq" type="button" data-view-allowed>Send</button>
+  </div>
+</dialog>
 
-  </dialog>
+  
 
   <script>
   (function(){
