@@ -93,7 +93,8 @@
     .row{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0}
     .mini{font-size:12px; color:#526189}
     .hidden{display:none}
-
+/* ensure cards remain clickable in “viewer/locked” mode */
+a.card[data-view-allowed] { pointer-events:auto !important; }
     @media (max-width: 780px){
       .grid{grid-template-columns:1fr}
       nav{flex:unset; margin-left:0}
