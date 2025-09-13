@@ -4,18 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jacopo Berton — Full Bio</title>
-<style>
-  /* --- Modal footer layout fix (overrides viewer CSS) --- */
-  .dlg-actions button,
-  .dialog-foot button {
-    width: auto !important;
-    display: inline-flex !important;
-  }
 
-  /* Make sure the footers themselves lay out correctly */
-  .dlg-actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; }
-  .dialog-foot{ display:flex; gap:10px; justify-content:space-between; align-items:center; }
-</style>
+  <style>
+    /* --- Modal footer layout fix (overrides viewer CSS) --- */
+    .dlg-actions button,
+    .dialog-foot button {
+      width: auto !important;
+      display: inline-flex !important;
+    }
+
+    /* Make sure the footers themselves lay out correctly */
+    .dlg-actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; }
+    .dialog-foot{ display:flex; gap:10px; justify-content:space-between; align-items:center; }
+  </style>
 
   <!-- Access / View Mode -->
   <link rel="stylesheet" href="assets/access-mode.css">
@@ -31,7 +32,7 @@
     body{margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); background:linear-gradient(180deg,#f7faff,#ffffff)}
 
     /* About dialog: split buttons to left/right */
-#inqFoot{ justify-content:space-between !important; }
+    #inqFoot{ justify-content:space-between !important; }
 
     header{position:sticky;top:0;background:rgba(255,255,255,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--line); z-index:10}
     a{color:var(--brand); text-decoration:none}
@@ -62,7 +63,7 @@
     .photo.drop{ outline:2px dashed #b8c6ff; outline-offset:-8px }
     .photo-actions{ position:absolute; right:10px; bottom:10px; display:flex; gap:8px }
 
-    .btn{ border:1px solid var(--line); background:#fff; color:var(--ink); padding:8px 10px; border-radius:10px; font-weight:600; cursor:pointer; box-shadow:0 6px 16px rgba(12,23,52,.06) }
+    .btn{ border:1px solid var(--line); background:#fff; color:#var(--ink); padding:8px 10px; border-radius:10px; font-weight:600; cursor:pointer; box-shadow:0 6px 16px rgba(12,23,52,.06) }
     .btn.primary{ background:#eef4ff; border-color:#dbe6ff; color:var(--brand) }
     .btn.ghost{ background:rgba(255,255,255,.85) }
 
@@ -80,41 +81,37 @@
     .add-link input, .add-link select{ flex:1; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-size:13px }
     .add-link input.hidden{ display:none }
     .link-pill svg{ width:14px; height:14px }
-/* --- Modal footer buttons: reset & restore original layout --- */
-.modal-actions{
-  display:flex; gap:10px; justify-content:flex-end; align-items:center;
-  margin-top:12px;
-}
 
-/* kill any global width:100%/block rules inside modals */
-.modal-actions button{
-  width:auto; display:inline-flex; align-items:center; justify-content:center;
-  appearance:none; cursor:pointer;
-  padding:10px 16px; border-radius:14px; font-weight:800; line-height:1.1;
-  border:1.5px solid #dbe6ff; background:#fff; color:#1f3aa2;
-}
-    .modal-actions button{ width:auto !important; display:inline-flex !important; }
+    /* --- Modal footer buttons: reset & restore original layout --- */
+    .modal-actions{
+      display:flex; gap:10px; justify-content:flex-end; align-items:center;
+      margin-top:12px;
+    }
+    /* kill any global width:100%/block rules inside modals */
+    .modal-actions button{
+      width:auto !important; display:inline-flex !important;
+      align-items:center; justify-content:center;
+      appearance:none; cursor:pointer;
+      padding:10px 16px; border-radius:14px; font-weight:800; line-height:1.1;
+      border:1.5px solid #dbe6ff; background:#fff; color:#1f3aa2;
+    }
 
-
-/* primary (Send) */
-.modal-actions .btn-primary{
-  background:#1f4aff; color:#fff; border-color:#1f4aff;
-}
-
-/* ghost (Cancel/Close) */
-.modal-actions .btn-ghost{
-  background:transparent; color:#0b152c; border-color:transparent;
-}
-
-/* focus */
-.modal-actions button:focus-visible{
-  outline:2px solid #1f4aff; outline-offset:2px;
-}
-
-/* small screens: keep them side-by-side, wrap only if needed */
-@media (max-width:480px){
-  .modal-actions{ flex-wrap:wrap; justify-content:flex-end; }
-}
+    /* primary (Send) */
+    .modal-actions .btn-primary{
+      background:#1f4aff; color:#fff; border-color:#1f4aff;
+    }
+    /* ghost (Cancel/Close) */
+    .modal-actions .btn-ghost{
+      background:transparent; color:#0b152c; border-color:transparent;
+    }
+    /* focus */
+    .modal-actions button:focus-visible{
+      outline:2px solid #1f4aff; outline-offset:2px;
+    }
+    /* small screens: keep them side-by-side, wrap only if needed */
+    @media (max-width:480px){
+      .modal-actions{ flex-wrap:wrap; justify-content:flex-end; }
+    }
 
     /* Bio card */
     .body{ margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 30px rgba(12,23,52,.06); padding:18px }
@@ -164,48 +161,48 @@
       width:100%; min-height:220px; border:1px solid var(--line); border-radius:12px;
       padding:12px; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:14px
     }
-<style>
-/* Force stacked, full-width fields */
-#inqDialog .dialog-body form{
-  display:grid !important;
-  grid-template-columns: 1fr !important;
-  gap:12px !important;
-}
-#inqDialog .dialog-body input,
-#inqDialog .dialog-body textarea,
-#inqDialog .dialog-body select{
-  display:block !important;
-  width:100% !important;
-  box-sizing:border-box !important;
-  padding:12px !important;
-  border-radius:12px !important;
-  border:2px solid #0b152c !important;
-  background:#fff !important;
-  color:#0b152c !important;
-}
-#inqDialog small{ display:block; margin-top:2px; color:#c7d2fe }
 
-/* Footer layout + buttons (your .modal-actions variant) */
-#inqDialog .modal-actions{
-  display:flex !important;
-  justify-content:space-between !important;  /* Close ← → Send */
-  align-items:center !important;
-  gap:12px !important;
-  padding:12px 16px !important;
-  background:#f7faff !important;
-  border-top:1px solid #e7edf7 !important;
-}
-#inqDialog .ft-btn{
-  display:inline-flex !important;
-  width:auto !important;
-  align-items:center; justify-content:center;
-  border:1.5px solid #dbe6ff; border-radius:14px;
-  padding:12px 18px; font-weight:800; line-height:1.1;
-  background:#fff; color:#1f3aa2;
-}
-#inqDialog .btn-primary{ background:#1f4aff; color:#fff; border-color:#1f4aff }
-#inqDialog .btn-ghost{ background:transparent; border-color:transparent; color:#0b152c }
-</style>
+    /* ---- Inquiry dialog overrides (moved here; no nested <style>) ---- */
+    /* Force stacked, full-width fields */
+    #inqDialog .dialog-body form{
+      display:grid !important;
+      grid-template-columns: 1fr !important;
+      gap:12px !important;
+    }
+    #inqDialog .dialog-body input,
+    #inqDialog .dialog-body textarea,
+    #inqDialog .dialog-body select{
+      display:block !important;
+      width:100% !important;
+      box-sizing:border-box !important;
+      padding:12px !important;
+      border-radius:12px !important;
+      border:2px solid #0b152c !important;
+      background:#fff !important;
+      color:#0b152c !important;
+    }
+    #inqDialog small{ display:block; margin-top:2px; color:#c7d2fe }
+
+    /* Footer layout + buttons (your .modal-actions variant) */
+    #inqDialog .modal-actions{
+      display:flex !important;
+      justify-content:space-between !important;  /* Close ← → Send */
+      align-items:center !important;
+      gap:12px !important;
+      padding:12px 16px !important;
+      background:#f7faff !important;
+      border-top:1px solid #e7edf7 !important;
+    }
+    #inqDialog .ft-btn{
+      display:inline-flex !important;
+      width:auto !important;
+      align-items:center; justify-content:center;
+      border:1.5px solid #dbe6ff; border-radius:14px;
+      padding:12px 18px; font-weight:800; line-height:1.1;
+      background:#fff; color:#1f3aa2;
+    }
+    #inqDialog .btn-primary{ background:#1f4aff; color:#fff; border-color:#1f4aff }
+    #inqDialog .btn-ghost{ background:transparent; border-color:transparent; color:#0b152c }
 
     /* Footer */
     footer{ border-top:1px solid var(--line); padding:18px 0; color:#6b7897 }
@@ -299,29 +296,28 @@
       <a href="assets/legal/terms.pdf" target="_blank" rel="noopener">Terms &amp; Conditions (PDF)</a>
     </div>
   </footer>
-<!-- Inquiry Dialog -->
-<dialog id="inqDialog" data-to-email="jacopoberton98@gmail.com" data-view-allowed>
-  <div class="dialog-head">Question / Collaboration Inquiry</div>
-  <div class="dialog-body">
-    <form id="inqForm" data-view-allowed>
-      <input name="name" placeholder="Your name" required data-view-allowed />
-      <input name="email" type="email" placeholder="Your email" required data-view-allowed />
-      <input name="topic" placeholder="Topic (optional)" data-view-allowed />
-      <textarea name="message" rows="6" placeholder="Your message" required data-view-allowed></textarea>
-      <small style="color:#c7d2fe">
-        On submit, your mail app opens with a pre-filled email to the contact address.
-      </small>
-    </form>
-  </div>
 
-  <!-- Footer (buttons split left/right) -->
-  <div class="modal-actions" id="inqFoot">
-    <button class="ft-btn btn-ghost" id="closeInq" type="button" data-view-allowed>Close</button>
-    <button class="ft-btn btn-primary" id="sendInq" type="button" data-view-allowed>Send</button>
-  </div>
-</dialog>
+  <!-- Inquiry Dialog -->
+  <dialog id="inqDialog" data-to-email="jacopoberton98@gmail.com" data-view-allowed>
+    <div class="dialog-head">Question / Collaboration Inquiry</div>
+    <div class="dialog-body">
+      <form id="inqForm" data-view-allowed>
+        <input name="name" placeholder="Your name" required data-view-allowed />
+        <input name="email" type="email" placeholder="Your email" required data-view-allowed />
+        <input name="topic" placeholder="Topic (optional)" data-view-allowed />
+        <textarea name="message" rows="6" placeholder="Your message" required data-view-allowed></textarea>
+        <small style="color:#c7d2fe">
+          On submit, your mail app opens with a pre-filled email to the contact address.
+        </small>
+      </form>
+    </div>
 
-  
+    <!-- Footer (buttons split left/right) -->
+    <div class="modal-actions" id="inqFoot">
+      <button class="ft-btn btn-ghost" id="closeInq" type="button" data-view-allowed>Close</button>
+      <button class="ft-btn btn-primary" id="sendInq" type="button" data-view-allowed>Send</button>
+    </div>
+  </dialog>
 
   <script>
   (function(){
@@ -401,7 +397,7 @@
       return raw.trim();
     };
 
-    // Rebuild-only sanitizer (now with IMG + TABLE support)
+    // Rebuild-only sanitizer (IMG + TABLE support)
     const sanitizeHTML = (html)=>{
       const allowed = new Set(['A','P','DIV','H1','H2','H3','EM','STRONG','UL','OL','LI','BR','HR','BLOCKQUOTE','CODE','PRE','SPAN','IMG','FIGURE','FIGCAPTION','TABLE','THEAD','TBODY','TFOOT','TR','TH','TD']);
       const doc = new DOMParser().parseFromString(html,'text/html');
@@ -410,9 +406,9 @@
       const allowURL = (url)=>{
         if (!url) return false;
         const v = url.trim();
-        if (/^https:\/\//i.test(v)) return true;                // https only
-        if (/^data:image\//i.test(v)) return true;               // inline images
-        if (/^blob:/i.test(v)) return true;                       // pasted/temporary blobs
+        if (/^https:\/\//i.test(v)) return true;
+        if (/^data:image\//i.test(v)) return true;
+        if (/^blob:/i.test(v)) return true;
         return false;
       };
 
@@ -425,14 +421,12 @@
           if (node.nodeType === Node.ELEMENT_NODE) {
             const tag = node.tagName;
             if (!allowed.has(tag)) {
-              if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'IFRAME' || tag === 'OBJECT' || tag === 'EMBED') return; // drop entirely
-              // unwrap other disallowed tags
+              if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'IFRAME' || tag === 'OBJECT' || tag === 'EMBED') return;
               scrub(node, dst);
               return;
             }
             const el = doc.createElement(tag);
 
-            // Attributes: keep only safe ones
             if (tag === 'A') {
               const href = (node.getAttribute('href')||'').trim();
               if (/^(https?:|mailto:|#)/i.test(href)) {
@@ -448,13 +442,9 @@
                 if (altAttr) el.setAttribute('alt', altAttr);
                 el.setAttribute('loading','lazy');
                 el.setAttribute('decoding','async');
-              } else {
-                // If src not allowed, drop the image entirely by not appending children
               }
             }
             dst.appendChild(el);
-
-            // Recurse children
             scrub(node, el);
           }
         });
