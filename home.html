@@ -52,7 +52,7 @@
     section.projects{padding:26px 0}
     .section-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px}
     .section-title{font-weight:800}
-    .grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:16px}
+    .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:16px }
     .card{position:relative; background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; transition:transform .2s ease}
     .card:hover{transform:translateY(-2px)}
     .cover{width:100%; aspect-ratio:16/9; background:#1b2550; background-size:cover; background-position:center; border-bottom:1px solid var(--line); cursor:pointer}
@@ -100,6 +100,21 @@
       nav ul{justify-content:center; gap:12px; flex-wrap:wrap}
       .nl-card{grid-template-columns:1fr}
     }
+    /* --- Responsive core (home) --- */
+:root{ --space: clamp(12px, 2vw, 20px); --col-gap: clamp(12px, 1.6vw, 16px); }
+.wrap{ padding: 0 var(--space); }
+img, video{ max-width:100%; height:auto; }
+button, .btn, .pill-btn{ min-height:44px; }
+
+/* Mobile-friendly dialogs */
+dialog{
+  width:min(860px, calc(100dvw - 32px));
+  max-height:calc(100dvh - 32px);
+  overflow:hidden;
+  border-radius:16px;
+}
+.dialog-body{ overflow:auto; }
+
   </style>
 </head>
 <body>
