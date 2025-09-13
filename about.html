@@ -65,6 +65,39 @@
     .add-link input, .add-link select{ flex:1; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-size:13px }
     .add-link input.hidden{ display:none }
     .link-pill svg{ width:14px; height:14px }
+/* --- Modal footer buttons: reset & restore original layout --- */
+.modal-actions{
+  display:flex; gap:10px; justify-content:flex-end; align-items:center;
+  margin-top:12px;
+}
+
+/* kill any global width:100%/block rules inside modals */
+.modal-actions button{
+  width:auto; display:inline-flex; align-items:center; justify-content:center;
+  appearance:none; cursor:pointer;
+  padding:10px 16px; border-radius:14px; font-weight:800; line-height:1.1;
+  border:1.5px solid #dbe6ff; background:#fff; color:#1f3aa2;
+}
+
+/* primary (Send) */
+.modal-actions .btn-primary{
+  background:#1f4aff; color:#fff; border-color:#1f4aff;
+}
+
+/* ghost (Cancel/Close) */
+.modal-actions .btn-ghost{
+  background:transparent; color:#0b152c; border-color:transparent;
+}
+
+/* focus */
+.modal-actions button:focus-visible{
+  outline:2px solid #1f4aff; outline-offset:2px;
+}
+
+/* small screens: keep them side-by-side, wrap only if needed */
+@media (max-width:480px){
+  .modal-actions{ flex-wrap:wrap; justify-content:flex-end; }
+}
 
     /* Bio card */
     .body{ margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 30px rgba(12,23,52,.06); padding:18px }
