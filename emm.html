@@ -85,6 +85,39 @@
 .card h4{ margin:0 0 4px 0; font-size:16px; line-height:1.25; font-weight:800; color:#0b152c }
 .card .deck{ margin:0 0 8px 0; color:#4c5c83; font-size:13px }
 .card .meta{ display:flex; gap:8px; flex-wrap:wrap; color:#5d6a8e; font-size:12px }
+/* --- Modal footer buttons: reset & restore original layout --- */
+.modal-actions{
+  display:flex; gap:10px; justify-content:flex-end; align-items:center;
+  margin-top:12px;
+}
+
+/* kill any global width:100%/block rules inside modals */
+.modal-actions button{
+  width:auto; display:inline-flex; align-items:center; justify-content:center;
+  appearance:none; cursor:pointer;
+  padding:10px 16px; border-radius:14px; font-weight:800; line-height:1.1;
+  border:1.5px solid #dbe6ff; background:#fff; color:#1f3aa2;
+}
+
+/* primary (Send) */
+.modal-actions .btn-primary{
+  background:#1f4aff; color:#fff; border-color:#1f4aff;
+}
+
+/* ghost (Cancel/Close) */
+.modal-actions .btn-ghost{
+  background:transparent; color:#0b152c; border-color:transparent;
+}
+
+/* focus */
+.modal-actions button:focus-visible{
+  outline:2px solid #1f4aff; outline-offset:2px;
+}
+
+/* small screens: keep them side-by-side, wrap only if needed */
+@media (max-width:480px){
+  .modal-actions{ flex-wrap:wrap; justify-content:flex-end; }
+}
 
 
     /* Responsive */
