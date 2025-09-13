@@ -317,23 +317,21 @@ dialog{
     });
     function render(){ grid.innerHTML = (DATA.projects || []).map(cardTemplate).join(''); }
 
-    /* ---- Robust EMM link resolution (prevents 404s) ---- */
     async function resolveEmmHref(){
-      const candidates = [
-        'emm.html#latest',   // prefer relative
-        'newsletter.html',
-        '/emm.html#latest',
-        '/newsletter.html'
-      ];
-      for (const u of candidates){
-        const test = u.replace('#latest','');   // HEAD cannot include hash
-        try{
-          const r = await fetch(test, { method:'HEAD', cache:'no-store' });
-          if (r.ok) return u;
-        }catch{}
-      }
-      return 'emm.html#latest'; // default relative
-    }
+  const candidates = [
+    'emm.html#latest', 'newsletter.html',
+    '/emm.html#latest', '/newsletter.html'
+  ];
+  for (const u of candidates){
+    const test = u.replace('#latest','');
+    try{
+      const r = await fetch(test, { method:'HEAD', cache:'no-store' });
+      if (r.ok) return u;
+    }catch{}
+  }
+  return 'emm.html#latest';
+}
+
 
     /* Customizer UI wiring (unchanged) */
     const panel = document.getElementById('customizePanel');
