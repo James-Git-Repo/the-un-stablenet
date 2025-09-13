@@ -141,7 +141,6 @@ dialog{
       <div class="brand"><div class="mark" aria-hidden="true">TSN</div><h1><b>The (un)Stable Net</b></h1></div>
       <nav aria-label="Primary">
         <ul>
-          <li><a href="index.html" data-view-allowed>Home</a></li>
           <li><a href="#projects" data-view-allowed>Projects</a></li>
           <!-- FIX: relative link to avoid 404s on static hosts -->
           <li><a id="navEmm" href="emm.html#latest" data-view-allowed>Newsletter</a></li>
@@ -476,6 +475,44 @@ if (navEmm) navEmm.setAttribute('href', emmHref);
       }
     })();
   </script>
+<script>
+/* Normalizza href delle card a versione RELATIVA e con .html dove serve. 
+   Funziona sia se ha renderizzato lo script inline, sia se ha vinto dynamic-home.js. */
+(function normalizeProjectHrefs(){
+  function norm(h){
+    h = (h || '').trim();
+    // Porta URL assoluti a pathname+hash e togli gli slash iniziali
+    try { const u = new URL(h, location.href); h = (u.pathname + u.hash); } catch(e){}
+    h = h.replace(/^\/+/, '');
+
+    // Mappature intelligenti
+    if (/^(emm)(\/|$|#)/i.test(h) || /\/emm$/i.test(h)) return 'emm.html#latest';
+    if (/^(msb|msab)(\/|$|#)/i.test(h) || /\/msb$/i.test(h) || /\/msab$/i.test(h)) return 'msab.html';
+
+    // Se non ha estensione, aggiungi .html
+    if (!/\.(html?|pdf)$/i.test(h)) h = h + '.html';
+    return h;
+  }
+
+  function apply(){
+    // card grid
+    document.querySelectorAll('#projectGrid a.card').forEach(a=>{
+      a.setAttribute('href', norm(a.getAttribute('href')));
+      a.setAttribute('data-view-allowed',''); // harden contro viewer lock
+    });
+    // voce di navbar Newsletter
+    const navEmm = document.getElementById('navEmm');
+    if (navEmm) navEmm.setAttribute('href', norm(navEmm.getAttribute('href')||'emm.html#latest'));
+  }
+
+  // Applica una volta al DOM ready e riapplica subito dopo per coprire il re-render
+  document.addEventListener('DOMContentLoaded', ()=>{
+    apply();           // dopo il render inline
+    setTimeout(apply); // dopo eventuale override di dynamic-home.js
+  });
+})();
+</script>
+
 
   <script type="module" src="assets/sb-init.js"></script>
   <script type="module" src="assets/dynamic-home.js"></script>
