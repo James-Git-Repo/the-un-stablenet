@@ -1,0 +1,62 @@
+/* ===== Site-wide responsive layer ===== */
+
+/* Spacing & safe viewport */
+:root{
+  --space: clamp(12px, 2vw, 20px);
+}
+.wrap{ padding: 0 var(--space); }
+.hero .inner{ padding: clamp(24px, 6vw, 56px) var(--space); }
+
+/* Media auto-fit grids (cards, generic .grid) */
+.cards,
+.grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap:14px;
+}
+@media (min-width:1280px){
+  .cards, .grid{ grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); }
+}
+
+/* Dialogs scale to screen */
+dialog{
+  width:min(860px, calc(100dvw - 32px));
+  max-height:calc(100dvh - 32px);
+  overflow:hidden;
+  border-radius:16px;
+}
+.dialog-body, .dlg-body{ overflow:auto; }
+
+/* Touch targets */
+button, .btn, .pill-btn{ min-height:44px; }
+
+/* Media */
+img, video{ max-width:100%; height:auto; }
+
+/* Tables inside long articles */
+.prose table{ display:block; overflow-x:auto; white-space:nowrap; }
+
+/* Article + comments split (used by EMM) */
+#article .layout{
+  display:grid;
+  grid-template-columns: minmax(0,1fr) 340px; /* content | comments */
+  gap:16px;
+  align-items:start;
+}
+@media (max-width:1024px){
+  #article .layout{ grid-template-columns:1fr; }
+  #comments{ position:static; max-height:none; }
+}
+#comments{
+  position:sticky;
+  top:92px; /* under sticky header */
+  max-height:calc(100dvh - 120px);
+  overflow:auto;
+  border-top:0;
+  padding-top:0;
+}
+
+/* Nav wraps nicely on small screens */
+@media (max-width:780px){
+  nav ul{ flex-wrap:wrap; gap:12px; justify-content:center; }
+}
