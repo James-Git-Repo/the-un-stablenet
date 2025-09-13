@@ -1,62 +1,48 @@
-/* ===== Site-wide responsive layer ===== */
+/* === Global container widths === */
+.wrap{ max-width:1120px; margin:0 auto; padding:0 20px }
 
-/* Spacing & safe viewport */
-:root{
-  --space: clamp(12px, 2vw, 20px);
-}
-.wrap{ padding: 0 var(--space); }
-.hero .inner{ padding: clamp(24px, 6vw, 56px) var(--space); }
-
-/* Media auto-fit grids (cards, generic .grid) */
-.cards,
-.grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-  gap:14px;
-}
-@media (min-width:1280px){
-  .cards, .grid{ grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); }
+/* === Home (index) === */
+@media (max-width:780px){
+  nav{flex:unset; margin-left:0}
+  nav ul{justify-content:center; gap:12px; flex-wrap:wrap}
+  .grid{grid-template-columns:1fr}
+  .nl-card{grid-template-columns:1fr}
 }
 
-/* Dialogs scale to screen */
-dialog{
-  width:min(860px, calc(100dvw - 32px));
-  max-height:calc(100dvh - 32px);
-  overflow:hidden;
-  border-radius:16px;
-}
-.dialog-body, .dlg-body{ overflow:auto; }
+/* === EMM: feed & article layout === */
+.cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+@media (max-width:1024px){ .cards{ grid-template-columns: repeat(2, 1fr) } }
+@media (max-width:640px){ .cards{ grid-template-columns: 1fr } }
 
-/* Touch targets */
-button, .btn, .pill-btn{ min-height:44px; }
-
-/* Media */
-img, video{ max-width:100%; height:auto; }
-
-/* Tables inside long articles */
-.prose table{ display:block; overflow-x:auto; white-space:nowrap; }
-
-/* Article + comments split (used by EMM) */
 #article .layout{
   display:grid;
   grid-template-columns: minmax(0,1fr) 340px; /* content | comments */
-  gap:16px;
-  align-items:start;
+  gap:16px; align-items:start;
 }
 @media (max-width:1024px){
-  #article .layout{ grid-template-columns:1fr; }
-  #comments{ position:static; max-height:none; }
-}
-#comments{
-  position:sticky;
-  top:92px; /* under sticky header */
-  max-height:calc(100dvh - 120px);
-  overflow:auto;
-  border-top:0;
-  padding-top:0;
+  #article .layout{ grid-template-columns:1fr }
 }
 
-/* Nav wraps nicely on small screens */
+/* Sticky right column (comments) on desktop */
+#comments{
+  position:sticky;
+  top:92px; /* clears header */
+  max-height:calc(100dvh - 120px);
+  overflow:auto;
+  border-top:0; padding-top:0;
+}
+
+/* Thumbs hint */
+.card .thumb{ width:100%; height:auto; display:block; }
+
+/* === Bio (about) === */
 @media (max-width:780px){
-  nav ul{ flex-wrap:wrap; gap:12px; justify-content:center; }
+  .head{ grid-template-columns:1fr !important; }
+  .photo-wrap{ order:-1; }
+}
+.photo{ max-width:100%; height:auto; }
+
+/* Tighter on very small screens */
+@media (max-width:420px){
+  .pill-btn,.btn,.ft-btn{ padding:10px 14px; font-size:14px }
 }
