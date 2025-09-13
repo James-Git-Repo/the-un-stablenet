@@ -1,5 +1,33 @@
 import { sb } from "./sb-init.js";
 
+/* --- href sanitizer: sempre relativo, niente leading slash, estensione corretta --- */
+function normalizeHref(href, id){
+  let h = (href || "").trim();
+
+  // Fallback intelligenti
+  if (!h) {
+    if (id === "emm") return "emm.html#latest";
+    return `project.html?slug=${id}`;
+  }
+
+  // Porta eventuali URL assoluti a pathname+hash e togli leading slash
+  try {
+    const u = new URL(h, location.href);
+    h = (u.pathname + u.hash).replace(/^\/+/, "");
+  } catch(_) {
+    h = h.replace(/^https?:\/\/[^/]+/i, "").replace(/^\/+/, "");
+  }
+
+  // Shorthand/slug -> file reale
+  if (/^emm(\/|$|#)/i.test(h))  return "emm.html#latest";
+  if (/^msb(\/|$|#)/i.test(h) || /^msab(\/|$|#)/i.test(h)) return "msab.html";
+
+  // Se non ha estensione nota, aggiungi .html
+  if (!/\.(html?|pdf)$/i.test(h)) h = `${h}.html`;
+
+  return h;
+}
+
 async function fetchProjects(){
   const { data, error } = await sb
     .from("projects")
@@ -18,7 +46,6 @@ function tpl(p){
       <h3>${p.title||""}</h3>
       <p><em>${p.blurb||""}</em></p>
     </div>`;
-  const href = p.href && p.href.trim() ? p.href : `project.html?slug=${p.id}`;
 
   if (p.id === "coming") {
     const isEditor = document.documentElement.getAttribute("data-mode") === "editor";
@@ -26,6 +53,8 @@ function tpl(p){
       ? `<a class="card" href="project_new.html" data-view-allowed>${inner}</a>`
       : `<article class="card" data-view-block>${inner}</article>`;
   }
+
+  const href = normalizeHref(p.href, p.id);
   return `<a class="card" href="${href}" data-view-allowed>${inner}</a>`;
 }
 
@@ -69,13 +98,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const items = await fetchProjects();
   renderProjects(items);
 
-  // Se l’item EMM ha un href valido, aggiorna anche il link del menu
-  const emm = items.find(p => p.id === "emm" && p.href);
-  if (emm?.href){
-    const navEmm = document.getElementById("navEmm");
-    if (navEmm) navEmm.setAttribute("href", emm.href);
-  }
+  // Aggiorna anche il link del menu alla versione normalizzata dell'EMM
+  const emm = items.find(p => p.id === "emm");
+  const navEmm = document.getElementById("navEmm");
+  if (emm && navEmm) navEmm.setAttribute("href", normalizeHref(emm.href, "emm"));
 
-  // Applica il fix dopo il render
+  // Applica il fix click dopo il render
   requestAnimationFrame(makeCardsClickProof);
 });
