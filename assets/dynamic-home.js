@@ -19,9 +19,9 @@ function tpl(p){
       <p><em>${p.blurb||""}</em></p>
     </div>`;
   const href = p.href && p.href.trim() ? p.href : `project.html?slug=${p.id}`;
+
   if (p.id === "coming") {
     const isEditor = document.documentElement.getAttribute("data-mode") === "editor";
-    // Use the file that exists in your repo
     return isEditor
       ? `<a class="card" href="project_new.html" data-view-allowed>${inner}</a>`
       : `<article class="card" data-view-block>${inner}</article>`;
@@ -48,16 +48,16 @@ function wireNewsletterForm(){
     const val = email?.value?.trim();
     if (!val) return;
     const { error } = await sb.from("subscriptions").insert({ email: val, source: "home" });
-    if (error) { alert("Thanks! (fallback email opened)"); location.href=`mailto:you@example.com?subject=Subscribe&body=${encodeURIComponent(val)}`; return; }
+    if (error) {
+      alert("Thanks! (fallback email opened)");
+      location.href = `mailto:you@example.com?subject=Subscribe&body=${encodeURIComponent(val)}`;
+      return;
+    }
     form.innerHTML = `<div class="text-green-600 font-semibold">Thank You and Welcome to European Market Movers, the newsletter that cuts through the noise to make sense of the Old Continent's financial markets.</div>`;
   });
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  wireNewsletterForm();
-  const items = await fetchProjects();
-  renderProjects(items);
-  function makeCardsClickProof(){
+function makeCardsClickProof(){
   document.querySelectorAll('a.card').forEach(card => {
     card.setAttribute('data-view-allowed','');
     card.querySelectorAll('*').forEach(el => el.setAttribute('data-view-allowed',''));
@@ -68,7 +68,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   wireNewsletterForm();
   const items = await fetchProjects();
   renderProjects(items);
-  makeCardsClickProof(); // <— qui
-});
 
+  // Se l’item EMM ha un href valido, aggiorna anche il link del menu
+  const emm = items.find(p => p.id === "emm" && p.href);
+  if (emm?.href){
+    const navEmm = document.getElementById("navEmm");
+    if (navEmm) navEmm.setAttribute("href", emm.href);
+  }
+
+  // Applica il fix dopo il render
+  requestAnimationFrame(makeCardsClickProof);
 });
