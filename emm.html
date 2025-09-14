@@ -134,8 +134,11 @@
   <link rel="stylesheet" href="assets/access-mode.css">
   <script defer src="assets/access-mode.js"></script>
 
-  <link rel="stylesheet" href="assets/site-nav.css?v=5">
-<script defer src="assets/site-nav.js?v=5"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<link rel="stylesheet" href="assets/site-nav.css?v=6">
+<link rel="stylesheet" href="assets/site-footer.css?v=2">
+<script defer src="assets/site-nav.js?v=6"></script>
+
 
   <!-- === Contribute dialog — bright layout (matches your screenshot) === -->
   <style>
@@ -202,32 +205,31 @@
   header nav a{ display:block; width:100%; text-align:left; min-height:44px; }
 }
 </style>
-
-  <link rel="stylesheet" href="assets/site-footer.css?v=1">
 </head>
 <body>
   <header>
-  <div class="wrap nav">
-    <a class="brand" href="home.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
-      <div class="mark" aria-hidden="true" style="width:36px;height:36px;border-radius:12px;display:grid;place-items:center;color:#fff;background:conic-gradient(from 210deg,#1f4aff,#00b7ff);box-shadow:0 10px 30px rgba(12,23,52,.08)">TSN</div>
-      <h1 class="site-name" style="margin:0;font-weight:800;font-size:18px;line-height:1">The (un)Stable Net</h1>
-    </a>
-    <nav id="primaryNav" aria-label="Primary">
-      <ul class="pill-row">
-        <li><a class="pill-btn" href="home.html">Home</a></li>
-        <li><a class="pill-btn" href="projects.html">Projects</a></li>
-        <li><a class="pill-btn" href="emm.html#latest">Newsletter</a></li>
-        <li><a class="pill-btn" href="about.html">Bio</a></li>
-      </ul>
-    </nav>
-    <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" data-view-allowed>
+    <div class="wrap nav">
+      <div class="brand"><div class="mark" aria-hidden="true">TSN</div><h1 class="text-lg font-extrabold">The (un)Stable Net</h1></div>
+      <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" data-view-allowed>
       <span class="sr-only">Toggle navigation</span>
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </button>
-  </div>
-</header>
+      <nav id="primaryNav" aria-label="Primary">
+        <ul class="pill-row">
+          <li><a class="pill-btn" href="home.html">Home</a></li>
+          <li><button id="openContrib" class="pill-btn primary" type="button" data-view-allowed>Contribute</button></li>
+        </ul>
+      </nav>
+      <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false">
+      <span class="sr-only">Apri menu</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    </div>
+  </header>
 
   <!-- Hero -->
   <section class="hero financial" aria-label="Section cover">
@@ -299,28 +301,18 @@
     <!-- Article -->
     <section id="article" class="article" aria-labelledby="postTitle" hidden>
       <article class="post">
-        <header>
-  <div class="wrap nav">
-    <a class="brand" href="home.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
-      <div class="mark" aria-hidden="true" style="width:36px;height:36px;border-radius:12px;display:grid;place-items:center;color:#fff;background:conic-gradient(from 210deg,#1f4aff,#00b7ff);box-shadow:0 10px 30px rgba(12,23,52,.08)">TSN</div>
-      <h1 class="site-name" style="margin:0;font-weight:800;font-size:18px;line-height:1">The (un)Stable Net</h1>
-    </a>
-    <nav id="primaryNav" aria-label="Primary">
-      <ul class="pill-row">
-        <li><a class="pill-btn" href="home.html">Home</a></li>
-        <li><a class="pill-btn" href="projects.html">Projects</a></li>
-        <li><a class="pill-btn" href="emm.html#latest">Newsletter</a></li>
-        <li><a class="pill-btn" href="about.html">Bio</a></li>
-      </ul>
-    </nav>
-    <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" data-view-allowed>
-      <span class="sr-only">Toggle navigation</span>
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </div>
-</header>
+        <header class="post-head">
+          <h1 id="postTitle"></h1>
+          <p id="postSubtitle" class="subtitle"></p>
+          <div class="meta">
+            <span id="postAuthor"></span>
+            <span>•</span>
+            <time id="postDate" datetime=""></time>
+            <span>•</span>
+            <span id="postReadTime"></span>
+            <div id="postTags" class="flex gap-2" style="margin-left:8px"></div>
+          </div>
+        </header>
         <div id="postBody" class="prose"></div>
       </article>
 
@@ -346,16 +338,15 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-  <div class="site-footer__inner">
-    <span>© <span id="y"></span> The (un)Stable Net</span>
-    <span aria-hidden="true">•</span>
-    <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy (PDF)</a>
-    <span aria-hidden="true">•</span>
-    <a href="assets/legal/terms.pdf" target="_blank" rel="noopener">Terms &amp; Conditions (PDF)</a>
-  </div>
-</footer>
-<script>document.getElementById('y') && (document.getElementById('y').textContent = new Date().getFullYear());</script>
+  <footer>
+    <div class="wrap mini" style="margin-top:6px; display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; text-align:center;">
+      <span>© 2025 The (un)Stable Net</span>
+      <span aria-hidden="true">•</span>
+      <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline underline-offset-4">Privacy Policy (PDF)</a>
+      <span aria-hidden="true" class="hidden sm:inline">•</span>
+      <a href="assets/legal/terms.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline underline-offset-4">Terms &amp; Conditions (PDF)</a>
+    </div>
+  </footer>
 
   <!-- Contribute dialog -->
   <dialog id="contribDialog" class="contrib" data-to-email="jacopoberton98@gmail.com" data-view-allowed>
