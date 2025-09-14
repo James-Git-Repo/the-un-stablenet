@@ -530,6 +530,27 @@ if (navEmm) navEmm.setAttribute('href', emmHref);
   });
 })();
 </script>
+<script>
+(function(){
+  const btn = document.getElementById('navToggle');
+  const nav = document.getElementById('primaryNav');
+  if(!btn || !nav) return;
+
+  // Toggle apertura/chiusura
+  btn.addEventListener('click', ()=>{
+    const open = document.body.classList.toggle('nav-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  // Assicura che l'hamburger NON si veda su desktop
+  const mq = matchMedia('(max-width:980px)');
+  const update = ()=>{ btn.style.display = mq.matches ? 'inline-flex' : 'none'; };
+  update(); mq.addEventListener('change', update);
+
+  // Compatibilità con il tuo "viewer"
+  try { btn.setAttribute('data-view-allowed',''); nav.querySelectorAll('a').forEach(a=>a.setAttribute('data-view-allowed','')); } catch(_){}
+})();
+</script>
 
 
   <script type="module" src="assets/sb-init.js"></script>
