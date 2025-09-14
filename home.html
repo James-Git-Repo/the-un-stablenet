@@ -211,6 +211,12 @@ dialog{
         <h2 id="projects-title" class="section-title">Projects</h2>
         <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap"></div>
       </div>
+      <!-- Editor tools (nascosti in Viewer) -->
+<div class="only-editor" style="display:flex;gap:8px;align-items:center;margin:8px 0">
+  <input type="file" id="coverInput" accept="image/*">
+  <button id="saveCover" type="button">Imposta cover</button>
+</div>
+
       <div class="grid" id="projectGrid"></div>
     </section>
   </main>
@@ -573,6 +579,47 @@ if (navEmm) navEmm.setAttribute('href', emmHref);
 
 
   <script type="module" src="assets/sb-init.js"></script>
+  <script type="module">
+  import { sb } from "./assets/sb-init.js";
+
+  // Chiede al volo l'ID/slug del progetto (es. "emm", "msb", "the-unstable-net")
+  async function setProjectCover(projectId, file){
+    if (!projectId) throw new Error("Inserisci un Project ID (slug).");
+    if (!file) throw new Error("Seleziona un file immagine.");
+
+    const ext  = (file.name.split('.').pop() || 'jpg').toLowerCase();
+    const path = `projects/${projectId}/cover-${Date.now()}.${ext}`;
+
+    // 1) Upload nel bucket 'public' (serve che esista ed abbia policy di read pubblica)
+    const { error: upErr } = await sb.storage.from('public').upload(path, file, { upsert:true });
+    if (upErr) throw upErr;
+
+    // 2) URL pubblica
+    const { data: { publicUrl } } = sb.storage.from('public').getPublicUrl(path);
+
+    // 3) Aggiorna il record del progetto
+    const { error: updErr } = await sb
+      .from('projects')
+      .update({ cover_url: publicUrl })
+      .eq('id', projectId);
+
+    if (updErr) throw updErr;
+  }
+
+  const fileInput = document.getElementById('coverInput');
+  const saveBtn   = document.getElementById('saveCover');
+
+  saveBtn?.addEventListener('click', async () => {
+    try{
+      const file = fileInput?.files?.[0];
+      const id   = prompt("Project ID (slug) es. 'emm' o 'msb':")?.trim();
+      await setProjectCover(id, file);
+      alert("Cover aggiornata! Ricarica la pagina per vederla.");
+    }catch(e){
+      alert(e?.message || e || "Errore inatteso");
+    }
+  });
+</script>
   <script type="module" src="assets/dynamic-home.js"></script>
   <script type="module" src="assets/editor-auth.js"></script>
   <script type="module" src="assets/editor-tray.js"></script>
