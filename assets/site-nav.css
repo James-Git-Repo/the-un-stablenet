@@ -1,90 +1,63 @@
+/* site-nav.css v6 — responsive header that behaves differently on mobile vs desktop */
+:root{ --maxw:1120px; --nav-h:72px; }
 
-/* --- Shared responsive header/menu (tutte le pagine) --- */
+/* Base header */
+header{ position:sticky; top:0; z-index:100; background:rgba(255,255,255,.86); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border-bottom:1px solid rgba(12,23,52,.06); }
+header .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:var(--maxw); margin:0 auto; padding:14px 20px; min-height:var(--nav-h); }
 
-/* Burger */
-.nav-toggle{
-  display:none;
-  appearance:none;
-  border:1px solid #dbe6ff;
-  background:#fff;
-  color:#143166;
-  width:40px; height:40px;
-  border-radius:10px;
-  align-items:center; justify-content:center;
-  cursor:pointer;
-}
+/* Brand */
+.brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; }
+.mark{ width:36px; height:36px; border-radius:12px; display:grid; place-items:center; color:#fff; background:conic-gradient(from 210deg,#1f4aff,#00b7ff); box-shadow:0 10px 30px rgba(12,23,52,.08) }
+.site-name{ margin:0; font-weight:800; font-size:18px; line-height:1; }
 
-/* sr-only util */
-.sr-only{
-  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-  clip:rect(0,0,0,0);white-space:nowrap;border:0
-}
-
-/* Layout desktop: non tocchiamo il tuo header, solo nav */
-header .nav{ justify-content:space-between; gap:12px; }
-
-/* Mobile / tablet */
-@media (max-width: 980px){
-  .nav-toggle{ display:inline-flex; }
-  header nav{
-    position: static;
-    margin-left:0;
-    flex:unset;
-  }
-  header nav ul{
-    position:absolute;
-    right:16px; top:72px;
-    display:none;
-    flex-direction:column;
-    gap:10px;
-    background:#fff;
-    border:1px solid var(--line, #e7edf7);
-    border-radius:14px;
-    padding:12px;
-    box-shadow:0 10px 30px rgba(12,23,52,.10);
-    z-index:50;
-    min-width: 220px;
-  }
-  /* quando aperto */
-  body.nav-open header nav ul{ display:flex; }
-  /* link più comodi al tatto */
-  header nav a{ display:block; width:100%; text-align:left; min-height:44px; }
-}
-
-/* Safe-area iOS */
-@supports(padding:max(0px)){
-  header{ padding-top: env(safe-area-inset-top); }
-}
-
-
-/* ---- Enhancements (v5) ---- */
-header{ position: sticky; top:0; z-index:40; background:rgba(255,255,255,.8); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-header .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-
-/* Ensure the burger ends at far right by putting it last in markup; as a safety, also allow .nav-toggle to push right */
-header .nav .nav-toggle{ margin-left:auto; }
-
-/* Close-on-open overlay (click outside close) - visual only */
-@media (max-width:980px){
-  body.nav-open::after{
-    content:''; position:fixed; inset:0; background:rgba(2,6,23,.25); backdrop-filter:blur(1px);
-    z-index:40;
-  }
-  /* Ensure the flyout menu is over the overlay */
-  body.nav-open header nav ul{ position:absolute; z-index:50; }
-}
-
-
-/* Global pill nav styles so the header looks consistent */
+/* Pills */
 .pill-row{ list-style:none; margin:0; padding:0; display:flex; align-items:center; gap:12px; }
 .pill-btn{
-  appearance:none; display:inline-flex; align-items:center; gap:6px; text-decoration:none;
+  appearance:none; display:inline-flex; align-items:center; gap:6px; text-decoration:none; cursor:pointer;
   background:#fff; color:#1f3aa2; border:1.5px solid #dbe6ff; border-radius:14px;
   padding:10px 14px; font-weight:800; font-size:14px; line-height:1;
-  transition: background .15s ease, box-shadow .15s ease; box-shadow:0 1px 0 rgba(12,23,52,.02); cursor:pointer;
+  transition: background .15s ease, box-shadow .15s ease; box-shadow:0 1px 0 rgba(12,23,52,.02);
 }
 .pill-btn:hover{ background:#f4f7ff }
 .pill-btn.primary{ background:linear-gradient(180deg,#2954ff,#1f4aff); color:#fff; border-color:#2140b8; box-shadow:0 6px 18px rgba(31,74,255,.20), inset 0 1px 0 rgba(255,255,255,.25); }
 
-/* Generic wrap container */
-.wrap{ max-width: var(--maxw, 1120px); margin: 0 auto; padding: 18px 20px; }
+/* Burger */
+.nav-toggle{ appearance:none; display:none; align-items:center; justify-content:center; width:40px; height:40px; border:1.5px solid #dbe6ff; border-radius:12px; background:#fff; color:#0b152c; }
+.nav-toggle:focus-visible{ outline:2px solid #2954ff; outline-offset:2px }
+
+/* Desktop defaults (>=981px) */
+@media (min-width:981px){
+  #primaryNav > ul{ display:flex; }
+  .nav-toggle{ display:none !important; }
+}
+
+/* Mobile layout (<=980px): show burger, hide nav until opened */
+@media (max-width:980px){
+  .nav-toggle{ display:inline-flex; margin-left:auto; }
+  #primaryNav{ position:static; }
+  #primaryNav > ul{
+    display:none;
+  }
+
+  /* Open state */
+  body.nav-open #primaryNav > ul{
+    display:flex;
+    position:absolute;
+    top:calc(var(--nav-h) - 6px);
+    right:14px;
+    left:auto;
+    flex-direction:column; gap:10px;
+    background:#ffffff; border:1px solid #e7edf7; border-radius:14px; padding:12px;
+    box-shadow:0 20px 40px rgba(12,23,52,.20);
+    z-index:110;
+  }
+
+  /* Click-out overlay */
+  body.nav-open::after{
+    content:''; position:fixed; inset:0; background:rgba(2,6,23,.35); -webkit-backdrop-filter:blur(1px); backdrop-filter:blur(1px);
+    z-index:90;
+  }
+}
+
+/* Generic wrap (in case page doesn't have its own) */
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 20px; }
