@@ -1,0 +1,38 @@
+
+/* assets/site-footer.css — unified sticky footer + consistent styles */
+:root{
+  --footer-bg:#fff;
+  --footer-ink:#6b7897;
+  --footer-link:#2140b8;
+  --footer-line: var(--line, #e7edf7);
+  --maxw: 1120px;
+}
+
+html,body{height:100%}
+body{min-height:100dvh; display:flex; flex-direction:column}
+main{flex:1}
+
+/* Base footer */
+.site-footer{
+  border-top:1px solid var(--footer-line);
+  background:var(--footer-bg);
+  color:var(--footer-ink);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-size:12px;
+}
+.site-footer a{ color:var(--footer-link); text-decoration:none; font-weight:700 }
+.site-footer a:hover{ text-decoration:underline }
+.site-footer__inner{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:18px 20px;
+  display:flex; gap:10px; flex-wrap:wrap;
+  justify-content:center; align-items:center; text-align:center;
+}
+/* Dark variant */
+.footer-dark{
+  --footer-bg: transparent;
+  --footer-ink: rgba(255,255,255,.65);
+  --footer-link: #ffffff;
+  --footer-line: rgba(255,255,255,.15);
+}
