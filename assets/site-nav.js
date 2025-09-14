@@ -24,4 +24,32 @@
     btn.setAttribute('data-view-allowed','');
     nav.querySelectorAll('a').forEach(a=>a.setAttribute('data-view-allowed',''));
   } catch(_) {}
+})(
+  // Close menu when clicking outside or on a link
+  document.addEventListener('click', (e)=>{
+    if(!document.body.classList.contains('nav-open')) return;
+    const within = nav.contains(e.target) || btn.contains(e.target);
+    if(!within){
+      document.body.classList.remove('nav-open');
+      btn.setAttribute('aria-expanded','false');
+    }
+  });
+
+  // Close when a nav link is clicked (use event delegation)
+  nav.addEventListener('click', (e)=>{
+    const a = e.target.closest('a');
+    if(a && document.body.classList.contains('nav-open')){
+      document.body.classList.remove('nav-open');
+      btn.setAttribute('aria-expanded','false');
+    }
+  });
+
+  // ESCAPE to close
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && document.body.classList.contains('nav-open')){
+      document.body.classList.remove('nav-open');
+      btn.setAttribute('aria-expanded','false');
+      btn.focus();
+    }
+  });
 })();
