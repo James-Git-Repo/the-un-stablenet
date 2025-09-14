@@ -3,8 +3,7 @@
 <head>
   <link rel="stylesheet" href="assets/access-mode.css">
   <script defer src="assets/access-mode.js"></script>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <link rel="stylesheet" href="assets/site-nav.css?v=6">
 <link rel="stylesheet" href="assets/site-footer.css?v=2">
 <script defer src="assets/site-nav.js?v=6"></script>
@@ -167,32 +166,33 @@ dialog{
 </style>
 
   <link rel="stylesheet" href="assets/site-responsive.css">
-
-  <link rel="stylesheet" href="assets/site-footer.css?v=1">
 </head>
 <body>
   <header>
-  <div class="wrap nav">
-    <a class="brand" href="home.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
-      <div class="mark" aria-hidden="true" style="width:36px;height:36px;border-radius:12px;display:grid;place-items:center;color:#fff;background:conic-gradient(from 210deg,#1f4aff,#00b7ff);box-shadow:0 10px 30px rgba(12,23,52,.08)">TSN</div>
-      <h1 class="site-name" style="margin:0;font-weight:800;font-size:18px;line-height:1">The (un)Stable Net</h1>
-    </a>
-    <nav id="primaryNav" aria-label="Primary">
-      <ul class="pill-row">
-        <li><a class="pill-btn" href="home.html">Home</a></li>
-        <li><a class="pill-btn" href="projects.html">Projects</a></li>
-        <li><a class="pill-btn" href="emm.html#latest">Newsletter</a></li>
-        <li><a class="pill-btn" href="about.html">Bio</a></li>
-      </ul>
-    </nav>
-    <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" data-view-allowed>
+    <div class="wrap nav">
+      <div class="brand"><div class="mark" aria-hidden="true">TSN</div><h1><b>The (un)Stable Net</b></h1></div>
+      <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" data-view-allowed>
       <span class="sr-only">Toggle navigation</span>
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </button>
-  </div>
-</header>
+      <nav id="primaryNav" aria-label="Primary">
+        <ul>
+          <li><a href="#projects" data-view-allowed>Projects</a></li>
+          <!-- FIX: relative link to avoid 404s on static hosts -->
+          <li><a id="navEmm" href="emm.html#latest" data-view-allowed>Newsletter</a></li>
+          <li><a href="bio.html" data-view-allowed>About me</a></li>
+        </ul>
+      </nav>
+      <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false">
+      <span class="sr-only">Apri menu</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    </div>
+  </header>
 
   <section class="hero">
     <canvas id="net" aria-hidden="true"></canvas>
@@ -240,16 +240,37 @@ dialog{
     </div>
   </dialog>
 
-  <footer class="site-footer">
-  <div class="site-footer__inner">
-    <span>© <span id="y"></span> The (un)Stable Net</span>
-    <span aria-hidden="true">•</span>
-    <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy (PDF)</a>
-    <span aria-hidden="true">•</span>
-    <a href="assets/legal/terms.pdf" target="_blank" rel="noopener">Terms &amp; Conditions (PDF)</a>
-  </div>
-</footer>
-<script>document.getElementById('y') && (document.getElementById('y').textContent = new Date().getFullYear());</script>
+  <footer>
+    <div class="wrap ft-wrap">
+      <div>
+        <a href="https://www.linkedin.com/in/jacopo-berton-16a69424b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-right:10px;color:#2140b8">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554V14.75c0-1.357-.027-3.099-1.889-3.099-1.89 0-2.178 1.477-2.178 3.002v5.799H9.27V9h3.414v1.561h.047c.476-.9 1.637-1.849 3.37-1.849 3.601 0 4.266 2.37 4.266 5.455v6.285zM5.337 7.433a2.062 2.062 0 11.001-4.124 2.062 2.062 0 01-.001 4.124zM6.918 20.452H3.654V9h3.264v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="mailto:jacopoberton98@gmail.com" aria-label="Email" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-right:10px">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M1.5 5.75A2.75 2.75 0 0 1 4.25 3h15.5A2.75 2.75 0 0 1 22.5 5.75v12.5A2.75 2.75 0 0 1 19.75 21H4.25A2.75 2.75 0 0 1 1.5 18.25V5.75zm2.75-.25a.25.25 0 0 0-.25.25v.17l7.5 5.01 7.5-5.01v-.17a.25.25 0 0 0-.25-.25H4.25zm15.5 2.64-7.14 4.77a.75.75 0 0 1-.82 0L3.65 8.14v10.11c0 .14.11.25.25.25h15.85c.14 0 .25-.11.25-.25V8.14z"/></svg>
+        </a>
+        <a href="https://github.com/James-Git-Repo" target="_blank" rel="noopener" aria-label="GitHub" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-right:10px">
+          <img alt="" src="https://cdn.simpleicons.org/github/2140b8" width="22" height="22" loading="lazy">
+        </a>
+        <a href="https://x.com/your-handle" target="_blank" rel="noopener" aria-label="X" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px">
+          <img alt="" src="https://cdn.simpleicons.org/x/2140b8" width="22" height="22" loading="lazy">
+        </a>
+      </div>
+
+      <div class="about-block">
+        <span class="about-label">About</span>
+        <p class="about-text">I'm a Swiss–Italian analyst & builder focused on fintech & AI. With a curious and delivery-oriented mindset, I'm always down for a new challenge.</p>
+      </div>
+
+      <div class="wrap mini" style="margin-top:6px; display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; text-align:center;">
+        <span>© 2025 The (un)Stable Net</span>
+        <span aria-hidden="true">•</span>
+        <a href="/assets/legal/privacy-policy.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline underline-offset-4">Privacy Policy (PDF)</a>
+        <span aria-hidden="true" class="hidden sm:inline">•</span>
+        <a href="/assets/legal/terms.pdf" target="_blank" rel="noopener noreferrer" class="hover:underline underline-offset-4">Terms &amp; Conditions (PDF)</a>
+      </div>
+    </div>
+  </footer>
 
   <button id="openCustomizer" class="btn fab">✎ Customize</button>
   <div id="customizePanel" class="customize hidden" role="dialog" aria-modal="true" aria-labelledby="czTitle">
