@@ -1,3 +1,4 @@
+
 /* --- Shared responsive header/menu (tutte le pagine) --- */
 
 /* Burger */
@@ -54,3 +55,36 @@ header .nav{ justify-content:space-between; gap:12px; }
 @supports(padding:max(0px)){
   header{ padding-top: env(safe-area-inset-top); }
 }
+
+
+/* ---- Enhancements (v5) ---- */
+header{ position: sticky; top:0; z-index:40; background:rgba(255,255,255,.8); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+header .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+
+/* Ensure the burger ends at far right by putting it last in markup; as a safety, also allow .nav-toggle to push right */
+header .nav .nav-toggle{ margin-left:auto; }
+
+/* Close-on-open overlay (click outside close) - visual only */
+@media (max-width:980px){
+  body.nav-open::after{
+    content:''; position:fixed; inset:0; background:rgba(2,6,23,.25); backdrop-filter:blur(1px);
+    z-index:40;
+  }
+  /* Ensure the flyout menu is over the overlay */
+  body.nav-open header nav ul{ position:absolute; z-index:50; }
+}
+
+
+/* Global pill nav styles so the header looks consistent */
+.pill-row{ list-style:none; margin:0; padding:0; display:flex; align-items:center; gap:12px; }
+.pill-btn{
+  appearance:none; display:inline-flex; align-items:center; gap:6px; text-decoration:none;
+  background:#fff; color:#1f3aa2; border:1.5px solid #dbe6ff; border-radius:14px;
+  padding:10px 14px; font-weight:800; font-size:14px; line-height:1;
+  transition: background .15s ease, box-shadow .15s ease; box-shadow:0 1px 0 rgba(12,23,52,.02); cursor:pointer;
+}
+.pill-btn:hover{ background:#f4f7ff }
+.pill-btn.primary{ background:linear-gradient(180deg,#2954ff,#1f4aff); color:#fff; border-color:#2140b8; box-shadow:0 6px 18px rgba(31,74,255,.20), inset 0 1px 0 rgba(255,255,255,.25); }
+
+/* Generic wrap container */
+.wrap{ max-width: var(--maxw, 1120px); margin: 0 auto; padding: 18px 20px; }
