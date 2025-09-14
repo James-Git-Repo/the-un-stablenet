@@ -1,5 +1,4 @@
-
-/* assets/site-footer.css — unified sticky footer + consistent styles */
+/* site-footer.css v2 — sticky bottom, light & dark variants */
 :root{
   --footer-bg:#fff;
   --footer-ink:#6b7897;
@@ -8,9 +7,10 @@
   --maxw: 1120px;
 }
 
-html,body{height:100%}
-body{min-height:100dvh; display:flex; flex-direction:column}
-main{flex:1}
+/* Flexible page — works even if <main> missing */
+html,body{ height:100%; }
+body{ min-height:100dvh; display:flex; flex-direction:column; }
+footer.site-footer{ margin-top:auto; } /* makes footer push to bottom */
 
 /* Base footer */
 .site-footer{
@@ -29,6 +29,7 @@ main{flex:1}
   display:flex; gap:10px; flex-wrap:wrap;
   justify-content:center; align-items:center; text-align:center;
 }
+
 /* Dark variant */
 .footer-dark{
   --footer-bg: transparent;
