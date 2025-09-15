@@ -1,0 +1,66 @@
+/* ---- Base: consistent perceived scale on mobile & desktop ---- */
+html{
+  /* Stop mobile auto-zoom and odd reflow on Android/iOS */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Fluid but tight: ~16px mobile → ~17.5px desktop (no huge jumps) */
+  font-size: clamp(15.5px, 14px + 0.5vw, 17.5px);
+}
+:root{
+  --page:#ffffff; --ink:#0b152c; --ink-2:#4c5875;
+  --line:#e7edf7; --card:#ffffff;
+  --brand:#1f4aff; --accent:#00b7ff; --chip:#eef4ff;
+  --maxw:1120px; --pad:16px; --pad-lg:24px;
+  --z-nav:60; --z-menu:70;
+}
+
+/* Consistent container & paddings */
+.container, .wrap, .page{
+  max-width: var(--maxw);
+  margin-inline:auto;
+  padding-inline: var(--pad);
+}
+@media (min-width: 1024px){
+  .container, .wrap, .page{ padding-inline: var(--pad-lg); }
+}
+
+/* Fluid headings without “giant on phone” effect */
+h1{ font-size: clamp(28px, 4.6vw, 48px); line-height:1.1; margin:0; }
+h2{ font-size: clamp(22px, 3.4vw, 32px); line-height:1.15; margin:0; }
+p, li{ font-size: 1rem; line-height: 1.55; color: var(--ink-2); }
+
+/* Media safety */
+img, video, canvas, svg{ max-width:100%; height:auto; }
+
+/* Hero/media blocks stay elegant on phones */
+.hero{
+  border-radius: 20px;
+  overflow:hidden;
+  background:#16254b;
+  /* keep proportion + avoid absurd height */
+  aspect-ratio: 16/9;
+  max-height: min(56vh, 520px);
+}
+
+/* Footer sticks to bottom on short pages */
+body{ min-height: 100dvh; display:flex; flex-direction:column; }
+.site-footer{ margin-top:auto; }
+
+/* ---- Nav burger: right aligned, no overlay blocking clicks ---- */
+.nav{ position:relative; z-index: var(--z-nav); height:72px; display:flex; align-items:center; justify-content:space-between; }
+.burger{
+  width:44px; height:44px; display:grid; place-items:center;
+  border-radius:12px; border:1px solid #dbe6ff; background:#f7faff;
+}
+.menu{
+  position:absolute; right:16px; top:64px;
+  background:#fff; border:1px solid #e7edf7; border-radius:20px;
+  box-shadow: 0 10px 30px rgba(13, 37, 82, .12);
+  padding:16px; width: min(86vw, 320px);
+  transform-origin: top right;
+  z-index: var(--z-menu);
+}
+.menu[hidden]{ display:none; }
+
+/* Close menu on small screens if we tap outside — pointer events ok */
+.menu a, .menu button{ display:block; width:100%; }
