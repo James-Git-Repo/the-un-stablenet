@@ -1,11 +1,25 @@
-/*! Role/View helper styles (with strict VIEWER) */
-html[data-mode="editor"] .only-user, html[data-mode="editor"] .only-viewer { display:none !important; }
-html[data-mode="user"] .only-editor, html[data-mode="user"] .only-viewer { display:none !important; }
-html[data-mode="viewer"] .only-editor, html[data-mode="viewer"] .only-user { display:none !important; }
+/*! Role/View helpers — minimal & safe */
 
-html[data-mode="editor"] .edit-outline { outline: 1.5px dashed rgba(16,185,129,0.7); outline-offset: 2px; }
+/* Role switches */
+html[data-mode="editor"] .only-user,
+html[data-mode="editor"] .only-viewer { display:none !important; }
 
-html[data-mode="viewer"] [contenteditable],
+html[data-mode="user"] .only-editor,
+html[data-mode="user"] .only-viewer { display:none !important; }
+
+html[data-mode="viewer"] .only-editor,
+html[data-mode="viewer"] .only-user { display:none !important; }
+
+/* Visual hint while editing */
+html[data-mode="editor"] .edit-outline {
+  outline: 1.5px dashed rgba(16,185,129,0.7);
+  outline-offset: 2px;
+}
+
+/* ————— IMPORTANT CHANGE —————
+   Viewer mode should hide ONLY the editor/admin chrome.
+   Do NOT blanket-hide generic classes or all buttons/inputs.
+*/
 html[data-mode="viewer"] .edit-toolbar,
 html[data-mode="viewer"] .edit-controls,
 html[data-mode="viewer"] .editor-only,
@@ -14,67 +28,37 @@ html[data-mode="viewer"] .admin-only,
 html[data-mode="viewer"] [data-admin],
 html[data-mode="viewer"] .debug-panel,
 html[data-mode="viewer"] .dev-only,
-html[data-mode="viewer"] .editable,
-html[data-mode="viewer"] .editor,
-html[data-mode="viewer"] .toolbar,
-html[data-mode="viewer"] .controls,
-html[data-mode="viewer"] .customize,
-html[data-mode="viewer"] .customise,
-html[data-mode="viewer"] .edit-button,
-html[data-mode="viewer"] .uploader,
-html[data-mode="viewer"] .upload,
-html[data-mode="viewer"] .file-upload,
-html[data-mode="viewer"] .dropzone,
-html[data-mode="viewer"] .cms,
-html[data-mode="viewer"] .admin,
 html[data-mode="viewer"] .editor-panel,
 html[data-mode="viewer"] .editor-area,
 html[data-mode="viewer"] .editor-tools,
-html[data-mode="viewer"] .editor-actions,
-html[data-mode="viewer"] [data-edit],
-html[data-mode="viewer"] [data-upload],
-html[data-mode="viewer"] [data-customize] { display:none !important; }
+html[data-mode="viewer"] .editor-actions { display:none !important; }
 
-html[data-mode="viewer"] :is(button, input, select, textarea, [role="button"], .btn, .button, .switch, .toggle):not([data-view-allowed]) {
-  display: none !important;
+/* Allow contenteditable to be present in editor only */
+html[data-mode="viewer"] [contenteditable] { display:none !important; }
+
+/* If you need to disable a specific control in viewer mode, add data-locked="true" */
+html[data-mode="viewer"] [data-locked="true"] {
+  opacity: 0.6; pointer-events: none; user-select: text;
 }
 
-html[data-mode="viewer"] [data-locked="true"] { opacity: 0.6; pointer-events: none; user-select: text; }
+/* Editor tray visible only while editing */
+#editorTray { display:none; }
+html[data-mode="editor"] #editorTray { display:block; }
 
-/* Hide the editor tray for viewers; show it only in editor mode */
-#editorTray { display: none; }
-[data-mode="editor"] #editorTray { display: block; }
-/* --- Modal footer buttons: reset & restore original layout --- */
+/* — Modal footer buttons: keep layout sane everywhere — */
 .modal-actions{
   display:flex; gap:10px; justify-content:flex-end; align-items:center;
   margin-top:12px;
 }
-
-/* kill any global width:100%/block rules inside modals */
 .modal-actions button{
   width:auto; display:inline-flex; align-items:center; justify-content:center;
   appearance:none; cursor:pointer;
   padding:10px 16px; border-radius:14px; font-weight:800; line-height:1.1;
   border:1.5px solid #dbe6ff; background:#fff; color:#1f3aa2;
 }
-
-/* primary (Send) */
-.modal-actions .btn-primary{
-  background:#1f4aff; color:#fff; border-color:#1f4aff;
-}
-
-/* ghost (Cancel/Close) */
-.modal-actions .btn-ghost{
-  background:transparent; color:#0b152c; border-color:transparent;
-}
-
-/* focus */
-.modal-actions button:focus-visible{
-  outline:2px solid #1f4aff; outline-offset:2px;
-}
-
-/* small screens: keep them side-by-side, wrap only if needed */
+.modal-actions .btn-primary{ background:#1f4aff; color:#fff; border-color:#1f4aff; }
+.modal-actions .btn-ghost{ background:transparent; color:#0b152c; border-color:transparent; }
+.modal-actions button:focus-visible{ outline:2px solid #1f4aff; outline-offset:2px; }
 @media (max-width:480px){
   .modal-actions{ flex-wrap:wrap; justify-content:flex-end; }
 }
-
