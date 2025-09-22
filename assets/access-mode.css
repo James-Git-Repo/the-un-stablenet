@@ -1,64 +1,32 @@
-/*! Role/View helpers — minimal & safe */
+# PURPOSE: Hide editor UI in viewer, prevent overlays from blocking content,
+# and ensure hero/cover is never covered by stray UI.
+# ──────────────────────────────────────────────────────────────────────────────
+:root{ --editor-z: 9000; --hero-z: 1 }
 
-/* Role switches */
-html[data-mode="editor"] .only-user,
-html[data-mode="editor"] .only-viewer { display:none !important; }
-
-html[data-mode="user"] .only-editor,
-html[data-mode="user"] .only-viewer { display:none !important; }
-
-html[data-mode="viewer"] .only-editor,
-html[data-mode="viewer"] .only-user { display:none !important; }
-
-/* Visual hint while editing */
-html[data-mode="editor"] .edit-outline {
-  outline: 1.5px dashed rgba(16,185,129,0.7);
-  outline-offset: 2px;
-}
-
-/* ————— IMPORTANT CHANGE —————
-   Viewer mode should hide ONLY the editor/admin chrome.
-   Do NOT blanket-hide generic classes or all buttons/inputs.
-*/
-html[data-mode="viewer"] .edit-toolbar,
-html[data-mode="viewer"] .edit-controls,
+html[data-mode="viewer"] [data-editor-ui],
+body[data-mode="viewer"] [data-editor-ui],
 html[data-mode="viewer"] .editor-only,
-html[data-mode="viewer"] [data-editor-only],
-html[data-mode="viewer"] .admin-only,
-html[data-mode="viewer"] [data-admin],
-html[data-mode="viewer"] .debug-panel,
-html[data-mode="viewer"] .dev-only,
-html[data-mode="viewer"] .editor-panel,
-html[data-mode="viewer"] .editor-area,
-html[data-mode="viewer"] .editor-tools,
-html[data-mode="viewer"] .editor-actions { display:none !important; }
-
-/* Allow contenteditable to be present in editor only */
-html[data-mode="viewer"] [contenteditable] { display:none !important; }
-
-/* If you need to disable a specific control in viewer mode, add data-locked="true" */
-html[data-mode="viewer"] [data-locked="true"] {
-  opacity: 0.6; pointer-events: none; user-select: text;
+body[data-mode="viewer"] .editor-only {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
-/* Editor tray visible only while editing */
-#editorTray { display:none; }
-html[data-mode="editor"] #editorTray { display:block; }
+/* In viewer, prevent accidental click-capture from overlays */
+html[data-mode="viewer"] .overlay, body[data-mode="viewer"] .overlay{
+  pointer-events: none !important;
+}
 
-/* — Modal footer buttons: keep layout sane everywhere — */
-.modal-actions{
-  display:flex; gap:10px; justify-content:flex-end; align-items:center;
-  margin-top:12px;
+/* Ensure hero/cover sits above background but below real modals */
+.cover, .hero{ position: relative; z-index: var(--hero-z) }
+
+/* Guard: if a burger/menu stays open, do not block the page in viewer */
+html[data-mode="viewer"] .nav-open .nav-panel{
+  pointer-events: none; opacity: 0; visibility: hidden;
 }
-.modal-actions button{
-  width:auto; display:inline-flex; align-items:center; justify-content:center;
-  appearance:none; cursor:pointer;
-  padding:10px 16px; border-radius:14px; font-weight:800; line-height:1.1;
-  border:1.5px solid #dbe6ff; background:#fff; color:#1f3aa2;
-}
-.modal-actions .btn-primary{ background:#1f4aff; color:#fff; border-color:#1f4aff; }
-.modal-actions .btn-ghost{ background:transparent; color:#0b152c; border-color:transparent; }
-.modal-actions button:focus-visible{ outline:2px solid #1f4aff; outline-offset:2px; }
-@media (max-width:480px){
-  .modal-actions{ flex-wrap:wrap; justify-content:flex-end; }
-}
+
+/* Optional helper: explicitly mark allowed islands in viewer */
+[data-view-allowed]{ pointer-events: auto !important; }
+
+
+# ──────────────────────────────────────────────────────────────────────────────
