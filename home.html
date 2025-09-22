@@ -169,13 +169,13 @@ dialog{
   <header>
     <div class="wrap nav">
       <div class="brand"><div class="mark" aria-hidden="true">TSN</div><h1><b>The (un)Stable Net</b></h1></div>
-      <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" data-view-allowed>
+      <button type="button" class="nav-toggle" aria-label="Menu" data-nav-toggle data-view-allowed>
       <span class="sr-only">Toggle navigation</span>
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </button>
-      <nav id="primaryNav" aria-label="Primary">
+      <nav id="primaryNav" aria-label="Primary" class="nav-panel" data-nav-panel aria-hidden="true">
         <ul>
           <li><a href="#projects" data-view-allowed>Projects</a></li>
           <!-- FIX: relative link to avoid 404s on static hosts -->
@@ -187,7 +187,7 @@ dialog{
     </div>
   </header>
 
-  <section class="hero">
+  <section class="hero cover">
     <canvas id="net" aria-hidden="true"></canvas>
     <div class="inner">
       <h2 class="title">The (un)Stable Net</h2>
@@ -212,7 +212,7 @@ dialog{
         <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap"></div>
       </div>
       <!-- Editor tools (nascosti in Viewer) -->
-<div class="only-editor" style="display:flex;gap:8px;align-items:center;margin:8px 0">
+<div class="editor-only" data-editor-ui style="display:flex;gap:8px;align-items:center;margin:8px 0">
   <input type="file" id="coverInput" accept="image/*">
   <button id="saveCover" type="button">Imposta cover</button>
 </div>
