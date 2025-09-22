@@ -2,3 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": false
 }
+{
+  "redirects": [
+    { "source": "/bio", "destination": "/about", "permanent": true }
+  ]
+}
