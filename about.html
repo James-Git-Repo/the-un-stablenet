@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en" data-mode="viewer">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <link rel="stylesheet" href="assets/global-responsive.css">
+  <link rel="stylesheet" href="/assets/global-responsive.css">
   <link rel="stylesheet" href="/assets/access-mode.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/foundation.css">
+  <link rel="stylesheet" href="/assets/foundation.css">
 
   <title>Jacopo Berton — Full Bio</title>
 
@@ -238,19 +238,20 @@
 </style>
   
   
-  <link rel="stylesheet" href="assets/site-responsive.css">
+  <link rel="stylesheet" href="/assets/site-responsive.css">
 </head>
 <body>
   <header>
     <div class="wrap nav">
       <div class="brand"><div class="mark" aria-hidden="true">TSN</div><h1 class="text-lg font-extrabold">The (un)Stable Net</h1></div>
-      <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" data-view-allowed>
+     <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false"
+        data-view-allowed data-nav-toggle>
       <span class="sr-only">Toggle navigation</span>
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </button>
-      <nav id="primaryNav" aria-label="Primary">
+      <nav id="primaryNav" aria-label="Primary" data-nav-panel aria-hidden="true">
         <ul class="pill-row">
           <li><a class="pill-btn" href="home.html">Home</a></li>
           <li><button id="openInquiry" class="pill-btn primary" type="button" data-view-allowed>Ask a question</button></li>
@@ -274,7 +275,7 @@
         <div class="contacts">
           <h4>Contacts</h4>
           <div id="links" class="link-list" data-view-allowed></div>
-          <div class="add-link only-editor">
+          <div class="add-link editor-only" data-editor-ui>
             <select id="linkType">
               <option value="email">Email</option>
               <option value="linkedin">LinkedIn</option>
@@ -326,9 +327,9 @@
     <div class="wrap legal mini">
       <span>© <span id="y"></span> The (un)Stable Net</span>
       <span aria-hidden="true">•</span>
-      <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy (PDF)</a>
+      <a href="/assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy (PDF)</a>
       <span aria-hidden="true">•</span>
-      <a href="assets/legal/terms.pdf" target="_blank" rel="noopener">Terms &amp; Conditions (PDF)</a>
+      <a href="/assets/legal/terms.pdf" target="_blank" rel="noopener">Terms &amp; Conditions (PDF)</a>
     </div>
   </footer>
 
@@ -578,39 +579,19 @@
     renderLinks(); applyBio(); ensureEmailHint();
   })();
   </script>
-<script>
-(function(){
-  const btn = document.getElementById('navToggle');
-  const nav = document.getElementById('primaryNav');
-  if(!btn || !nav) return;
 
-  // Toggle apertura/chiusura
-  btn.addEventListener('click', ()=>{
-    const open = document.body.classList.toggle('nav-open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-
-  // Assicura che l'hamburger NON si veda su desktop
-  const mq = matchMedia('(max-width:980px)');
-  const update = ()=>{ btn.style.display = mq.matches ? 'inline-flex' : 'none'; };
-  update(); mq.addEventListener('change', update);
-
-  // Compatibilità con il tuo "viewer"
-  try { btn.setAttribute('data-view-allowed',''); nav.querySelectorAll('a').forEach(a=>a.setAttribute('data-view-allowed','')); } catch(_){}
-})();
-</script>
 
   <!-- Your modules -->
 
-    <script type="module" src="assets/sb-init.js"></script>
-    <script type="module" src="assets/dynamic-bio.js"></script>
-    <script type="module" src="assets/dynamic-bio-content.js"></script>
-    <script type="module" src="assets/editor-auth.js"></script>
-    <script type="module" src="assets/editor-tray.js"></script>
-    <script type="module" src="assets/editor-quiet.js"></script>
-    <script type="module" src="assets/editor-unlock.js"></script>
-    <script type="module" src="assets/live-all-norepl.js"></script>
-    <script defer src="assets/global-responsive.js"></script>
+    <script type="module" src="/assets/sb-init.js"></script>
+    <script type="module" src="/assets/dynamic-bio.js"></script>
+    <script type="module" src="/assets/dynamic-bio-content.js"></script>
+    <script type="module" src="/assets/editor-auth.js"></script>
+    <script type="module" src="/assets/editor-tray.js"></script>
+    <script type="module" src="/assets/editor-quiet.js"></script>
+    <script type="module" src="/assets/editor-unlock.js"></script>
+    <script type="module" src="/assets/live-all-norepl.js"></script>
+    <script defer src="/assets/global-responsive.js"></script>
     <script defer src="/assets/site-nav.js"></script>
     <script defer src="/assets/access-mode.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
