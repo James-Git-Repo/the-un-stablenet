@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="en" data-mode="viewer">
+<html lang="en">
 <head>
-  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- CSS (keep your existing files) -->
   <link rel="stylesheet" href="assets/global-responsive.css">
   <link rel="stylesheet" href="/assets/access-mode.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,19 +12,21 @@
   <link rel="stylesheet" href="assets/foundation.css">
 
   <title>Switch View — Editor/User/Viewer</title>
-
   <style>body{font-family:Inter,system-ui,sans-serif}</style>
 </head>
 <body class="min-h-screen bg-[#0b0f13] text-white">
   <div class="mx-auto max-w-xl px-6 py-16">
     <h1 class="text-3xl font-extrabold tracking-tight">View Switch</h1>
     <p class="mt-2 text-white/70">Default: <b>Viewer</b>. Press <b>Ctrl+Shift+E</b> for Editor (passphrase required).</p>
-    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+
+    <!-- Make this block usable even in viewer -->
+    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3" data-view-allowed>
       <button id="enter-editor" class="rounded-2xl bg-white text-black font-semibold px-5 py-3 shadow">Enter Editor Mode</button>
       <button id="enter-user" class="rounded-2xl border border-white/20 text-white font-semibold px-5 py-3 shadow">Soft User Mode</button>
       <button id="enter-viewer" class="rounded-2xl border border-white/20 text-white font-semibold px-5 py-3 shadow">Strict Viewer Mode</button>
     </div>
   </div>
+
   <script>
     async function sha256Hex(str){
       const data = new TextEncoder().encode(str);
@@ -47,12 +50,19 @@
       localStorage.removeItem('tsn_token'); localStorage.setItem('tsn_mode','viewer'); location.reload();
     });
   </script>
-   <script type="module" src="assets/sb-init.js"></script>
-   <script type="module" src="assets/editor-auth.js"></script>
-   <script type="module" src="assets/editor-tray.js"></script>
-   <script type="module" src="assets/live-all-norepl.js"></script>
-   <script defer src="/assets/site-nav.js"></script>
-   <script defer src="/assets/access-mode.js"></script>
-   <script defer src="assets/global-responsive.js"></script>
-   <script src="https://cdn.tailwindcss.com"></script>
-</body></html>
+
+  <!-- Load the guard scripts BEFORE editor modules -->
+  <script defer src="/assets/site-nav.js"></script>
+  <script defer src="/assets/access-mode.js"></script>
+
+  <!-- Editor modules (okay to keep; they’ll be inert in viewer) -->
+  <script type="module" src="assets/sb-init.js"></script>
+  <script type="module" src="assets/editor-auth.js"></script>
+  <script type="module" src="assets/editor-tray.js"></script>
+  <script type="module" src="assets/live-all-norepl.js"></script>
+
+  <!-- Other scripts -->
+  <script defer src="assets/global-responsive.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>
