@@ -4,14 +4,13 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="stylesheet" href="assets/global-responsive.css">
+<link rel="stylesheet" href="/assets/global-responsive.css">
 <link rel="stylesheet" href="/assets/access-mode.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-
-
-<link rel="stylesheet" href="assets/foundation.css">
-
+<link rel="stylesheet" href="/assets/foundation.css">
+<link rel="stylesheet" href="/assets/global-responsive.css">
+<link rel="stylesheet" href="/assets/access-mode.css">
 
   <title>Viewer Mode</title>
 
@@ -33,13 +32,31 @@
       location.href = '/';
     });
   </script>
-  <script type="module" src="assets/sb-init.js"></script>
-  <script type="module" src="assets/editor-auth.js"></script>
-  <script type="module" src="assets/editor-tray.js"></script>
-  <script type="module" src="assets/live-all-norepl.js"></script>
+  <script>
+  // Load editor-only modules only when actually in editor mode
+  (function(){
+    var mode = (function(){
+      try { return localStorage.getItem('tsn_mode') || 'viewer'; }
+      catch(e) { return 'viewer'; }
+    })();
+    if (mode === 'editor') {
+      [
+        '/assets/sb-init.js',
+        '/assets/editor-auth.js',
+        '/assets/editor-tray.js',
+        '/assets/live-all-norepl.js'
+      ].forEach(function(src){
+        var s = document.createElement('script');
+        s.type = 'module';
+        s.src = src;
+        document.body.appendChild(s);
+      });
+    }
+  })();
+</script>
   <script defer src="/assets/site-nav.js"></script>
   <script defer src="/assets/access-mode.js"></script>
-  <script defer src="assets/global-responsive.js"></script>
+  <script defer src="/assets/global-responsive.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
 </body></html>
