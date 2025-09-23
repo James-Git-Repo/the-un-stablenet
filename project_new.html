@@ -1,19 +1,18 @@
 <!doctype html>
-<html lang="en" data-mode="viewer">
+<html lang="en">
 <head>
   
  
   <meta charset="utf-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="stylesheet" href="assets/global-responsive.css">
-<script defer src="assets/global-responsive.js"></script>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
- <link rel="stylesheet" href="assets/site-responsive.css">
-<link rel="stylesheet" href="assets/foundation.css">
-<link rel="stylesheet" href="assets/access-mode.css">
-<script defer src="assets/access-mode.js"></script>
+  <link rel="stylesheet" href="assets/global-responsive.css">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site-responsive.css">
+  <link rel="stylesheet" href="assets/foundation.css">
+  <link rel="stylesheet" href="/assets/access-mode.css">
+  
   <title>Create New Project — The (un)Stable Net</title>
 
   <style>
@@ -74,16 +73,17 @@
             <span class="font-extrabold tracking-tight text-slate-900 group-hover:text-blue-700 transition">The (un)Stable Net</span>
           </a>
         </div>
-        <nav id="primaryNav">
-<nav class="hidden md:flex items-center gap-6 text-[15px]">
+        <nav id="primaryNav" data-nav-panel aria-hidden="true">
+         <nav class="hidden md:flex items-center gap-6 text-[15px]">
           <a class="text-slate-700 hover:text-blue-700 transition" href="index.html">Home</a>
           <a class="text-slate-700 hover:text-blue-700 transition" href="projects.html">Projects</a>
           <a class="text-slate-700 hover:text-blue-700 transition" href="newsletter.html">Newsletter</a>
           <a class="text-slate-700 hover:text-blue-700 transition" href="bio.html">Bio</a>
           <a class="text-slate-700 hover:text-blue-700 transition" href="contact.html">Contact</a>
         </nav>
+       </nav>
       </div>
-      <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false">
+      <button id="navToggle" class="nav-toggle" aria-controls="primaryNav" aria-expanded="false" data-nav-toggle>
       <span class="sr-only">Apri menu</span>
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -92,7 +92,7 @@
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-28 lg:pb-16">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-28 lg:pb-16" data-editor-ui>
     <!-- helper note -->
     <section id="helperNote" class="card p-4 sm:p-5 mb-6 flex items-start gap-3" role="region" aria-label="Homepage integration note">
       <div class="flex-shrink-0 mt-0.5">
@@ -390,7 +390,7 @@
     </section>
 
     <!-- actions: mobile fixed -->
-    <div class="lg:hidden mobile-actions">
+    <div class="lg:hidden mobile-actions" data-editor-ui>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 mobile-safe">
         <div class="flex items-center gap-2 py-2">
           <button id="saveBtn_m" class="flex-1 btn btn-primary">Save</button>
@@ -403,7 +403,7 @@
   </main>
 
   <!-- Toast -->
-  <div id="toast" class="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 hidden z-50">
+  <div id="toast" class="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 hidden z-50" data-editor-ui>
     <div class="card p-4 w-[min(92vw,26rem)]" role="status" aria-live="polite">
       <div class="flex items-start gap-3">
         <div class="mt-0.5 text-blue-600">
@@ -425,7 +425,7 @@
   </div>
 
   <!-- Modal: Card Preview -->
-  <div id="modal" class="fixed inset-0 hidden items-center justify-center z-50" aria-modal="true" role="dialog" aria-labelledby="modalTitle">
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center z-50" aria-modal="true" role="dialog" aria-labelledby="modalTitle" data-editor-ui>
     <div class="absolute inset-0 modal-backdrop"></div>
     <div class="card relative w-[min(92vw,34rem)] max-h-[85vh] overflow-auto">
       <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100">
@@ -1177,8 +1177,11 @@
     document.addEventListener('DOMContentLoaded', init);
   </script>
   <script type="module" src="assets/sb-init.js"></script>
-<script type="module" src="assets/editor-auth.js"></script>
-<script type="module" src="assets/editor-tray.js"></script>
-
-<script type="module" src="assets/live-all-norepl.js"></script>
+  <script type="module" src="assets/editor-auth.js"></script>
+  <script type="module" src="assets/editor-tray.js"></script>
+  <script type="module" src="assets/live-all-norepl.js"></script>
+  <script defer src="assets/global-responsive.js"></script>
+  <script defer src="/assets/access-mode.js"></script>
+  <script defer src="/assets/site-nav.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </body></html>
