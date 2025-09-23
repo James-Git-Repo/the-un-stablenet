@@ -9,14 +9,13 @@ import { applyBindings, collectEditable, wireLiveEditor } from "./live-core.js";
 import { detectConfig } from "./live-config.js";
 
 function getMode(){
-  const html = document.documentElement;
-  const local = localStorage.getItem("tsn:mode");
-  const attr = html.getAttribute("data-mode");
-  return (local || attr || "viewer").toLowerCase();
+  return (localStorage.getItem('tsn_mode')
+    || document.documentElement.getAttribute('data-mode')
+    || 'viewer').toLowerCase();
 }
-function setMode(mode){
-  document.documentElement.setAttribute("data-mode", mode);
-  localStorage.setItem("tsn:mode", mode);
+function setMode(m){
+  localStorage.setItem('tsn_mode', m);
+  document.documentElement.setAttribute('data-mode', m);
 }
 
 // Fetch helpers
