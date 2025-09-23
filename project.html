@@ -1,23 +1,26 @@
 <!doctype html>
-<html lang="en" data-mode="viewer">
+<html lang="en">
 <head>
-  
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="stylesheet" href="assets/global-responsive.css">
-<link rel="stylesheet" href="/assets/access-mode.css">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/foundation.css">
 
+  <!-- Your site CSS -->
+  <link rel="stylesheet" href="assets/global-responsive.css">
+  <link rel="stylesheet" href="assets/foundation.css">
+  <link rel="stylesheet" href="assets/site-responsive.css">
 
-  <title>Project</title>
+  <!-- Fonts (keep only once) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (keep only once) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="assets/access-mode.css">
-  <script defer src="assets/access-mode.js"></script>
+
+  <!-- Dual-mode CSS (root-relative path) -->
+  <link rel="stylesheet" href="/assets/access-mode.css">
+
+  <title>Project</title>
+
   <style>
     :root{ --page:#ffffff; --ink:#0b152c; --line:#e7edf7; --maxw:1120px; }
     body{font-family:Inter,system-ui,sans-serif; color:var(--ink)}
@@ -28,19 +31,26 @@
     footer{ border-top:1px solid var(--line); padding:18px 0; color:#6b7897 }
     .proj-body { padding-top: 16px; }
   </style>
-  <link rel="stylesheet" href="assets/site-responsive.css">
 </head>
-<body class="bg-white">
+
+<body class="bg-white" data-mode="viewer">
   <header class="sticky top-0 z-20">
     <div class="wrap flex items-center justify-between">
       <a href="index.html" class="text-lg font-extrabold">The (un)Stable Net</a>
-      <nav id="primaryNav">
-<nav class="text-sm">
+
+      <!-- Burger button (adds/removes .nav-open on <html>) -->
+      <button type="button" aria-label="Menu" data-nav-toggle class="md:hidden p-2 border rounded">
+        ☰
+      </button>
+
+      <!-- Nav panel (desktop can use normal layout; mobile toggled by burger) -->
+      <nav class="text-sm md:block hidden nav-panel" data-nav-panel aria-hidden="true">
         <a class="px-3 py-2" href="index.html">Home</a>
         <a class="px-3 py-2" href="home.html">Projects</a>
         <a class="px-3 py-2" href="newsletter.html">Newsletter</a>
         <a class="px-3 py-2" href="bio.html">Bio</a>
-        <a class="px-3 py-2 only-editor" href="mode.html">Switch view</a>
+        <!-- Editor-only link (hidden in viewer by access-mode.css) -->
+        <a class="px-3 py-2" data-editor-ui href="mode.html">Switch view</a>
       </nav>
     </div>
   </header>
@@ -60,15 +70,36 @@
     <div class="wrap">&copy; The (un)Stable Net</div>
   </footer>
 
+  <!-- Viewer/General modules (ok to load in both modes) -->
   <script type="module" src="assets/sb-init.js"></script>
   <script type="module" src="assets/dynamic-project.js"></script>
-  <script type="module" src="assets/editor-auth.js"></script>
-  <script type="module" src="assets/editor-tray.js"></script>
-  <script type="module" src="assets/editor-quiet.js"></script>
-  <script type="module" src="assets/editor-unlock.js"></script>
-  <script type="module" src="assets/live-all-norepl.js"></script>
+
+  <!-- Load EDITOR modules only when actually in editor mode -->
+  <script>
+    (function(){
+      try {
+        var isEditor = (localStorage.getItem('tsn_mode') === 'editor');
+        if (!isEditor) return;
+        [
+          'assets/editor-auth.js',
+          'assets/editor-tray.js',
+          'assets/editor-quiet.js',
+          'assets/editor-unlock.js',
+          'assets/live-all-norepl.js'
+        ].forEach(function(src){
+          var s = document.createElement('script');
+          s.type = 'module'; s.src = src;
+          document.body.appendChild(s);
+        });
+      } catch(_) {}
+    })();
+  </script>
+
+  <!-- Your other general scripts -->
   <script defer src="assets/global-responsive.js"></script>
+
+  <!-- Dual-mode scripts (order matters: nav first, then mode) -->
   <script defer src="/assets/site-nav.js"></script>
   <script defer src="/assets/access-mode.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-</body></html>
+</body>
+</html>
