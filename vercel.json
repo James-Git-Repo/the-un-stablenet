@@ -13,4 +13,5 @@
     { "source": "/msb.html", "destination": "/msab", "permanent": true }
   ]
 }
+{ "redirects": [{ "source": "/newsletter", "destination": "/emm.html#latest", "permanent": true }] }
 
