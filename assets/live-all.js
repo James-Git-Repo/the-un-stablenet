@@ -1,8 +1,15 @@
 // assets/live-all.js
 import { ensureRow, applyBindings, collectEditable, wireLiveViewer, wireLiveEditor } from "./live-core.js";
 import { detectConfig } from "./live-config.js";
-function getMode(){ const html = document.documentElement; const local = localStorage.getItem("tsn:mode"); const attr = html.getAttribute("data-mode"); return (local || attr || "viewer").toLowerCase(); }
-function setMode(m){ document.documentElement.setAttribute("data-mode", m); localStorage.setItem("tsn:mode", m); }
+function getMode(){
+  return (localStorage.getItem('tsn_mode')
+    || document.documentElement.getAttribute('data-mode')
+    || 'viewer').toLowerCase();
+}
+function setMode(m){
+  localStorage.setItem('tsn_mode', m);
+  document.documentElement.setAttribute('data-mode', m);
+}
 async function tryEnsureRowWithFallback(cfg){
   const res = await ensureRow(cfg.table, cfg.keyColumn, cfg.keyValue);
   if (!res.error) return { cfg, row: res.data };
