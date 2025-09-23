@@ -2,16 +2,3 @@
   "cleanUrls": true,
   "trailingSlash": false
 }
-{
-  "redirects": [
-    { "source": "/bio", "destination": "/about", "permanent": true }
-  ]
-}
-{
-  "redirects": [
-    { "source": "/msb", "destination": "/msab", "permanent": true },
-    { "source": "/msb.html", "destination": "/msab", "permanent": true }
-  ]
-}
-{ "redirects": [{ "source": "/newsletter", "destination": "/emm.html#latest", "permanent": true }] }
-
