@@ -22,6 +22,15 @@
   <title>Project</title>
 
   <style>
+    /* When burger is open, show the mobile panel (overrides Tailwind `hidden`) */
+      html.nav-open [data-nav-panel]{ display:block }
+/* In viewer mode, allow the panel overlay to be visible and interactive */
+      html[data-mode="viewer"].nav-open [data-nav-panel]{ 
+      opacity:1; visibility:visible; pointer-events:auto;
+      }
+/* Optional: prevent background scroll when menu is open */
+      html.nav-open { overflow:hidden; }
+
     :root{ --page:#ffffff; --ink:#0b152c; --line:#e7edf7; --maxw:1120px; }
     body{font-family:Inter,system-ui,sans-serif; color:var(--ink)}
     .wrap{ max-width:var(--maxw); margin:0 auto; padding:24px }
