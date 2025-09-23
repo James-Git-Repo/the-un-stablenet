@@ -3,12 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
-  <!-- Your site CSS -->
-  <link rel="stylesheet" href="assets/global-responsive.css">
-  <link rel="stylesheet" href="assets/foundation.css">
-  <link rel="stylesheet" href="assets/site-responsive.css">
-
+  
   <!-- Fonts (keep only once) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
@@ -18,6 +13,9 @@
 
   <!-- Dual-mode CSS (root-relative path) -->
   <link rel="stylesheet" href="/assets/access-mode.css">
+  <link rel="stylesheet" href="/assets/global-responsive.css">
+  <link rel="stylesheet" href="/assets/foundation.css">
+  <link rel="stylesheet" href="/assets/site-responsive.css">
 
   <title>Project</title>
 
@@ -103,7 +101,14 @@
       } catch(_) {}
     })();
   </script>
+  <script defer src="/assets/sb-config.js"></script>
+<script defer src="/assets/sb-init.js"></script>
 
+<!-- Live bindings -->
+<script defer src="/assets/live-core.js"></script>
+<script defer src="/assets/live-config.js"></script>
+<!-- choose ONE of the next two -->
+<script defer src="/assets/live-all.js"></script>
   <!-- Your other general scripts -->
   <script defer src="assets/global-responsive.js"></script>
 
