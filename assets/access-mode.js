@@ -12,19 +12,30 @@
 
   // Apply mode attribute on both roots for maximum CSS compatibility
   const applyAttr = (mode) => {
-    const m = VALID.has(mode) ? mode : 'viewer';
-    const root = document.documentElement; // <html>
-    const body = document.body || document.querySelector('body');
-    root.setAttribute('data-mode', m);
-    if (body) body.setAttribute('data-mode', m);
-  };
+  const m = VALID.has(mode) ? mode : 'viewer';
+  const root = document.documentElement; // <html>
+  const body = document.body || document.querySelector('body');
+  root.setAttribute('data-mode', m);
+  if (body) body.setAttribute('data-mode', m);
+};
 
-  const setMode = (mode) => {
-    const m = VALID.has(mode) ? mode : 'viewer';
-    try{ localStorage.setItem(MODE_KEY, m) }catch(_){}
-    applyAttr(m);
-    if (m === 'viewer') lockDownViewer(); else unlockEditor();
-  };
+const setMode = (mode) => {
+  const m = VALID.has(mode) ? mode : 'viewer';
+  try { localStorage.setItem(MODE_KEY, m) } catch(_) {}
+  applyAttr(m);
+
+  if (m === 'viewer') {
+    // viewer lockdown is local; it's fine to call immediately
+    if (typeof lockDownViewer === 'function') lockDownViewer();
+  } else {
+    // EDITOR: if editor scripts aren't loaded yet, fire the lazy-loader event.
+    if (typeof window.unlockEditor === 'function') {
+      window.unlockEditor();               // already loaded, just run it
+    } else {
+      window.dispatchEvent(new CustomEvent('tsn:enter-editor')); // triggers dynamic imports
+    }
+  }
+};
 
   const getMode = () => {
     try{
