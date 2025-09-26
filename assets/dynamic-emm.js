@@ -1,79 +1,62 @@
-// assets/dynamic-emm.js
-// Minimal EMM helper: DO NOT change hero/title/deck/content.
-// Only: (1) whitelist Contribute UI for viewers, (2) save contributions to Supabase.
+// /assets/dynamic-emm.js
+import { sb } from './sb-init.js';
 
-<!-- <script type="module" src="assets/dynamic-emm.js"></script> -->
-import { sb } from "./sb-init.js";
-
-const $ = (id) => document.getElementById(id);
-
-// Allow these elements to stay interactive in Viewer mode
-function allowViewer() {
-  [
-    "openContrib",
-    "contribDialog",
-    "contribFormContainer", // old id in your page
-    "contribForm",          // alt id if you ever rename
-    "ctName","ctEmail","ctType","ctFile","ctMsg","ctConsent",
-    "closeContrib","cancelContrib","submitContrib",
-  ].forEach((id) => {
-    const el = $(id);
-    if (el) el.setAttribute("data-view-allowed", "");
-  });
+function qs(sel){ return document.querySelector(sel); }
+function setStatus(msg, ok=true){
+  const el = qs('[data-status]');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.classList.remove('text-red-600','text-green-600','hidden');
+  el.classList.add(ok ? 'text-green-600' : 'text-red-600');
 }
 
-function closeDialog() {
-  const dlg = $("contribDialog");
-  if (!dlg) return;
-  if (typeof dlg.close === "function") dlg.close();
-  else dlg.style.display = "none";
-}
+function resetStatus(){ const el = qs('[data-status]'); if (el) { el.textContent=''; el.classList.add('hidden'); } }
 
-// Attach a SUPABASE submit handler that runs in the CAPTURE phase.
-// If Supabase insert succeeds -> we consume the click (prevent the old local handler).
-// If it fails -> we let the old inline handler run (localStorage fallback + alert).
-function attachSupabaseSubmit() {
-  const btn = $("submitContrib");
-  if (!btn || btn.dataset.sbHooked) return;
-  btn.dataset.sbHooked = "1";
+async function submitInquiry(e){
+  e.preventDefault();
+  resetStatus();
 
-  btn.addEventListener(
-    "click",
-    async (e) => {
-      const name = $("ctName")?.value?.trim();
-      const email = $("ctEmail")?.value?.trim();
-      const type = $("ctType")?.value || null;
-      const msg = $("ctMsg")?.value?.trim();
-      const ok = $("ctConsent")?.checked;
+  const form = e.currentTarget;
+  const btn  = form.querySelector('button[type="submit"]');
+  const name = form.querySelector('[name="name"]')?.value?.trim() || null;
+  const email= form.querySelector('[name="email"]')?.value?.trim() || null;
+  const msg  = form.querySelector('[name="message"]')?.value?.trim();
 
-      // Let your original inline JS handle validation alerts
-      if (!name || !email || !msg || !ok) return;
+  if (!msg) { setStatus('Please write a message.', false); return; }
 
-      const url = new URL(location.href);
-      const article_slug = url.searchParams.get("a") || null;
+  btn?.setAttribute('disabled','true');
 
-      try {
-        const { error } = await sb
-          .from("emm_contribs")
-          .insert({ name, email, type, message: msg, article_slug });
-
-        if (!error) {
-          // Success → stop the original inline handler from running
-          e.stopImmediatePropagation();
-          e.preventDefault();
-          closeDialog();
-          alert("Thanks for your contribution!");
-        }
-        // If there was an error, do nothing → your inline handler will save locally.
-      } catch {
-        // Network/other error → fall through to inline handler
+  try{
+    const { error } = await sb.from('inquiries').insert([{
+      source: 'emm',
+      name, email, message: msg,
+      meta: {
+        path: location.pathname + location.search + location.hash,
+        ua: navigator.userAgent
       }
-    },
-    { capture: true } // important: run before the old (bubble-phase) handler
-  );
+    }]);
+    if (error) throw error;
+
+    form.reset();
+    setStatus('Thanks! Your contribution has been received.', true);
+  }catch(err){
+    console.error(err);
+    setStatus('Sorry, something went wrong. Please try again later.', false);
+  }finally{
+    btn?.removeAttribute('disabled');
+  }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  allowViewer();
-  attachSupabaseSubmit();
-});
+function bind(){
+  const form = qs('#contributeForm');
+  if (form && !form.dataset.bound){
+    form.dataset.bound = '1';
+    form.addEventListener('submit', submitInquiry);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bind);
+} else {
+  bind();
+}
