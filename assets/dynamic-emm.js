@@ -9,7 +9,6 @@ function setStatus(msg, ok=true){
   el.classList.remove('text-red-600','text-green-600','hidden');
   el.classList.add(ok ? 'text-green-600' : 'text-red-600');
 }
-
 function resetStatus(){ const el = qs('[data-status]'); if (el) { el.textContent=''; el.classList.add('hidden'); } }
 
 async function submitInquiry(e){
@@ -23,20 +22,15 @@ async function submitInquiry(e){
   const msg  = form.querySelector('[name="message"]')?.value?.trim();
 
   if (!msg) { setStatus('Please write a message.', false); return; }
-
   btn?.setAttribute('disabled','true');
 
   try{
     const { error } = await sb.from('inquiries').insert([{
       source: 'emm',
       name, email, message: msg,
-      meta: {
-        path: location.pathname + location.search + location.hash,
-        ua: navigator.userAgent
-      }
+      meta: { path: location.pathname + location.search + location.hash, ua: navigator.userAgent }
     }]);
     if (error) throw error;
-
     form.reset();
     setStatus('Thanks! Your contribution has been received.', true);
   }catch(err){
