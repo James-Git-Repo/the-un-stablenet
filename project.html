@@ -3,66 +3,48 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  
-  <!-- Fonts (keep only once) -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-
-  <!-- Tailwind (keep only once) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Dual-mode CSS (root-relative path) -->
-  <link rel="stylesheet" href="/assets/access-mode.css">
-  <link rel="stylesheet" href="/assets/global-responsive.css">
-  <link rel="stylesheet" href="/assets/foundation.css">
-  <link rel="stylesheet" href="/assets/site-responsive.css">
-
   <title>Project</title>
 
-  <style>
-    /* When burger is open, show the mobile panel (overrides Tailwind `hidden`) */
-      html.nav-open [data-nav-panel]{ display:block }
-/* In viewer mode, allow the panel overlay to be visible and interactive */
-      html[data-mode="viewer"].nav-open [data-nav-panel]{ 
-      opacity:1; visibility:visible; pointer-events:auto;
-      }
-/* Optional: prevent background scroll when menu is open */
-      html.nav-open { overflow:hidden; }
+  <!-- Fonts + Tailwind -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    :root{ --page:#ffffff; --ink:#0b152c; --line:#e7edf7; --maxw:1120px; }
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="/assets/foundation.css">
+  <link rel="stylesheet" href="/assets/site-responsive.css">
+  <link rel="stylesheet" href="/assets/global-responsive.css">
+  <link rel="stylesheet" href="/assets/access-mode.css">
+
+  <style>
+    html.nav-open [data-nav-panel]{ display:block }
+    html[data-mode="viewer"].nav-open [data-nav-panel]{ opacity:1; visibility:visible; pointer-events:auto }
+    html.nav-open { overflow:hidden }
+    :root{ --page:#ffffff; --ink:#0b152c; --line:#e7edf7; --maxw:1120px }
     body{font-family:Inter,system-ui,sans-serif; color:var(--ink)}
     .wrap{ max-width:var(--maxw); margin:0 auto; padding:24px }
     header{ border-bottom:1px solid var(--line); background:#fff8 }
-    .hero{ min-height:220px; background:#eef4ff; display:flex; align-items:flex-end; }
+    .hero{ min-height:220px; background:#eef4ff; display:flex; align-items:flex-end }
     .hero-inner{ max-width:var(--maxw); margin:0 auto; padding:36px 24px }
     footer{ border-top:1px solid var(--line); padding:18px 0; color:#6b7897 }
-    .proj-body { padding-top: 16px; }
+    .proj-body { padding-top:16px }
   </style>
 </head>
-
 <body class="bg-white" data-mode="viewer">
   <header class="sticky top-0 z-20">
     <div class="wrap flex items-center justify-between">
-      <a href="index.html" class="text-lg font-extrabold">The (un)Stable Net</a>
-
-      <!-- Burger button (adds/removes .nav-open on <html>) -->
-      <button type="button" aria-label="Menu" data-nav-toggle class="md:hidden p-2 border rounded">
-        ☰
-      </button>
-
-      <!-- Nav panel (desktop can use normal layout; mobile toggled by burger) -->
+      <a href="/home.html" class="text-lg font-extrabold">The (un)Stable Net</a>
+      <button type="button" aria-label="Menu" data-nav-toggle class="md:hidden p-2 border rounded">☰</button>
       <nav class="text-sm md:block hidden nav-panel" data-nav-panel data-view-allowed aria-hidden="true">
-        <a class="px-3 py-2" href="index.html">Home</a>
-        <a class="px-3 py-2" href="home.html">Projects</a>
-        <a class="px-3 py-2" href="newsletter.html">Newsletter</a>
-        <a class="px-3 py-2" href="bio.html">Bio</a>
-        <!-- Editor-only link (hidden in viewer by access-mode.css) -->
-        <a class="px-3 py-2" data-editor-ui href="mode.html">Switch view</a>
+        <a class="px-3 py-2" href="/home.html">Home</a>
+        <a class="px-3 py-2" href="/newsletter.html">Newsletter</a>
+        <a class="px-3 py-2" href="/bio.html">Bio</a>
+        <a class="px-3 py-2" data-editor-ui href="/mode.html">Switch view</a>
       </nav>
     </div>
   </header>
 
-  <section class="hero proj-hero">
+  <section class="hero">
     <div class="hero-inner">
       <h1 class="proj-title text-3xl font-extrabold"></h1>
       <p class="proj-subtitle text-slate-600 mt-2"></p>
@@ -73,64 +55,27 @@
     <article class="proj-body prose max-w-none" data-publish-target="project"></article>
   </main>
 
-  <footer>
-    <div class="wrap">&copy; The (un)Stable Net</div>
-  </footer>
+  <footer><div class="wrap">&copy; The (un)Stable Net</div></footer>
 
-  <!-- Viewer/General modules (ok to load in both modes) -->
-  <script type="module" src="assets/sb-init.js"></script>
-  <script type="module" src="assets/dynamic-project.js"></script>
+  <!-- Modules (modules are deferred by default) -->
+  <script type="module" src="/assets/sb-init.js"></script>
+  <script type="module" src="/assets/dynamic-project.js"></script>
 
-  <!-- Load EDITOR modules only when actually in editor mode -->
-  <script>
-    (function(){
-      try {
-        var isEditor = (localStorage.getItem('tsn_mode') === 'editor');
-        if (!isEditor) return;
-        [
-          'assets/editor-auth.js',
-          'assets/editor-tray.js',
-          'assets/editor-quiet.js',
-          'assets/editor-unlock.js',
-          'assets/live-all-norepl.js'
-        ].forEach(function(src){
-          var s = document.createElement('script');
-          s.type = 'module'; s.src = src;
-          document.body.appendChild(s);
-        });
-      } catch(_) {}
-    })();
+  <!-- Nice-to-have UI -->
+  <script defer src="/assets/global-responsive.js"></script>
+  <script defer src="/assets/site-nav.js"></script>
+  <script defer src="/assets/access-mode.js"></script>
+
+  <!-- Lazy-load editor bundle when entering editor -->
+  <script type="module">
+    window.addEventListener('tsn:enter-editor', async () => {
+      await import('/assets/editor-auth.js');
+      await import('/assets/editor-tray.js');
+      await import('/assets/editor-quiet.js');
+      await import('/assets/editor-unlock.js');
+      // If you prefer one file: await import('/assets/editor-bundle.js');
+    });
   </script>
- <!-- Supabase client (module scripts are deferred by default) -->
-<script type="module" src="/assets/sb-init.js"></script>
-
-<!-- Page logic -->
-<script type="module" src="/assets/dynamic-.js"></script>
-
-<!-- Nice-to-have UI (after paint) -->
-<script defer src="/assets/global-responsive.js"></script>
-
-<!-- Choose ONE live setup -->
-<!-- Option A: core+config -->
-<script defer src="/assets/live-core.js"></script>
-<script defer src="/assets/live-config.js"></script>
-<!-- Option B: single bundle -->
-<!-- <script defer src="/assets/live-all-norepl.js"></script> -->
-
-<!-- Nav + mode (after DOM is parsed) -->
-<script defer src="/assets/site-nav.js"></script>
-<script defer src="/assets/access-mode.js"></script>
-
-<!-- Lazy-load editor bundle only when entering editor mode -->
-<script type="module">
-  // access-mode.js should dispatch a custom event when editor mode is entered
-  window.addEventListener('tsn:enter-editor', async () => {
-    await import('/assets/editor-auth.js');
-    await import('/assets/editor-tray.js');
-    await import('/assets/editor-quiet.js');
-    await import('/assets/editor-unlock.js');
-  });
-</script>
-
 </body>
 </html>
+
