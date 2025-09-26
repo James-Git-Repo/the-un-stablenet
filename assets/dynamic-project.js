@@ -9,32 +9,30 @@ function getSlug() {
   return (parts[parts.length - 2] === 'project') ? parts[parts.length - 1] : null;
 }
 
-function setText(sel, val) { const el = document.querySelector(sel); if (el) el.textContent = val ?? ''; }
-function setHTML(sel, html) { const el = document.querySelector(sel); if (el) el.innerHTML = html ?? ''; }
+const setText = (sel, v) => { const el = document.querySelector(sel); if (el) el.textContent = v ?? ''; };
+const setHTML = (sel, v) => { const el = document.querySelector(sel); if (el) el.innerHTML = v ?? ''; };
 
-async function loadProject(slug) {
-  // If you store projects in `projects`, reuse that table. Otherwise point to `documents`.
+async function loadProject(id) {
   const { data, error } = await sb
-    .from('documents')  // or 'projects' if body_html lives there
-    .select('title, subtitle, body_html, published')
-    .eq('slug', slug)
-    .eq('kind', 'project')
-    .eq('published', true)
+    .from('projects')
+    .select('title, subtitle, body_html, status')
+    .eq('id', id)
     .maybeSingle();
   if (error) throw error;
+  if (!data || data.status !== 'published') return null;
   return data;
 }
 
 (async function main(){
-  const slug = getSlug();
-  if (!slug) { setText('.proj-title','Project not specified'); setText('.proj-subtitle','Missing ?slug='); return; }
+  const id = getSlug();
+  if (!id) { setText('.proj-title','Project not specified'); setText('.proj-subtitle','Missing ?slug='); return; }
   try{
-    const proj = await loadProject(slug);
-    if (!proj) { setText('.proj-title','Project not found'); setText('.proj-subtitle',`No published project for “${slug}”.`); return; }
+    const proj = await loadProject(id);
+    if (!proj) { setText('.proj-title','Project not found'); setText('.proj-subtitle',`No published project for “${id}”.`); return; }
     document.title = `${proj.title} — The (un)Stable Net`;
     setText('.proj-title', proj.title);
-    setText('.proj-subtitle', proj.subtitle);
-    setHTML('[data-publish-target="project"]', proj.body_html);
+    setText('.proj-subtitle', proj.subtitle || '');
+    setHTML('[data-publish-target="project"]', proj.body_html || '');
   }catch(e){
     console.error(e);
     setText('.proj-title','Error loading project');
