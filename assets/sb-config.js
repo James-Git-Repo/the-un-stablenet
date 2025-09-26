@@ -1,2 +1,2 @@
-export const SUPABASE_URL = https://jcruixfisddhasiogkku.supabase.co;
-export const SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjcnVpeGZpc2RkaGFzaW9na2t1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NTkzMjMsImV4cCI6MjA3NDIzNTMyM30.RMlk6vKhsSDczAS4v2UcQKxYpRIJnppu8AVfP1W80yA; // no angle brackets, no "..."
+export const SUPABASE_URL = "https://jcruixfisddhasiogkku.supabase.co";
+export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjcnVpeGZpc2RkaGFzaW9na2t1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2NTkzMjMsImV4cCI6MjA3NDIzNTMyM30.RMlk6vKhsSDczAS4v2UcQKxYpRIJnppu8AVfP1W80yA";
