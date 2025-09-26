@@ -1,4 +1,4 @@
-<!--- PURPOSE: Hide editor UI in viewer, prevent overlays from blocking content, and ensure hero/cover is never covered by stray UI. -->
+<!-- PURPOSE: Hide editor UI in viewer, prevent overlays from blocking content, and ensure hero/cover is never covered by stray UI. -->
 
 :root{ --editor-z: 9000; --hero-z: 1 }
 
