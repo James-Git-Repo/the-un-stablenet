@@ -33,7 +33,7 @@
       localStorage.removeItem('tsn_token');
       localStorage.setItem('tsn_mode', 'viewer');
       location.href = '/';
-    });
+    });https://github.com/James-Git-Repo/the-un-stablenet/blob/main/viewer.html
   </script>
 
   <!-- Load editor-only modules ONLY when actually in editor mode -->
@@ -52,19 +52,37 @@
       }
     })();
   </script>
-<script defer src="/assets/sb-config.js"></script>
-<script defer src="/assets/sb-init.js"></script>
+<!-- Supabase client (module scripts are deferred by default) -->
+<script type="module" src="/assets/sb-init.js"></script>
 
-<!-- Live bindings -->
+<!-- Page logic -->
+<script type="module" src="/assets/dynamic-.js"></script>
+
+<!-- Nice-to-have UI (after paint) -->
+<script defer src="/assets/global-responsive.js"></script>
+
+<!-- Choose ONE live setup -->
+<!-- Option A: core+config -->
 <script defer src="/assets/live-core.js"></script>
 <script defer src="/assets/live-config.js"></script>
-<script defer src="/assets/live-all-norepl.js"></script>
-  <!-- Keep these two – order matters -->
-  <script defer src="/assets/site-nav.js"></script>
-  <script defer src="/assets/access-mode.js"></script>
+<!-- Option B: single bundle -->
+<!-- <script defer src="/assets/live-all-norepl.js"></script> -->
 
-  <!-- Root-relative path here as well -->
-  <script defer src="/assets/global-responsive.js"></script>
+<!-- Nav + mode (after DOM is parsed) -->
+<script defer src="/assets/site-nav.js"></script>
+<script defer src="/assets/access-mode.js"></script>
+
+<!-- Lazy-load editor bundle only when entering editor mode -->
+<script type="module">
+  // access-mode.js should dispatch a custom event when editor mode is entered
+  window.addEventListener('tsn:enter-editor', async () => {
+    await import('/assets/editor-auth.js');
+    await import('/assets/editor-tray.js');
+    await import('/assets/editor-quiet.js');
+    await import('/assets/editor-unlock.js');
+  });
+</script>
+
 
 </body>
 </html>
