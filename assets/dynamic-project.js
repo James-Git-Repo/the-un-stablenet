@@ -1,4 +1,3 @@
-// /assets/dynamic-project.js
 import { sb } from './sb-init.js';
 
 function getSlug() {
