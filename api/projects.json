@@ -1,7 +1,0 @@
-{
-  "projects": [
-    { "id":"msb",  "title":"Million Slots Billboard", "tag":"Platform",  "blurb":"A permanent AI video mosaic with 1,000,000 micro-slots. Claim space and publish.", "href":"msab.html",        "cover":"" },
-    { "id":"emm",  "title":"European Market Movers",  "tag":"Newsletter", "blurb":"Weekly, PM-style wrap of European markets.",                                     "href":"emm.html#latest", "cover":"" },
-    { "id":"coming","title":"New projects coming soon…","tag":"Coming up","blurb":"Stay tuned","href":"project-new.html","cover":"" }
-  ]
-}
