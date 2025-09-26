@@ -1,4 +1,3 @@
-// assets/dynamic-bio.js
 import { sb } from "./sb-init.js";
 
 const $ = (id) => document.getElementById(id);
@@ -76,7 +75,7 @@ function wireSubmit() {
 
     // Fold topic into message so it matches your table schema
     const payload = {
-      page: "bio",
+      page: "about",
       name,
       email,
       message: topic ? `[${topic}] ${message}` : message
