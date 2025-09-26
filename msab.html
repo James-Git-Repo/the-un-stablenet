@@ -344,23 +344,36 @@
     });
   })();
 </script>
-  <script type="module" src="/assets/sb-init.js"></script>
-  <script type="module" src="/assets/dynamic-msb.js"></script>
-  <script type="module" src="/assets/editor-auth.js"></script>
-  <script type="module" src="/assets/editor-tray.js"></script>
-  <script type="module" src="assets/editor-quiet.js"></script>
-  <script type="module" src="/assets/editor-unlock.js"></script>
-  <script type="module" src="/assets/live-all-norepl.js"></script>
-  <script defer src="/assets/sb-config.js"></script>
-<script defer src="/assets/sb-init.js"></script>
+  <!-- Supabase client (module scripts are deferred by default) -->
+<script type="module" src="/assets/sb-init.js"></script>
 
-<!-- Live bindings -->
+<!-- Page logic -->
+<script type="module" src="/assets/dynamic-msab.js"></script>
+
+<!-- Nice-to-have UI (after paint) -->
+<script defer src="/assets/global-responsive.js"></script>
+
+<!-- Choose ONE live setup -->
+<!-- Option A: core+config -->
 <script defer src="/assets/live-core.js"></script>
 <script defer src="/assets/live-config.js"></script>
-<!-- choose ONE of the next two -->
-<script defer src="/assets/live-all-norepl.js"></script>
-  <script defer src="/assets/site-nav.js"></script>
-  <script defer src="/assets/access-mode.js"></script>
-  <script defer src="/assets/global-responsive.js"></script>
+<!-- Option B: single bundle -->
+<!-- <script defer src="/assets/live-all-norepl.js"></script> -->
+
+<!-- Nav + mode (after DOM is parsed) -->
+<script defer src="/assets/site-nav.js"></script>
+<script defer src="/assets/access-mode.js"></script>
+
+<!-- Lazy-load editor bundle only when entering editor mode -->
+<script type="module">
+  // access-mode.js should dispatch a custom event when editor mode is entered
+  window.addEventListener('tsn:enter-editor', async () => {
+    await import('/assets/editor-auth.js');
+    await import('/assets/editor-tray.js');
+    await import('/assets/editor-quiet.js');
+    await import('/assets/editor-unlock.js');
+  });
+</script>
+
   
 </body></html>
